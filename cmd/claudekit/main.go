@@ -50,13 +50,29 @@ func usage() {
 	fmt.Println(`claudekit — Claude Code terminal customization toolkit
 
 Usage:
-  claudekit fonts status        Detect installed fonts and terminal
-  claudekit fonts install       Install Monaspice via Homebrew
-  claudekit fonts configure     Write terminal font configuration
-  claudekit fonts setup         All-in-one: detect → install → configure
+  claudekit fonts status          Detect installed fonts and terminal
+  claudekit fonts install         Install Monaspice via Homebrew
+  claudekit fonts configure       Write terminal font configuration
+  claudekit fonts configure --terminal ghostty
+  claudekit fonts preview         Show ligatures, Nerd Font glyphs, fallback tiers
+  claudekit fonts setup           All-in-one: detect → install → configure
 
-  claudekit statusline install  Install the Claude Code statusline
-  claudekit statusline preview  Preview statusline with sample data`)
+  claudekit statusline install    Install the Claude Code statusline
+  claudekit statusline preview    Preview statusline with sample data`)
+}
+
+// parseFlag returns the value of --key from os.Args, or fallback if not found.
+func parseFlag(key, fallback string) string {
+	prefix := "--" + key
+	for i, arg := range os.Args {
+		if arg == prefix && i+1 < len(os.Args) {
+			return os.Args[i+1]
+		}
+		if strings.HasPrefix(arg, prefix+"=") {
+			return strings.TrimPrefix(arg, prefix+"=")
+		}
+	}
+	return fallback
 }
 
 func runFonts(ctx context.Context, cmd string) error {
@@ -67,10 +83,12 @@ func runFonts(ctx context.Context, cmd string) error {
 		return fontsInstall(ctx)
 	case "configure":
 		return fontsConfigure()
+	case "preview":
+		return fontsPreview()
 	case "setup":
 		return fontsSetup(ctx)
 	default:
-		return fmt.Errorf("unknown fonts command: %s (try: status, install, configure, setup)", cmd)
+		return fmt.Errorf("unknown fonts command: %s (try: status, install, configure, preview, setup)", cmd)
 	}
 }
 
@@ -132,26 +150,43 @@ func fontsInstall(ctx context.Context) error {
 }
 
 func fontsConfigure() error {
-	term := fontkit.DetectTerminal()
+	termFlag := parseFlag("terminal", "auto")
+
+	var terminal fontkit.Terminal
+	switch termFlag {
+	case "auto":
+		terminal = fontkit.DetectTerminal().Terminal
+	case "iterm2":
+		terminal = fontkit.TerminalITerm2
+	case "ghostty":
+		terminal = fontkit.TerminalGhostty
+	default:
+		return fmt.Errorf("unsupported terminal: %s (supported: auto, iterm2, ghostty)", termFlag)
+	}
 
 	var path string
 	var err error
-	switch term.Terminal {
+	switch terminal {
 	case fontkit.TerminalITerm2:
 		path, err = fontkit.ConfigureITerm2(fontkit.ITerm2Opts{})
 	case fontkit.TerminalGhostty:
 		path, err = fontkit.ConfigureGhostty(fontkit.GhosttyOpts{})
 	default:
-		return fmt.Errorf("unsupported terminal: %s (supported: iTerm2, Ghostty)", term.Name)
+		return fmt.Errorf("unsupported terminal: %s (supported: iTerm2, Ghostty)", terminal)
 	}
 	if err != nil {
 		return err
 	}
 	fmt.Printf("Wrote font config: %s\n", path)
 
-	if term.Terminal == fontkit.TerminalITerm2 {
+	if terminal == fontkit.TerminalITerm2 {
 		fmt.Println("\nTo activate: iTerm2 → Preferences → Profiles → select \"Claudekit Monaspace\"")
 	}
+	return nil
+}
+
+func fontsPreview() error {
+	fmt.Print(fontkit.Preview(fontkit.PreviewOpts{ShowAll: true}))
 	return nil
 }
 
@@ -166,7 +201,6 @@ func fontsSetup(ctx context.Context) error {
 		return err
 	}
 
-	// Install if no Monaspice found
 	hasMonaspice := false
 	for _, f := range status.Installed {
 		if f.HasNerdGlyphs {
