@@ -9,7 +9,7 @@
 - [x] Claude Code statusline with Monaspace multi-font fallback
 
 ## Tier 2: Terminal Theming
-- [ ] Catppuccin theme support (one palette → multiple targets)
+- [x] Catppuccin theme support (one palette → multiple targets)
 - [ ] Starship prompt configuration
 - [ ] Terminal color scheme management
 - [ ] Syntax highlighting theme sync (bat, delta, etc.)

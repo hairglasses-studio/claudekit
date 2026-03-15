@@ -15,9 +15,10 @@ make test    # run tests
 | Package | Purpose | Dependencies |
 |---------|---------|-------------|
 | `fontkit` | Font detection, installation, terminal config | None (pure Go) |
-| `statusline` | Claude Code statusline script + installer | `fontkit` |
+| `themekit` | Catppuccin palettes + terminal theme export | None (pure Go) |
+| `statusline` | Claude Code statusline script + installer | `themekit` |
 | `mcpserver` | MCP tool modules | `fontkit`, `statusline`, mcpkit |
-| `cmd/claudekit` | CLI entrypoint | `fontkit`, `statusline` |
+| `cmd/claudekit` | CLI entrypoint | `fontkit`, `statusline`, `themekit` |
 | `cmd/claudekit-mcp` | MCP server entrypoint | `mcpserver` |
 
 ## Conventions
