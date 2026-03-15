@@ -1,5 +1,8 @@
 name: CI
 
+# Requires MCPKIT_TOKEN secret with read access to hairglasses-studio/mcpkit.
+# Set via: gh secret set MCPKIT_TOKEN --body "<personal-access-token>"
+
 on: [push, pull_request]
 
 jobs:
