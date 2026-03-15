@@ -85,5 +85,28 @@
       "Potential Tier 8: multi-project orchestration, remote sampling, CI lint integration"
     ],
     "timestamp": "2026-03-15T22:37:16Z"
+  },
+  {
+    "cycle_id": "ci-lint-hardening-001",
+    "cycle_number": 5,
+    "what_worked": [
+      "golangci-lint config created with sensible defaults",
+      "CI YAML syntax validated locally before pushing (caught xargs brace issue)",
+      "Race detector passed clean on all packages",
+      "Coverage analysis identified gaps: cmd/claudekit at 5.1%, mcpserver at 26.1%"
+    ],
+    "what_failed": [
+      "CI fails because MCPKIT_TOKEN secret is not configured — requires user action",
+      "First CI fix attempt used path: ../mcpkit which GitHub Actions doesn't support",
+      "YAML brace escaping issue required second fix commit"
+    ],
+    "wasted_iterations": 2,
+    "total_cost_dollars": 0,
+    "suggestions": [
+      "User needs to run: gh secret set MCPKIT_TOKEN to enable CI",
+      "Consider making mcpkit a public repo to simplify CI",
+      "Coverage targets: mcpserver to 40%+, cmd/claudekit to 20%+"
+    ],
+    "timestamp": "2026-03-15T23:09:23Z"
   }
 ]
