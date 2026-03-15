@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/hairglasses-studio/claudekit/mcpserver"
+	"github.com/hairglasses-studio/claudekit/pluginkit"
 	"github.com/hairglasses-studio/mcpkit/registry"
 )
 
@@ -19,6 +20,15 @@ func main() {
 
 	// Register ralph autonomous loop module.
 	mcpserver.SetupRalph(reg, nil)
+
+	// Load plugins.
+	if pluginDir, err := pluginkit.DefaultPluginDir(); err == nil {
+		if plugins, err := pluginkit.LoadPlugins(pluginDir); err == nil {
+			for _, cfg := range plugins {
+				reg.RegisterModule(pluginkit.NewPluginModule(cfg))
+			}
+		}
+	}
 
 	s := registry.NewMCPServer("claudekit", "0.1.0")
 	reg.RegisterWithServer(s)

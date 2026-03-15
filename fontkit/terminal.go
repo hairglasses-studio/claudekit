@@ -8,6 +8,7 @@ type Terminal string
 const (
 	TerminalITerm2  Terminal = "iterm2"
 	TerminalGhostty Terminal = "ghostty"
+	TerminalWezTerm Terminal = "wezterm"
 	TerminalApple   Terminal = "apple_terminal"
 	TerminalUnknown Terminal = "unknown"
 )
@@ -36,6 +37,12 @@ func DetectTerminal() TerminalInfo {
 				Name:     "Ghostty",
 				Version:  os.Getenv("TERM_PROGRAM_VERSION"),
 			}
+		case "WezTerm":
+			return TerminalInfo{
+				Terminal: TerminalWezTerm,
+				Name:     "WezTerm",
+				Version:  os.Getenv("TERM_PROGRAM_VERSION"),
+			}
 		case "Apple_Terminal":
 			return TerminalInfo{
 				Terminal: TerminalApple,
@@ -62,7 +69,7 @@ func DetectTerminal() TerminalInfo {
 // SupportsConfig returns whether we can write font configuration for this terminal.
 func (t Terminal) SupportsConfig() bool {
 	switch t {
-	case TerminalITerm2, TerminalGhostty:
+	case TerminalITerm2, TerminalGhostty, TerminalWezTerm:
 		return true
 	default:
 		return false
