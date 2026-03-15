@@ -1,6 +1,6 @@
 # claudekit
 
-Claude Code terminal customization framework. Follows mcpkit patterns.
+Claude Code terminal customization framework. Built on [mcpkit](https://github.com/hairglasses-studio/mcpkit).
 
 ## Build
 
@@ -15,16 +15,40 @@ make test    # run tests
 | Package | Purpose | Dependencies |
 |---------|---------|-------------|
 | `fontkit` | Font detection, installation, terminal config | None (pure Go) |
-| `themekit` | Catppuccin palettes + terminal theme export | None (pure Go) |
+| `themekit` | Catppuccin palettes + theme export (iTerm2, Ghostty, bat, delta, Starship) | None (pure Go) |
+| `envkit` | Mise integration, shell detection, dotfile snapshot/restore | None (pure Go) |
 | `statusline` | Claude Code statusline script + installer | `themekit` |
-| `mcpserver` | MCP tool modules | `fontkit`, `statusline`, mcpkit |
-| `cmd/claudekit` | CLI entrypoint | `fontkit`, `statusline`, `themekit` |
+| `mcpserver` | MCP tool modules (font, theme, env, statusline, ralph, gateway, discovery, webmcp) | `fontkit`, `themekit`, `envkit`, `statusline`, mcpkit |
+| `cmd/claudekit` | CLI entrypoint | all packages |
 | `cmd/claudekit-mcp` | MCP server entrypoint | `mcpserver` |
 
-## Conventions
+## MCP Tools
 
+8 tools across 4 modules + ralph (3 more):
+- **fonts**: `font_status`, `font_install`, `font_configure`
+- **theme**: `theme_apply`, `theme_list`
+- **statusline**: `statusline_install`
+- **env**: `env_status`, `env_snapshot`
+- **ralph**: `ralph_start`, `ralph_stop`, `ralph_status`
+
+## Key Patterns
+
+- `ToolModule` interface: `Name()`, `Description()`, `Tools() []ToolDefinition`
 - Typed inputs/outputs with `jsonschema` tags for MCP tools
-- `ToolModule` interface: `Name()`, `Description()`, `Tools()`
 - Tests alongside source files (`_test.go`)
-- No heavy CLI frameworks — `os.Args` routing
-- Context-aware exec for all shell commands
+- CLI: `os.Args` routing with `parseFlag(key, fallback)` helper
+- Context-aware `exec.CommandContext` for all shell commands
+- Font fallback: MonaspiceNe → MonaspaceNeon → Menlo
+- Theme export: one Catppuccin palette → multiple targets
+- Dotfile management: `# claudekit:begin` / `# claudekit:end` markers
+
+## External Dependencies
+
+- [mcpkit](https://github.com/hairglasses-studio/mcpkit) — MCP server framework (local replace `../mcpkit`)
+- [Monaspace](https://github.com/githubnext/monaspace) — GitHub's variable font family
+- [Monaspice](https://github.com/aaronliu0130/monaspice) — Nerd Font patched Monaspace
+- [Catppuccin](https://github.com/catppuccin/catppuccin) — Soothing pastel theme
+- [Starship](https://starship.rs/) — Cross-shell prompt
+- [mise](https://mise.jdx.dev/) — Tool version manager
+- [bat](https://github.com/sharkdp/bat) — Cat clone with syntax highlighting
+- [delta](https://github.com/dandavison/delta) — Git diff viewer
