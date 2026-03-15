@@ -62,6 +62,7 @@ Usage:
 
   claudekit theme apply           Apply Catppuccin theme to terminal
   claudekit theme apply --flavor mocha --terminal ghostty
+  claudekit theme sync            Apply theme to terminal + bat + delta
   claudekit theme preview         Preview all Catppuccin flavors
 
   claudekit statusline install    Install the Claude Code statusline
@@ -239,10 +240,12 @@ func runTheme(cmd string) error {
 	switch cmd {
 	case "apply":
 		return themeApply()
+	case "sync":
+		return themeSync()
 	case "preview":
 		return themePreview()
 	default:
-		return fmt.Errorf("unknown theme command: %s (try: apply, preview)", cmd)
+		return fmt.Errorf("unknown theme command: %s (try: apply, sync, preview)", cmd)
 	}
 }
 
@@ -296,6 +299,62 @@ func themeApply() error {
 	if terminal == fontkit.TerminalGhostty {
 		fmt.Printf("\nAdd to your Ghostty config: theme = claudekit-%s\n", strings.ReplaceAll(strings.ToLower(p.Name), " ", "-"))
 	}
+	return nil
+}
+
+func themeSync() error {
+	flavorStr := parseFlag("flavor", "mocha")
+
+	var flavor themekit.Flavor
+	switch flavorStr {
+	case "latte":
+		flavor = themekit.Latte
+	case "frappe":
+		flavor = themekit.Frappe
+	case "macchiato":
+		flavor = themekit.Macchiato
+	case "mocha":
+		flavor = themekit.Mocha
+	default:
+		return fmt.Errorf("unknown flavor: %s", flavorStr)
+	}
+
+	p := themekit.Catppuccin(flavor)
+	fmt.Printf("Syncing %s across all targets...\n\n", p.Name)
+
+	// Terminal theme
+	term := fontkit.DetectTerminal()
+	if term.Terminal.SupportsConfig() {
+		var path string
+		var err error
+		switch term.Terminal {
+		case fontkit.TerminalITerm2:
+			path, err = themekit.ExportITerm2(p)
+		case fontkit.TerminalGhostty:
+			path, err = themekit.ExportGhostty(p)
+		}
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "  ✗ Terminal: %v\n", err)
+		} else {
+			fmt.Printf("  ✓ Terminal (%s): %s\n", term.Name, path)
+		}
+	}
+
+	// bat
+	if path, err := themekit.ExportBat(p); err != nil {
+		fmt.Fprintf(os.Stderr, "  ✗ bat: %v\n", err)
+	} else {
+		fmt.Printf("  ✓ bat: %s\n", path)
+	}
+
+	// delta
+	if path, err := themekit.ExportDelta(p); err != nil {
+		fmt.Fprintf(os.Stderr, "  ✗ delta: %v\n", err)
+	} else {
+		fmt.Printf("  ✓ delta: %s\n", path)
+	}
+
+	fmt.Printf("\nTheme sync complete. Set CLAUDEKIT_THEME=%s for statusline colors.\n", flavorStr)
 	return nil
 }
 
