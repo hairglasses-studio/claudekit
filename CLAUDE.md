@@ -19,17 +19,19 @@ make test    # run tests
 | `envkit` | Mise integration, shell detection, dotfile snapshot/restore | None (pure Go) |
 | `statusline` | Claude Code statusline script + installer | `themekit` |
 | `pluginkit` | YAML plugin loading, subprocess handler, ToolModule bridge | `mcpkit/registry`, `yaml.v3` |
-| `mcpserver` | MCP tool modules (font, theme, env, statusline, ralph, gateway, discovery, webmcp) | `fontkit`, `themekit`, `envkit`, `statusline`, mcpkit |
+| `skillkit` | Claude Code skill marketplace — discovery, install, remove | None (pure Go) |
+| `mcpserver` | MCP tool modules (font, theme, env, statusline, skill, ralph, gateway, discovery, webmcp) | `fontkit`, `themekit`, `envkit`, `statusline`, `skillkit`, mcpkit |
 | `cmd/claudekit` | CLI entrypoint | all packages |
 | `cmd/claudekit-mcp` | MCP server entrypoint | `mcpserver`, `pluginkit` |
 
 ## MCP Tools
 
-8 tools across 4 modules + ralph (3 more) + dynamic plugin tools:
+10 tools across 5 modules + ralph (3 more) + dynamic plugin tools:
 - **fonts**: `font_status`, `font_install`, `font_configure`
 - **theme**: `theme_apply`, `theme_list`
 - **statusline**: `statusline_install`
 - **env**: `env_status`, `env_snapshot`
+- **skills**: `skill_list`, `skill_install`
 - **ralph**: `ralph_start`, `ralph_stop`, `ralph_status`
 
 ## Key Patterns

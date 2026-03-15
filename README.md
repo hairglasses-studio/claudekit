@@ -146,6 +146,16 @@ tools:
 
 The plugin subprocess receives `{"method":"<tool>","params":<input>}` on stdin and returns `{"result":...}` on stdout.
 
+### Skills (Marketplace)
+
+| Command | Description |
+|---------|-------------|
+| `claudekit skill list` | List installed and available skills |
+| `claudekit skill install <name>` | Install a skill from the marketplace |
+| `claudekit skill remove <name>` | Remove an installed skill |
+
+Skills are Claude Code behavior guides (SKILL.md files) that teach Claude how to use claudekit MCP tools for specific workflows. The built-in marketplace includes: `font-setup`, `theme-setup`, `env-setup`.
+
 ### MCP Management
 
 | Command | Description |
@@ -167,6 +177,8 @@ The plugin subprocess receives `{"method":"<tool>","params":<input>}` on stdin a
 | `statusline_install` | Install Claude Code statusline | Yes |
 | `env_status` | Check mise + shell info | No |
 | `env_snapshot` | Capture managed config files | No |
+| `skill_list` | List installed and available skills | No |
+| `skill_install` | Install a skill from marketplace | Yes |
 | `ralph_start` | Start autonomous task loop | Yes |
 | `ralph_stop` | Stop running loop | No |
 | `ralph_status` | Get loop status | No |
@@ -180,7 +192,8 @@ claudekit/
 ├── statusline/     Claude Code statusline with 3-tier font fallback
 ├── envkit/         Mise integration, shell detection, dotfile management
 ├── pluginkit/      YAML plugin loading, subprocess handler, ToolModule bridge
-├── mcpserver/      MCP tool modules + gateway + ralph + discovery + WebMCP
+├── skillkit/       Claude Code skill marketplace — discovery, install, manage
+├── mcpserver/      MCP tool modules + gateway + ralph + skills + discovery + WebMCP
 ├── cmd/claudekit/  CLI entrypoint
 └── cmd/claudekit-mcp/  MCP stdio server entrypoint
 ```

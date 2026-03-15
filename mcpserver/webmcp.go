@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/hairglasses-studio/claudekit/skillkit"
 	"github.com/hairglasses-studio/mcpkit/registry"
 )
 
@@ -20,6 +21,7 @@ type toolInfo struct {
 //
 // Endpoints:
 //   - GET /tools   — list all registered tools as JSON
+//   - GET /skills  — list available skills from the marketplace
 //   - GET /health  — health check (200 OK)
 func WebMCPHandler(reg *registry.ToolRegistry) http.Handler {
 	mux := http.NewServeMux()
@@ -36,6 +38,27 @@ func WebMCPHandler(reg *registry.ToolRegistry) http.Handler {
 		}
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(tools)
+	})
+
+	mux.HandleFunc("GET /skills", func(w http.ResponseWriter, r *http.Request) {
+		index := skillkit.BuiltinIndex()
+		type skillEntry struct {
+			Name        string   `json:"name"`
+			Title       string   `json:"title"`
+			Description string   `json:"description"`
+			Tools       []string `json:"tools"`
+		}
+		entries := make([]skillEntry, 0, len(index))
+		for _, e := range index {
+			entries = append(entries, skillEntry{
+				Name:        e.Name,
+				Title:       e.Title,
+				Description: e.Description,
+				Tools:       e.Tools,
+			})
+		}
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(entries)
 	})
 
 	mux.HandleFunc("GET /health", func(w http.ResponseWriter, r *http.Request) {

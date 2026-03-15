@@ -6,17 +6,18 @@ Activates when the user mentions fonts, terminal appearance, Monaspace, Monaspic
 
 1. Call `font_status` to detect the current terminal and installed fonts
 2. Present findings:
-   - Terminal: iTerm2 / Ghostty / Apple Terminal / other
+   - Terminal: iTerm2 / Ghostty / WezTerm / Apple Terminal / other
    - Installed font families (if any)
    - Best available font from the fallback chain
 3. If fonts need installing:
    - Explain: Monaspice Nerd Font = Monaspace + icon glyphs, installed via Homebrew
    - Ask for confirmation
    - Call `font_install` with `nerd_font: true`
-4. If terminal supports configuration (iTerm2 or Ghostty):
+4. If terminal supports configuration (iTerm2, Ghostty, or WezTerm):
    - Call `font_configure` to write config with fallback
    - iTerm2: creates Dynamic Profile "Claudekit Monaspace" — user switches manually
    - Ghostty: writes font-family directives, takes effect on restart
+   - WezTerm: writes Lua module, user adds require("claudekit").apply(config, wezterm)
 5. Suggest `statusline_install` and `theme_apply` for the full experience
 
 ## Font Families
