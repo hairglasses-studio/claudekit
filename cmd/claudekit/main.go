@@ -5,12 +5,14 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strings"
 	"time"
 
 	"github.com/hairglasses-studio/claudekit/envkit"
 	"github.com/hairglasses-studio/claudekit/fontkit"
 	"github.com/hairglasses-studio/claudekit/mcpserver"
+	"github.com/hairglasses-studio/claudekit/pluginkit"
 	"github.com/hairglasses-studio/claudekit/statusline"
 	"github.com/hairglasses-studio/claudekit/themekit"
 	"github.com/hairglasses-studio/mcpkit/registry"
@@ -43,6 +45,8 @@ func main() {
 		err = runMCP(ctx, cmd)
 	case "statusline":
 		err = runStatusline(ctx, cmd)
+	case "plugin":
+		err = runPlugin(cmd)
 	case "help", "--help", "-h":
 		usage()
 	default:
@@ -82,7 +86,10 @@ Usage:
   claudekit mcp serve             Start WebMCP HTTP server (default :8080)
 
   claudekit statusline install    Install the Claude Code statusline
-  claudekit statusline preview    Preview statusline with sample data`)
+  claudekit statusline preview    Preview statusline with sample data
+
+  claudekit plugin list          List installed plugins
+  claudekit plugin add <path>    Install a plugin from YAML file`)
 }
 
 // parseFlag returns the value of --key from os.Args, or fallback if not found.
@@ -184,8 +191,10 @@ func fontsConfigure() error {
 		terminal = fontkit.TerminalITerm2
 	case "ghostty":
 		terminal = fontkit.TerminalGhostty
+	case "wezterm":
+		terminal = fontkit.TerminalWezTerm
 	default:
-		return fmt.Errorf("unsupported terminal: %s (supported: auto, iterm2, ghostty)", termFlag)
+		return fmt.Errorf("unsupported terminal: %s (supported: auto, iterm2, ghostty, wezterm)", termFlag)
 	}
 
 	var path string
@@ -195,8 +204,10 @@ func fontsConfigure() error {
 		path, err = fontkit.ConfigureITerm2(fontkit.ITerm2Opts{})
 	case fontkit.TerminalGhostty:
 		path, err = fontkit.ConfigureGhostty(fontkit.GhosttyOpts{})
+	case fontkit.TerminalWezTerm:
+		path, err = fontkit.ConfigureWezTerm(fontkit.WezTermOpts{})
 	default:
-		return fmt.Errorf("unsupported terminal: %s (supported: iTerm2, Ghostty)", terminal)
+		return fmt.Errorf("unsupported terminal: %s (supported: iTerm2, Ghostty, WezTerm)", terminal)
 	}
 	if err != nil {
 		return err
@@ -293,8 +304,10 @@ func themeApply() error {
 		terminal = fontkit.TerminalITerm2
 	case "ghostty":
 		terminal = fontkit.TerminalGhostty
+	case "wezterm":
+		terminal = fontkit.TerminalWezTerm
 	default:
-		return fmt.Errorf("unsupported terminal: %s (supported: auto, iterm2, ghostty)", termStr)
+		return fmt.Errorf("unsupported terminal: %s (supported: auto, iterm2, ghostty, wezterm)", termStr)
 	}
 
 	var path string
@@ -304,6 +317,8 @@ func themeApply() error {
 		path, err = themekit.ExportITerm2(p)
 	case fontkit.TerminalGhostty:
 		path, err = themekit.ExportGhostty(p)
+	case fontkit.TerminalWezTerm:
+		path, err = themekit.ExportWezTerm(p)
 	default:
 		return fmt.Errorf("unsupported terminal: %s", terminal)
 	}
@@ -314,6 +329,9 @@ func themeApply() error {
 	fmt.Printf("Applied %s theme: %s\n", p.Name, path)
 	if terminal == fontkit.TerminalGhostty {
 		fmt.Printf("\nAdd to your Ghostty config: theme = claudekit-%s\n", strings.ReplaceAll(strings.ToLower(p.Name), " ", "-"))
+	}
+	if terminal == fontkit.TerminalWezTerm {
+		fmt.Println("\nAdd to your wezterm.lua: config.colors = require(\"claudekit-colors\")")
 	}
 	return nil
 }
@@ -348,6 +366,8 @@ func themeSync() error {
 			path, err = themekit.ExportITerm2(p)
 		case fontkit.TerminalGhostty:
 			path, err = themekit.ExportGhostty(p)
+		case fontkit.TerminalWezTerm:
+			path, err = themekit.ExportWezTerm(p)
 		}
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "  ✗ Terminal: %v\n", err)
@@ -538,6 +558,16 @@ func newToolRegistry() *registry.ToolRegistry {
 	reg.RegisterModule(&mcpserver.ThemeModule{})
 	reg.RegisterModule(&mcpserver.StatuslineModule{})
 	reg.RegisterModule(&mcpserver.EnvModule{})
+
+	// Load plugins
+	if pluginDir, err := pluginkit.DefaultPluginDir(); err == nil {
+		if plugins, err := pluginkit.LoadPlugins(pluginDir); err == nil {
+			for _, cfg := range plugins {
+				reg.RegisterModule(pluginkit.NewPluginModule(cfg))
+			}
+		}
+	}
+
 	return reg
 }
 
@@ -583,4 +613,73 @@ func mcpServe() error {
 	fmt.Println("  GET /tools   — list registered MCP tools")
 	fmt.Println("  GET /health  — health check")
 	return http.ListenAndServe(addr, handler)
+}
+
+// --- plugin commands ---
+
+func runPlugin(cmd string) error {
+	switch cmd {
+	case "list":
+		return pluginList()
+	case "add":
+		if len(os.Args) < 4 {
+			return fmt.Errorf("usage: claudekit plugin add <path>")
+		}
+		return pluginAdd(os.Args[3])
+	default:
+		return fmt.Errorf("unknown plugin command: %s (try: list, add)", cmd)
+	}
+}
+
+func pluginList() error {
+	dir, err := pluginkit.DefaultPluginDir()
+	if err != nil {
+		return err
+	}
+
+	plugins, err := pluginkit.LoadPlugins(dir)
+	if err != nil {
+		return err
+	}
+
+	if len(plugins) == 0 {
+		fmt.Printf("No plugins installed. (plugin dir: %s)\n", dir)
+		return nil
+	}
+
+	fmt.Printf("Installed plugins (%s):\n\n", dir)
+	for _, p := range plugins {
+		fmt.Printf("  %-24s v%-8s %d tool(s)\n", p.Name, p.Version, len(p.Tools))
+	}
+	return nil
+}
+
+func pluginAdd(path string) error {
+	// Validate the plugin file first
+	cfg, err := pluginkit.LoadPlugin(path)
+	if err != nil {
+		return err
+	}
+
+	dir, err := pluginkit.DefaultPluginDir()
+	if err != nil {
+		return err
+	}
+
+	if err := os.MkdirAll(dir, 0o755); err != nil {
+		return fmt.Errorf("create plugin dir: %w", err)
+	}
+
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return err
+	}
+
+	dest := filepath.Join(dir, filepath.Base(path))
+	if err := os.WriteFile(dest, data, 0o644); err != nil {
+		return err
+	}
+
+	fmt.Printf("Installed plugin: %s v%s (%d tools) → %s\n", cfg.Name, cfg.Version, len(cfg.Tools), dest)
+	return nil
 }

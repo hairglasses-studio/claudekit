@@ -26,7 +26,7 @@
 - [x] MCP Registry publishing — discoverable via official registry
 
 ## Tier 5: Ecosystem
-- [ ] Plugin system for community-contributed terminal configs
+- [x] Plugin system for community-contributed terminal configs (YAML-driven, subprocess handler)
 - [ ] Claude Code skill marketplace integration
-- [ ] Multi-terminal sync (one config → iTerm2 + Ghostty + WezTerm)
-- [ ] CI/CD for dotfile validation
+- [x] Multi-terminal sync (one config → iTerm2 + Ghostty + WezTerm)
+- [x] CI/CD for dotfile validation (GitHub Actions)

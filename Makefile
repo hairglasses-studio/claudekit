@@ -1,4 +1,4 @@
-.PHONY: build test vet check clean
+.PHONY: build test vet check clean lint
 
 build:
 	go build ./...
@@ -10,6 +10,9 @@ vet:
 	go vet ./...
 
 check: vet test build
+
+lint:
+	golangci-lint run ./...
 
 clean:
 	rm -f claudekit claudekit-mcp

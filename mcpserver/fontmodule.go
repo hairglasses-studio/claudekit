@@ -46,7 +46,7 @@ type FontInstallOutput struct {
 // --- font_configure ---
 
 type FontConfigureInput struct {
-	Terminal string `json:"terminal,omitempty" jsonschema:"description=Terminal to configure (auto|iterm2|ghostty),enum=auto,enum=iterm2,enum=ghostty"`
+	Terminal string `json:"terminal,omitempty" jsonschema:"description=Terminal to configure (auto|iterm2|ghostty|wezterm),enum=auto,enum=iterm2,enum=ghostty,enum=wezterm"`
 	FontSize int    `json:"font_size,omitempty" jsonschema:"description=Font size in points (default 15)"`
 }
 
@@ -123,10 +123,12 @@ func (m *FontModule) Tools() []registry.ToolDefinition {
 					path, err = fontkit.ConfigureITerm2(fontkit.ITerm2Opts{FontSize: fontSize})
 				case fontkit.TerminalGhostty:
 					path, err = fontkit.ConfigureGhostty(fontkit.GhosttyOpts{FontSize: fontSize})
+				case fontkit.TerminalWezTerm:
+					path, err = fontkit.ConfigureWezTerm(fontkit.WezTermOpts{FontSize: fontSize})
 				default:
 					return FontConfigureOutput{
 						Terminal: terminal,
-						Message:  "unsupported terminal — only iTerm2 and Ghostty are supported",
+						Message:  "unsupported terminal — only iTerm2, Ghostty, and WezTerm are supported",
 					}, nil
 				}
 				if err != nil {
