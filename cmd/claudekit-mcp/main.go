@@ -11,6 +11,7 @@ import (
 func main() {
 	reg := registry.NewToolRegistry()
 	reg.RegisterModule(&mcpserver.FontModule{})
+	reg.RegisterModule(&mcpserver.ThemeModule{})
 	reg.RegisterModule(&mcpserver.StatuslineModule{})
 
 	s := registry.NewMCPServer("claudekit", "0.1.0")

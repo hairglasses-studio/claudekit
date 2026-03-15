@@ -26,6 +26,26 @@ func TestFontModuleInterface(t *testing.T) {
 	}
 }
 
+func TestThemeModuleInterface(t *testing.T) {
+	m := &ThemeModule{}
+	if m.Name() != "theme" {
+		t.Errorf("Name() = %q, want theme", m.Name())
+	}
+	tools := m.Tools()
+	if len(tools) != 2 {
+		t.Fatalf("Tools() = %d tools, want 2", len(tools))
+	}
+	names := map[string]bool{}
+	for _, td := range tools {
+		names[td.Tool.Name] = true
+	}
+	for _, want := range []string{"theme_apply", "theme_list"} {
+		if !names[want] {
+			t.Errorf("missing tool %q", want)
+		}
+	}
+}
+
 func TestStatuslineModuleInterface(t *testing.T) {
 	m := &StatuslineModule{}
 	if m.Name() != "statusline" {

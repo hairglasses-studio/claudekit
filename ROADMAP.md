@@ -11,8 +11,8 @@
 ## Tier 2: Terminal Theming
 - [x] Catppuccin theme support (one palette → multiple targets)
 - [ ] Starship prompt configuration
-- [ ] Terminal color scheme management
-- [ ] Syntax highlighting theme sync (bat, delta, etc.)
+- [x] Terminal color scheme management
+- [x] Syntax highlighting theme sync (bat, delta, etc.)
 
 ## Tier 3: Environment Bootstrap
 - [ ] Dotfile management (chezmoi-style templates)
