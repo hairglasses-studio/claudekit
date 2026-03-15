@@ -25,16 +25,25 @@ func TestExportITerm2(t *testing.T) {
 		t.Fatalf("invalid JSON: %v", err)
 	}
 
-	profiles := profile["Profiles"].([]any)
-	p := profiles[0].(map[string]any)
+	profiles, ok := profile["Profiles"].([]any)
+	if !ok || len(profiles) == 0 {
+		t.Fatal("Profiles missing or empty")
+	}
+	p, ok := profiles[0].(map[string]any)
+	if !ok {
+		t.Fatal("first profile is not a map")
+	}
 
-	if got := p["Name"].(string); got != "Claudekit Catppuccin Mocha" {
-		t.Errorf("Name = %q", got)
+	if got, ok := p["Name"].(string); !ok || got != "Claudekit Catppuccin Mocha" {
+		t.Errorf("Name = %v", p["Name"])
 	}
 
 	// Verify background color components
-	bg := p["Background Color"].(map[string]any)
-	if r := bg["Red Component"].(float64); r < 0.11 || r > 0.13 {
-		t.Errorf("Background Red = %f, expected ~0.118 (30/255)", r)
+	bg, ok := p["Background Color"].(map[string]any)
+	if !ok {
+		t.Fatal("Background Color missing or wrong type")
+	}
+	if r, ok := bg["Red Component"].(float64); !ok || r < 0.11 || r > 0.13 {
+		t.Errorf("Background Red = %v, expected ~0.118 (30/255)", bg["Red Component"])
 	}
 }

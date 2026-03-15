@@ -26,19 +26,25 @@ func TestConfigureITerm2(t *testing.T) {
 		t.Fatalf("invalid JSON: %v", err)
 	}
 
-	profiles := profile["Profiles"].([]any)
+	profiles, ok := profile["Profiles"].([]any)
+	if !ok {
+		t.Fatal("Profiles missing or wrong type")
+	}
 	if len(profiles) != 1 {
 		t.Fatalf("expected 1 profile, got %d", len(profiles))
 	}
 
-	p := profiles[0].(map[string]any)
-	if got := p["Normal Font"].(string); got != "MonaspiceNeNFM-Regular 14" {
-		t.Errorf("Normal Font = %q, want MonaspiceNeNFM-Regular 14", got)
+	p, ok := profiles[0].(map[string]any)
+	if !ok {
+		t.Fatal("first profile is not a map")
 	}
-	if got := p["Non Ascii Font"].(string); got != "MenloRegular 14" {
-		t.Errorf("Non Ascii Font = %q, want MenloRegular 14", got)
+	if got, ok := p["Normal Font"].(string); !ok || got != "MonaspiceNeNFM-Regular 14" {
+		t.Errorf("Normal Font = %v, want MonaspiceNeNFM-Regular 14", p["Normal Font"])
 	}
-	if got := p["Use Non-ASCII Font"].(bool); !got {
+	if got, ok := p["Non Ascii Font"].(string); !ok || got != "MenloRegular 14" {
+		t.Errorf("Non Ascii Font = %v, want MenloRegular 14", p["Non Ascii Font"])
+	}
+	if got, ok := p["Use Non-ASCII Font"].(bool); !ok || !got {
 		t.Error("Use Non-ASCII Font should be true")
 	}
 }
