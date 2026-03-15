@@ -52,7 +52,9 @@ func Install(opts InstallOpts) (*InstallResult, error) {
 			// Back up if there's an existing statusLine config
 			if _, ok := settings["statusLine"]; ok {
 				backupPath := settingsPath + ".claudekit-backup"
-				os.WriteFile(backupPath, data, 0o644)
+				if err := os.WriteFile(backupPath, data, 0o644); err != nil {
+					return nil, fmt.Errorf("backup settings: %w", err)
+				}
 				result.BackedUp = backupPath
 			}
 		}

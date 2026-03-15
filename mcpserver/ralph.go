@@ -30,6 +30,7 @@ type RalphModule = ralphModule
 type ralphModule struct {
 	mu       sync.Mutex
 	loop     *ralph.Loop
+	cancel   context.CancelFunc
 	registry *registry.ToolRegistry
 	sampler  sampling.SamplingClient
 	rcfg     RalphConfig
@@ -147,8 +148,10 @@ func (m *ralphModule) Tools() []registry.ToolDefinition {
 					return ralphStartOutput{}, fmt.Errorf("failed to create loop: %w", err)
 				}
 				m.loop = loop
+				ctx, cancel := context.WithCancel(context.Background())
+				m.cancel = cancel
 
-				go loop.Run(context.Background())
+				go loop.Run(ctx)
 
 				return ralphStartOutput{
 					Status:   ralph.StatusRunning,
@@ -173,6 +176,9 @@ func (m *ralphModule) Tools() []registry.ToolDefinition {
 				}
 
 				m.loop.Stop()
+				if m.cancel != nil {
+					m.cancel()
+				}
 				status := m.loop.Status()
 				return ralphStopOutput{
 					Status:  status.Status,
