@@ -88,16 +88,8 @@ func (m *FontModule) Tools() []registry.ToolDefinition {
 			"font_install",
 			"Install Monaspace or Monaspice fonts via Homebrew. Defaults to Monaspice Nerd Font for full icon support. Supports dry-run mode.",
 			func(ctx context.Context, input FontInstallInput) (FontInstallOutput, error) {
-				// Default to nerd font
-				nerdFont := true
-				if !input.NerdFont && input.DryRun {
-					// Only respect NerdFont=false if explicitly set
-					// (zero value ambiguity — default to true)
-					nerdFont = true
-				}
-
 				result, err := fontkit.Install(ctx, fontkit.InstallOpts{
-					NerdFont: nerdFont,
+					NerdFont: true, // Always install Nerd Font variant
 					DryRun:   input.DryRun,
 				})
 				if err != nil {
