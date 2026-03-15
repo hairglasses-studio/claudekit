@@ -1,6 +1,6 @@
 # Binaries
-claudekit
-claudekit-mcp
+/claudekit
+/claudekit-mcp
 *.exe
 *.dll
 *.so
