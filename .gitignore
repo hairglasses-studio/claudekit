@@ -20,6 +20,10 @@ coverage.html
 # Claude Code worktrees
 .claude/worktrees/
 
+# Runtime logs
+claudekit.log
+*.progress.json
+
 # OS
 .DS_Store
 Thumbs.db

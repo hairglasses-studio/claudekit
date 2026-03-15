@@ -60,10 +60,12 @@ func main() {
 
 	// Load plugins.
 	if pluginDir, err := pluginkit.DefaultPluginDir(); err == nil {
-		if plugins, err := pluginkit.LoadPlugins(pluginDir); err == nil {
-			for _, cfg := range plugins {
-				reg.RegisterModule(pluginkit.NewPluginModule(cfg))
-			}
+		plugins, err := pluginkit.LoadPlugins(pluginDir)
+		if err != nil {
+			log.Printf("warning: failed to load plugins from %s: %v", pluginDir, err)
+		}
+		for _, cfg := range plugins {
+			reg.RegisterModule(pluginkit.NewPluginModule(cfg))
 		}
 	}
 
