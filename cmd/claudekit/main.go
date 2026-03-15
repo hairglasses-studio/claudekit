@@ -200,8 +200,10 @@ func runStatusline(ctx context.Context, cmd string) error {
 		return statuslineInstall()
 	case "preview":
 		return statuslinePreview()
+	case "render":
+		return statuslineRender()
 	default:
-		return fmt.Errorf("unknown statusline command: %s (try: install, preview)", cmd)
+		return fmt.Errorf("unknown statusline command: %s (try: install, preview, render)", cmd)
 	}
 }
 
@@ -216,6 +218,12 @@ func statuslineInstall() error {
 		fmt.Printf("Previous config backed up to: %s\n", result.BackedUp)
 	}
 	fmt.Println("\nRestart Claude Code to see the statusline.")
+	return nil
+}
+
+func statuslineRender() error {
+	output := statusline.Render(os.Stdin)
+	fmt.Print(output)
 	return nil
 }
 

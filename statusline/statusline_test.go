@@ -89,6 +89,27 @@ func TestInstall(t *testing.T) {
 	}
 }
 
+func TestRenderEmptyInput(t *testing.T) {
+	output := Render(strings.NewReader(""))
+	if !strings.Contains(output, "error") {
+		t.Error("empty input should produce error message")
+	}
+}
+
+func TestRenderZeroValues(t *testing.T) {
+	input := `{"model":"","working_directory":"","cost_usd":0,"total_tokens":0,"max_tokens":0,"duration_ms":0}`
+	output := Render(strings.NewReader(input))
+	if strings.Contains(output, "error") {
+		t.Errorf("zero values should not error, got: %s", output)
+	}
+	if !strings.Contains(output, "0.00") {
+		t.Error("should show zero cost")
+	}
+	if !strings.Contains(output, "0s") {
+		t.Error("should show zero duration")
+	}
+}
+
 func TestFormatDuration(t *testing.T) {
 	tests := []struct {
 		ms   int
