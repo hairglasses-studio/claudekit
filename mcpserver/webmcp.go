@@ -37,7 +37,9 @@ func WebMCPHandler(reg *registry.ToolRegistry) http.Handler {
 			})
 		}
 		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(tools)
+		if err := json.NewEncoder(w).Encode(tools); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
 	})
 
 	mux.HandleFunc("GET /skills", func(w http.ResponseWriter, r *http.Request) {
@@ -58,12 +60,16 @@ func WebMCPHandler(reg *registry.ToolRegistry) http.Handler {
 			})
 		}
 		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(entries)
+		if err := json.NewEncoder(w).Encode(entries); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
 	})
 
 	mux.HandleFunc("GET /health", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(map[string]string{"status": "ok"})
+		if err := json.NewEncoder(w).Encode(map[string]string{"status": "ok"}); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
 	})
 
 	return mux

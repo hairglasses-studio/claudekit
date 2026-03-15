@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/hairglasses-studio/mcpkit/gateway"
 	"github.com/hairglasses-studio/mcpkit/registry"
@@ -22,10 +23,12 @@ func SetupGateway(reg *registry.ToolRegistry, upstreams []string) (*gateway.Gate
 			return nil, nil, fmt.Errorf("invalid upstream %q: %w", spec, err)
 		}
 
-		_, err = gw.AddUpstream(context.Background(), gateway.UpstreamConfig{
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		_, err = gw.AddUpstream(ctx, gateway.UpstreamConfig{
 			Name: name,
 			URL:  url,
 		})
+		cancel()
 		if err != nil {
 			gw.Close()
 			return nil, nil, fmt.Errorf("adding upstream %q: %w", name, err)
