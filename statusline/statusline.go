@@ -8,6 +8,8 @@ import (
 	"math"
 	"os"
 	"strings"
+
+	"github.com/hairglasses-studio/claudekit/themekit"
 )
 
 // Style controls statusline verbosity.
@@ -98,14 +100,63 @@ func Render(r io.Reader) string {
 	// Duration
 	dur := formatDuration(data.Duration)
 
+	// Apply Catppuccin theme colors if configured
+	theme := detectTheme()
+	reset := "\033[0m"
+
+	modelColor := ""
+	cwdColor := ""
+	costColor := ""
+	timeColor := ""
+	sepColor := ""
+
+	if theme != nil {
+		modelColor = theme.Get("mauve").ANSI()
+		cwdColor = theme.Get("blue").ANSI()
+		costColor = theme.Get("green").ANSI()
+		timeColor = theme.Get("subtext0").ANSI()
+		sepColor = theme.Get("overlay0").ANSI()
+	} else {
+		reset = ""
+	}
+
+	sep := sepColor + ic.Sep + reset
+
 	// Line 1: Model | CWD | Context | Cost
-	line1 := fmt.Sprintf("%s %s%s%s %s%s%s%s%s %s",
-		ic.Model, model, ic.Sep, ic.Folder, cwd, ic.Sep, progress, ic.Sep, ic.Cost, cost)
+	line1 := fmt.Sprintf("%s%s %s%s%s%s%s %s%s%s%s%s%s %s%s",
+		modelColor, ic.Model, model, reset,
+		sep,
+		cwdColor, ic.Folder, cwd, reset,
+		sep, progress,
+		sep, costColor, ic.Cost, cost+reset)
 
 	// Line 2: Duration
-	line2 := fmt.Sprintf("%s %s", ic.Time, dur)
+	line2 := fmt.Sprintf("%s%s %s%s", timeColor, ic.Time, dur, reset)
 
 	return line1 + "\n" + line2 + "\n"
+}
+
+// detectTheme returns a Catppuccin palette if CLAUDEKIT_THEME is set, or nil.
+func detectTheme() *themekit.Palette {
+	t := os.Getenv("CLAUDEKIT_THEME")
+	if t == "" {
+		return nil
+	}
+	var flavor themekit.Flavor
+	switch t {
+	case "latte":
+		flavor = themekit.Latte
+	case "frappe":
+		flavor = themekit.Frappe
+	case "macchiato":
+		flavor = themekit.Macchiato
+	case "mocha":
+		flavor = themekit.Mocha
+	default:
+		flavor = themekit.Mocha
+	}
+	p := themekit.Catppuccin(flavor)
+	return &p
 }
 
 func shortModel(model string) string {

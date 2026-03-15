@@ -9,6 +9,7 @@ import (
 
 	"github.com/hairglasses-studio/claudekit/fontkit"
 	"github.com/hairglasses-studio/claudekit/statusline"
+	"github.com/hairglasses-studio/claudekit/themekit"
 )
 
 func main() {
@@ -30,6 +31,8 @@ func main() {
 	switch group {
 	case "fonts":
 		err = runFonts(ctx, cmd)
+	case "theme":
+		err = runTheme(cmd)
 	case "statusline":
 		err = runStatusline(ctx, cmd)
 	case "help", "--help", "-h":
@@ -56,6 +59,10 @@ Usage:
   claudekit fonts configure --terminal ghostty
   claudekit fonts preview         Show ligatures, Nerd Font glyphs, fallback tiers
   claudekit fonts setup           All-in-one: detect → install → configure
+
+  claudekit theme apply           Apply Catppuccin theme to terminal
+  claudekit theme apply --flavor mocha --terminal ghostty
+  claudekit theme preview         Preview all Catppuccin flavors
 
   claudekit statusline install    Install the Claude Code statusline
   claudekit statusline preview    Preview statusline with sample data`)
@@ -225,6 +232,87 @@ func fontsSetup(ctx context.Context) error {
 	}
 
 	fmt.Println("\n=== Setup Complete ===")
+	return nil
+}
+
+func runTheme(cmd string) error {
+	switch cmd {
+	case "apply":
+		return themeApply()
+	case "preview":
+		return themePreview()
+	default:
+		return fmt.Errorf("unknown theme command: %s (try: apply, preview)", cmd)
+	}
+}
+
+func themeApply() error {
+	flavorStr := parseFlag("flavor", "mocha")
+	termStr := parseFlag("terminal", "auto")
+
+	var flavor themekit.Flavor
+	switch flavorStr {
+	case "latte":
+		flavor = themekit.Latte
+	case "frappe":
+		flavor = themekit.Frappe
+	case "macchiato":
+		flavor = themekit.Macchiato
+	case "mocha":
+		flavor = themekit.Mocha
+	default:
+		return fmt.Errorf("unknown flavor: %s (try: mocha, macchiato, frappe, latte)", flavorStr)
+	}
+
+	p := themekit.Catppuccin(flavor)
+
+	var terminal fontkit.Terminal
+	switch termStr {
+	case "auto":
+		terminal = fontkit.DetectTerminal().Terminal
+	case "iterm2":
+		terminal = fontkit.TerminalITerm2
+	case "ghostty":
+		terminal = fontkit.TerminalGhostty
+	default:
+		return fmt.Errorf("unsupported terminal: %s (supported: auto, iterm2, ghostty)", termStr)
+	}
+
+	var path string
+	var err error
+	switch terminal {
+	case fontkit.TerminalITerm2:
+		path, err = themekit.ExportITerm2(p)
+	case fontkit.TerminalGhostty:
+		path, err = themekit.ExportGhostty(p)
+	default:
+		return fmt.Errorf("unsupported terminal: %s", terminal)
+	}
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("Applied %s theme: %s\n", p.Name, path)
+	if terminal == fontkit.TerminalGhostty {
+		fmt.Printf("\nAdd to your Ghostty config: theme = claudekit-%s\n", strings.ReplaceAll(strings.ToLower(p.Name), " ", "-"))
+	}
+	return nil
+}
+
+func themePreview() error {
+	reset := "\033[0m"
+	for _, flavor := range themekit.AllFlavors() {
+		p := themekit.Catppuccin(flavor)
+		fmt.Printf("=== %s ===\n", p.Name)
+
+		// Show key colors
+		names := []string{"base", "text", "red", "green", "yellow", "blue", "pink", "teal", "mauve", "peach"}
+		for _, name := range names {
+			col := p.Get(name)
+			fmt.Printf("  %s██%s %s (#%s)\n", col.ANSI(), reset, col.Name, col.Hex)
+		}
+		fmt.Println()
+	}
 	return nil
 }
 
