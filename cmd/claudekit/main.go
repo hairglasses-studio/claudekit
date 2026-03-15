@@ -354,6 +354,13 @@ func themeSync() error {
 		fmt.Printf("  ✓ delta: %s\n", path)
 	}
 
+	// starship
+	if path, err := themekit.ExportStarship(p); err != nil {
+		fmt.Fprintf(os.Stderr, "  ✗ starship: %v\n", err)
+	} else {
+		fmt.Printf("  ✓ starship: %s\n", path)
+	}
+
 	fmt.Printf("\nTheme sync complete. Set CLAUDEKIT_THEME=%s for statusline colors.\n", flavorStr)
 	return nil
 }
