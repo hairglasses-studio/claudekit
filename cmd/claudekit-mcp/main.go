@@ -18,6 +18,10 @@ func main() {
 	reg.RegisterModule(&mcpserver.StatuslineModule{})
 	reg.RegisterModule(&mcpserver.EnvModule{})
 
+	// Register skill marketplace module.
+	wd, _ := os.Getwd()
+	reg.RegisterModule(&mcpserver.SkillModule{ProjectDir: wd})
+
 	// Register ralph autonomous loop module.
 	mcpserver.SetupRalph(reg, nil)
 

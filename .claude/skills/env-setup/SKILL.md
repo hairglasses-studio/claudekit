@@ -24,6 +24,8 @@ Activates when the user mentions environment, mise, tool versions, dotfiles, she
 Files tracked by claudekit's dotfile system:
 - `~/.config/starship.toml` — Starship prompt
 - `~/.config/ghostty/config` — Ghostty terminal
+- `~/.config/wezterm/claudekit.lua` — WezTerm font config
+- `~/.config/wezterm/claudekit-colors.lua` — WezTerm color theme
 - `~/.config/bat/config` — bat syntax highlighter
 - `~/.config/delta/catppuccin.gitconfig` — delta git pager
 - `~/Library/Application Support/iTerm2/DynamicProfiles/claudekit-*.json` — iTerm2 profiles

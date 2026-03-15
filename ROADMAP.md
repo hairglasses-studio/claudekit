@@ -27,6 +27,6 @@
 
 ## Tier 5: Ecosystem
 - [x] Plugin system for community-contributed terminal configs (YAML-driven, subprocess handler)
-- [ ] Claude Code skill marketplace integration
+- [x] Claude Code skill marketplace integration (skillkit package, CLI + MCP + WebMCP)
 - [x] Multi-terminal sync (one config → iTerm2 + Ghostty + WezTerm)
 - [x] CI/CD for dotfile validation (GitHub Actions)
