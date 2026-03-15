@@ -18,7 +18,7 @@ func (m *ThemeModule) Description() string { return "Terminal color theme manage
 
 type ThemeApplyInput struct {
 	Flavor   string `json:"flavor,omitempty" jsonschema:"description=Catppuccin flavor (mocha|macchiato|frappe|latte),enum=mocha,enum=macchiato,enum=frappe,enum=latte"`
-	Terminal string `json:"terminal,omitempty" jsonschema:"description=Terminal to configure (auto|iterm2|ghostty),enum=auto,enum=iterm2,enum=ghostty"`
+	Terminal string `json:"terminal,omitempty" jsonschema:"description=Terminal to configure (auto|iterm2|ghostty|wezterm),enum=auto,enum=iterm2,enum=ghostty,enum=wezterm"`
 }
 
 type ThemeApplyOutput struct {
@@ -80,11 +80,13 @@ func (m *ThemeModule) Tools() []registry.ToolDefinition {
 					path, err = themekit.ExportITerm2(p)
 				case fontkit.TerminalGhostty:
 					path, err = themekit.ExportGhostty(p)
+				case fontkit.TerminalWezTerm:
+					path, err = themekit.ExportWezTerm(p)
 				default:
 					return ThemeApplyOutput{
 						Terminal: terminal,
 						Flavor:   flavorStr,
-						Message:  "unsupported terminal — only iTerm2 and Ghostty are supported",
+						Message:  "unsupported terminal — only iTerm2, Ghostty, and WezTerm are supported",
 					}, nil
 				}
 				if err != nil {

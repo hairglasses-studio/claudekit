@@ -15,16 +15,17 @@ make test    # run tests
 | Package | Purpose | Dependencies |
 |---------|---------|-------------|
 | `fontkit` | Font detection, installation, terminal config | None (pure Go) |
-| `themekit` | Catppuccin palettes + theme export (iTerm2, Ghostty, bat, delta, Starship) | None (pure Go) |
+| `themekit` | Catppuccin palettes + theme export (iTerm2, Ghostty, WezTerm, bat, delta, Starship) | None (pure Go) |
 | `envkit` | Mise integration, shell detection, dotfile snapshot/restore | None (pure Go) |
 | `statusline` | Claude Code statusline script + installer | `themekit` |
+| `pluginkit` | YAML plugin loading, subprocess handler, ToolModule bridge | `mcpkit/registry`, `yaml.v3` |
 | `mcpserver` | MCP tool modules (font, theme, env, statusline, ralph, gateway, discovery, webmcp) | `fontkit`, `themekit`, `envkit`, `statusline`, mcpkit |
 | `cmd/claudekit` | CLI entrypoint | all packages |
-| `cmd/claudekit-mcp` | MCP server entrypoint | `mcpserver` |
+| `cmd/claudekit-mcp` | MCP server entrypoint | `mcpserver`, `pluginkit` |
 
 ## MCP Tools
 
-8 tools across 4 modules + ralph (3 more):
+8 tools across 4 modules + ralph (3 more) + dynamic plugin tools:
 - **fonts**: `font_status`, `font_install`, `font_configure`
 - **theme**: `theme_apply`, `theme_list`
 - **statusline**: `statusline_install`

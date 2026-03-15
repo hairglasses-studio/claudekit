@@ -73,7 +73,7 @@ Or with gateway for aggregating external MCP servers:
 | `claudekit fonts preview` | Show ligatures, Nerd Font glyphs, fallback tiers |
 | `claudekit fonts setup` | All-in-one: detect, install, configure |
 
-Supported terminals: **iTerm2** (Dynamic Profiles), **Ghostty** (config file).
+Supported terminals: **iTerm2** (Dynamic Profiles), **Ghostty** (config file), **WezTerm** (Lua module).
 
 Font families:
 - [Monaspace](https://github.com/githubnext/monaspace) — 5 subfamilies (Argon, Neon, Xenon, Radon, Krypton)
@@ -90,7 +90,7 @@ Font families:
 
 Catppuccin flavors: **Mocha** (dark), **Macchiato** (dark), **Frappe** (dark), **Latte** (light).
 
-Sync targets: terminal (iTerm2/Ghostty), [bat](https://github.com/sharkdp/bat), [delta](https://github.com/dandavison/delta), [Starship](https://starship.rs/).
+Sync targets: terminal (iTerm2/Ghostty/WezTerm), [bat](https://github.com/sharkdp/bat), [delta](https://github.com/dandavison/delta), [Starship](https://starship.rs/).
 
 ### Statusline
 
@@ -116,6 +116,35 @@ Font fallback tiers:
 | `claudekit env status` | Show mise, shell, and managed config info |
 | `claudekit env snapshot` | Capture current config files |
 | `claudekit env mise` | Install and configure [mise](https://mise.jdx.dev/) |
+
+### Plugins
+
+| Command | Description |
+|---------|-------------|
+| `claudekit plugin list` | List installed plugins |
+| `claudekit plugin add <path>` | Install a plugin from YAML file |
+
+Plugins are YAML files in `~/.claudekit/plugins/`. Each plugin defines tools that are invoked via subprocess:
+
+```yaml
+name: my-plugin
+description: Example plugin
+version: "1.0.0"
+handler:
+  type: subprocess
+  command: my-handler
+  timeout: "30s"
+tools:
+  - name: my_tool
+    description: Does something useful
+    input_schema:
+      type: object
+      properties:
+        name:
+          type: string
+```
+
+The plugin subprocess receives `{"method":"<tool>","params":<input>}` on stdin and returns `{"result":...}` on stdout.
 
 ### MCP Management
 
@@ -147,9 +176,10 @@ Font fallback tiers:
 ```
 claudekit/
 ├── fontkit/        Font detection, installation, terminal config (pure Go)
-├── themekit/       Catppuccin palettes, iTerm2/Ghostty/bat/delta/Starship export
+├── themekit/       Catppuccin palettes, iTerm2/Ghostty/WezTerm/bat/delta/Starship export
 ├── statusline/     Claude Code statusline with 3-tier font fallback
 ├── envkit/         Mise integration, shell detection, dotfile management
+├── pluginkit/      YAML plugin loading, subprocess handler, ToolModule bridge
 ├── mcpserver/      MCP tool modules + gateway + ralph + discovery + WebMCP
 ├── cmd/claudekit/  CLI entrypoint
 └── cmd/claudekit-mcp/  MCP stdio server entrypoint

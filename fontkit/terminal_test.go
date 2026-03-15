@@ -9,6 +9,7 @@ func TestTerminalSupportsConfig(t *testing.T) {
 	}{
 		{TerminalITerm2, true},
 		{TerminalGhostty, true},
+		{TerminalWezTerm, true},
 		{TerminalApple, false},
 		{TerminalUnknown, false},
 	}
