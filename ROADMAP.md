@@ -5,7 +5,7 @@
 - [x] iTerm2 Dynamic Profile with font fallback
 - [x] Ghostty config with font fallback
 - [x] CLI + MCP server + Claude Code skill
-- [ ] Font preview command (ligatures, Nerd Font icons)
+- [x] Font preview command (ligatures, Nerd Font icons)
 - [x] Claude Code statusline with Monaspace multi-font fallback
 
 ## Tier 2: Terminal Theming
