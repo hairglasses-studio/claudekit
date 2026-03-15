@@ -10,6 +10,7 @@ Activates when the user mentions themes, colors, Catppuccin, dark mode, or termi
 4. Explain what was configured:
    - iTerm2: Dynamic Profile with ANSI color mapping
    - Ghostty: theme file in `~/.config/ghostty/themes/`
+   - WezTerm: Lua color table in `~/.config/wezterm/claudekit-colors.lua`
 5. Suggest `claudekit theme sync` for bat + delta + Starship too
 6. Suggest `CLAUDEKIT_THEME=<flavor>` env var for statusline colors
 
@@ -28,6 +29,7 @@ Activates when the user mentions themes, colors, Catppuccin, dark mode, or termi
 |--------|------------|------|
 | iTerm2 | `~/Library/Application Support/iTerm2/DynamicProfiles/` | [iTerm2](https://iterm2.com/) |
 | Ghostty | `~/.config/ghostty/themes/` | [Ghostty](https://ghostty.org/) |
+| WezTerm | `~/.config/wezterm/claudekit-colors.lua` | [WezTerm](https://wezfurlong.org/wezterm/) |
 | bat | `~/.config/bat/config` | [bat](https://github.com/sharkdp/bat) |
 | delta | `~/.config/delta/catppuccin.gitconfig` | [delta](https://github.com/dandavison/delta) |
 | Starship | `~/.config/starship.toml` | [Starship](https://starship.rs/) |

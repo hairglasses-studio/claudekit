@@ -13,6 +13,7 @@ import (
 	"github.com/hairglasses-studio/claudekit/fontkit"
 	"github.com/hairglasses-studio/claudekit/mcpserver"
 	"github.com/hairglasses-studio/claudekit/pluginkit"
+	"github.com/hairglasses-studio/claudekit/skillkit"
 	"github.com/hairglasses-studio/claudekit/statusline"
 	"github.com/hairglasses-studio/claudekit/themekit"
 	"github.com/hairglasses-studio/mcpkit/registry"
@@ -47,6 +48,8 @@ func main() {
 		err = runStatusline(ctx, cmd)
 	case "plugin":
 		err = runPlugin(cmd)
+	case "skill":
+		err = runSkill(cmd)
 	case "help", "--help", "-h":
 		usage()
 	default:
@@ -89,7 +92,11 @@ Usage:
   claudekit statusline preview    Preview statusline with sample data
 
   claudekit plugin list          List installed plugins
-  claudekit plugin add <path>    Install a plugin from YAML file`)
+  claudekit plugin add <path>    Install a plugin from YAML file
+
+  claudekit skill list           List installed and available skills
+  claudekit skill install <name> Install a skill from the marketplace
+  claudekit skill remove <name>  Remove an installed skill`)
 }
 
 // parseFlag returns the value of --key from os.Args, or fallback if not found.
@@ -558,6 +565,7 @@ func newToolRegistry() *registry.ToolRegistry {
 	reg.RegisterModule(&mcpserver.ThemeModule{})
 	reg.RegisterModule(&mcpserver.StatuslineModule{})
 	reg.RegisterModule(&mcpserver.EnvModule{})
+	reg.RegisterModule(&mcpserver.SkillModule{ProjectDir: projectDir()})
 
 	// Load plugins
 	if pluginDir, err := pluginkit.DefaultPluginDir(); err == nil {
@@ -611,6 +619,7 @@ func mcpServe() error {
 	fmt.Printf("Starting WebMCP server on %s\n", addr)
 	fmt.Println("Endpoints:")
 	fmt.Println("  GET /tools   — list registered MCP tools")
+	fmt.Println("  GET /skills  — list available skills")
 	fmt.Println("  GET /health  — health check")
 	return http.ListenAndServe(addr, handler)
 }
@@ -681,5 +690,95 @@ func pluginAdd(path string) error {
 	}
 
 	fmt.Printf("Installed plugin: %s v%s (%d tools) → %s\n", cfg.Name, cfg.Version, len(cfg.Tools), dest)
+	return nil
+}
+
+// --- skill commands ---
+
+func projectDir() string {
+	dir, err := os.Getwd()
+	if err != nil {
+		return "."
+	}
+	return dir
+}
+
+func runSkill(cmd string) error {
+	switch cmd {
+	case "list":
+		return skillList()
+	case "install":
+		if len(os.Args) < 4 {
+			return fmt.Errorf("usage: claudekit skill install <name>")
+		}
+		return skillInstall(os.Args[3])
+	case "remove":
+		if len(os.Args) < 4 {
+			return fmt.Errorf("usage: claudekit skill remove <name>")
+		}
+		return skillRemove(os.Args[3])
+	default:
+		return fmt.Errorf("unknown skill command: %s (try: list, install, remove)", cmd)
+	}
+}
+
+func skillList() error {
+	dir := projectDir()
+
+	installed, err := skillkit.ListInstalled(dir)
+	if err != nil {
+		return err
+	}
+
+	if len(installed) > 0 {
+		fmt.Println("Installed skills:")
+		for _, s := range installed {
+			fmt.Printf("  %-24s %s\n", s.Name, s.Description)
+		}
+		fmt.Println()
+	}
+
+	available, err := skillkit.AvailableSkills(dir)
+	if err != nil {
+		return err
+	}
+
+	if len(available) > 0 {
+		fmt.Println("Available from marketplace:")
+		for _, e := range available {
+			fmt.Printf("  %-24s %s\n", e.Name, e.Description)
+		}
+		fmt.Println()
+		fmt.Println("Install with: claudekit skill install <name>")
+	}
+
+	if len(installed) == 0 && len(available) == 0 {
+		fmt.Println("No skills found.")
+	}
+	return nil
+}
+
+func skillInstall(name string) error {
+	entry := skillkit.FindInIndex(name)
+	if entry == nil {
+		return fmt.Errorf("skill %q not found in marketplace (try: claudekit skill list)", name)
+	}
+
+	dir := projectDir()
+	path, err := skillkit.Install(dir, entry.Name, entry.Content)
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("Installed skill: %s → %s\n", entry.Title, path)
+	return nil
+}
+
+func skillRemove(name string) error {
+	dir := projectDir()
+	if err := skillkit.Remove(dir, name); err != nil {
+		return err
+	}
+	fmt.Printf("Removed skill: %s\n", name)
 	return nil
 }
