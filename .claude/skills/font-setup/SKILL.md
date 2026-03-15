@@ -5,24 +5,27 @@ Activates when the user mentions fonts, terminal appearance, Monaspace, Monaspic
 ## Workflow
 
 1. Call `font_status` to detect the current terminal and installed fonts
-2. Present findings to the user:
-   - Which terminal they're running
-   - Which fonts (if any) are already installed
-   - The recommended font (MonaspiceNe Nerd Font)
-3. If fonts need to be installed:
-   - Explain what will be installed (Monaspice Nerd Font via Homebrew)
-   - Ask for confirmation before proceeding
+2. Present findings:
+   - Terminal: iTerm2 / Ghostty / Apple Terminal / other
+   - Installed font families (if any)
+   - Best available font from the fallback chain
+3. If fonts need installing:
+   - Explain: Monaspice Nerd Font = Monaspace + icon glyphs, installed via Homebrew
+   - Ask for confirmation
    - Call `font_install` with `nerd_font: true`
-4. If the terminal supports configuration:
-   - Call `font_configure` to write the appropriate config
-   - For iTerm2: explain they need to switch to the "Claudekit Monaspace" profile
-   - For Ghostty: the config takes effect on restart
-5. Suggest installing the statusline with `statusline_install` to showcase the fonts
+4. If terminal supports configuration (iTerm2 or Ghostty):
+   - Call `font_configure` to write config with fallback
+   - iTerm2: creates Dynamic Profile "Claudekit Monaspace" — user switches manually
+   - Ghostty: writes font-family directives, takes effect on restart
+5. Suggest `statusline_install` and `theme_apply` for the full experience
 
-## Key Details
+## Font Families
 
-- **Monaspace** = upstream GitHub font family (5 subfamilies: Argon, Neon, Xenon, Radon, Krypton)
-- **Monaspice** = Nerd Font patched variant with icon glyphs (5 variants: Ar, Ne, Xe, Rn, Kr)
-- Default recommendation: **MonaspiceNe Nerd Font** (Neon subfamily + icons)
-- Fallback chain: MonaspiceNe → MonaspaceNeon → Menlo (system)
-- Both are installed via Homebrew casks
+| Family | Source | Nerd Glyphs | Brew Cask |
+|--------|--------|-------------|-----------|
+| [Monaspace](https://github.com/githubnext/monaspace) | GitHub | No | `font-monaspace` |
+| [Monaspice](https://github.com/aaronliu0130/monaspice) | Community | Yes | `font-monaspice-nerd-font` |
+
+Subfamilies: Argon, Neon, Xenon, Radon, Krypton (Monaspace) / Ar, Ne, Xe, Rn, Kr (Monaspice)
+
+Default: **MonaspiceNe Nerd Font** (Neon + icons). Fallback: MonaspiceNe → MonaspaceNeon → Menlo.
