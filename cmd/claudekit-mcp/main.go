@@ -15,6 +15,7 @@ func main() {
 	reg.RegisterModule(&mcpserver.FontModule{})
 	reg.RegisterModule(&mcpserver.ThemeModule{})
 	reg.RegisterModule(&mcpserver.StatuslineModule{})
+	reg.RegisterModule(&mcpserver.EnvModule{})
 
 	// Register ralph autonomous loop module.
 	mcpserver.SetupRalph(reg, nil)

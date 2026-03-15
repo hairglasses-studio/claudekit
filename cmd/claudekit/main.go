@@ -3,13 +3,17 @@ package main
 import (
 	"context"
 	"fmt"
+	"net/http"
 	"os"
 	"strings"
 	"time"
 
+	"github.com/hairglasses-studio/claudekit/envkit"
 	"github.com/hairglasses-studio/claudekit/fontkit"
+	"github.com/hairglasses-studio/claudekit/mcpserver"
 	"github.com/hairglasses-studio/claudekit/statusline"
 	"github.com/hairglasses-studio/claudekit/themekit"
+	"github.com/hairglasses-studio/mcpkit/registry"
 )
 
 func main() {
@@ -33,6 +37,10 @@ func main() {
 		err = runFonts(ctx, cmd)
 	case "theme":
 		err = runTheme(cmd)
+	case "env":
+		err = runEnv(ctx, cmd)
+	case "mcp":
+		err = runMCP(ctx, cmd)
 	case "statusline":
 		err = runStatusline(ctx, cmd)
 	case "help", "--help", "-h":
@@ -64,6 +72,14 @@ Usage:
   claudekit theme apply --flavor mocha --terminal ghostty
   claudekit theme sync            Apply theme to terminal + bat + delta
   claudekit theme preview         Preview all Catppuccin flavors
+
+  claudekit env status            Show mise + shell + dotfile info
+  claudekit env snapshot          Capture current config files
+  claudekit env mise              Install/configure mise
+
+  claudekit mcp tools             List registered MCP tools
+  claudekit mcp publish           Publish to MCP Registry
+  claudekit mcp serve             Start WebMCP HTTP server (default :8080)
 
   claudekit statusline install    Install the Claude Code statusline
   claudekit statusline preview    Preview statusline with sample data`)
@@ -428,4 +444,143 @@ func statuslinePreview() error {
 	output := statusline.Render(strings.NewReader(sampleJSON))
 	fmt.Print(output)
 	return nil
+}
+
+// --- env commands ---
+
+func runEnv(ctx context.Context, cmd string) error {
+	switch cmd {
+	case "status":
+		return envStatus(ctx)
+	case "snapshot":
+		return envSnapshot()
+	case "mise":
+		return envMise(ctx)
+	default:
+		return fmt.Errorf("unknown env command: %s (try: status, snapshot, mise)", cmd)
+	}
+}
+
+func envStatus(ctx context.Context) error {
+	mise, err := envkit.MiseStatus(ctx)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("=== Mise ===")
+	if mise.Installed {
+		fmt.Printf("Installed: yes (%s)\n", mise.Version)
+		if len(mise.Tools) > 0 {
+			fmt.Println("Active tools:")
+			for name, version := range mise.Tools {
+				fmt.Printf("  %s: %s\n", name, version)
+			}
+		}
+	} else {
+		fmt.Println("Installed: no")
+	}
+	fmt.Println()
+
+	shell := envkit.DetectShell()
+	fmt.Println("=== Shell ===")
+	fmt.Println(shell.ShellSummary())
+	fmt.Println()
+
+	snap, err := envkit.Snapshot()
+	if err != nil {
+		return err
+	}
+	fmt.Println("=== Managed Configs ===")
+	fmt.Print(envkit.SnapshotSummary(snap))
+
+	return nil
+}
+
+func envSnapshot() error {
+	snap, err := envkit.Snapshot()
+	if err != nil {
+		return err
+	}
+
+	fmt.Print(envkit.SnapshotSummary(snap))
+	if len(snap.Files) > 0 {
+		fmt.Println("\nFile contents captured in memory. Use MCP env_snapshot tool to access programmatically.")
+	}
+	return nil
+}
+
+func envMise(ctx context.Context) error {
+	dryRun := parseFlag("dry-run", "false") == "true"
+
+	fmt.Println("Configuring mise tool version manager...")
+	result, err := envkit.MiseInstall(ctx, envkit.MiseOpts{DryRun: dryRun})
+	if err != nil {
+		return err
+	}
+
+	if result.Installed {
+		fmt.Println("Mise installed successfully.")
+	}
+	if result.ConfigPath != "" {
+		fmt.Printf("Config written: %s\n", result.ConfigPath)
+	}
+	if result.Output != "" {
+		fmt.Println(result.Output)
+	}
+	return nil
+}
+
+// --- mcp commands ---
+
+func newToolRegistry() *registry.ToolRegistry {
+	reg := registry.NewToolRegistry()
+	reg.RegisterModule(&mcpserver.FontModule{})
+	reg.RegisterModule(&mcpserver.ThemeModule{})
+	reg.RegisterModule(&mcpserver.StatuslineModule{})
+	reg.RegisterModule(&mcpserver.EnvModule{})
+	return reg
+}
+
+func runMCP(ctx context.Context, cmd string) error {
+	switch cmd {
+	case "tools":
+		return mcpTools()
+	case "publish":
+		return mcpPublish(ctx)
+	case "serve":
+		return mcpServe()
+	default:
+		return fmt.Errorf("unknown mcp command: %s (try: tools, publish, serve)", cmd)
+	}
+}
+
+func mcpTools() error {
+	reg := newToolRegistry()
+	meta := mcpserver.GenerateMetadata(reg)
+	fmt.Printf("claudekit MCP tools (%d registered):\n\n", len(meta.Tools))
+	for _, tool := range meta.Tools {
+		fmt.Printf("  %-24s %s\n", tool.Name, tool.Description)
+	}
+	return nil
+}
+
+func mcpPublish(ctx context.Context) error {
+	reg := newToolRegistry()
+	fmt.Println("Publishing claudekit to MCP Registry...")
+	if err := mcpserver.Publish(ctx, reg); err != nil {
+		return err
+	}
+	fmt.Println("Published successfully.")
+	return nil
+}
+
+func mcpServe() error {
+	reg := newToolRegistry()
+	addr := parseFlag("addr", ":8080")
+	handler := mcpserver.WebMCPHandler(reg)
+	fmt.Printf("Starting WebMCP server on %s\n", addr)
+	fmt.Println("Endpoints:")
+	fmt.Println("  GET /tools   — list registered MCP tools")
+	fmt.Println("  GET /health  — health check")
+	return http.ListenAndServe(addr, handler)
 }
