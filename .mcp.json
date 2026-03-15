@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "claudekit": {
+      "command": "go",
+      "args": ["run", "./cmd/claudekit-mcp"]
+    }
+  }
+}
