@@ -1,0 +1,41 @@
+{
+  "name": "Test Loop: First Real Ralph Run",
+  "description": "Minimal end-to-end test of the Ralph autonomous loop. Exercises all 7 R&D cycle tasks with safe, non-destructive operations. Goal: verify sampling works through Claude Code MCP session, cost tracking records usage, and progress persists to disk.",
+  "completion": "All 7 tasks complete: scan found no critical issues, plan confirmed roadmap is current, CHANGELOG.md created, make check passes, notes recorded, report generated, next cycle scheduled.",
+  "tasks": [
+    {
+      "id": "scan",
+      "description": "Run rdcycle_scan to check for MCP ecosystem changes. This is a read-only operation that queries GitHub for recent activity."
+    },
+    {
+      "id": "plan",
+      "depends_on": ["scan"],
+      "description": "Run rdcycle_plan with the scan results. Analyze the roadmap at /Users/mitchnotmitchell/hairglasses-studio/claudekit/roadmap.json. If no urgent work items found, note that all tiers are complete."
+    },
+    {
+      "id": "implement",
+      "depends_on": ["plan"],
+      "description": "Create a CHANGELOG.md file at /Users/mitchnotmitchell/hairglasses-studio/claudekit/CHANGELOG.md summarizing the 7 completed tiers and 34 MCP tools. Use rdcycle_artifacts to record what was created."
+    },
+    {
+      "id": "verify",
+      "depends_on": ["implement"],
+      "description": "Run rdcycle_verify with command 'make check' to verify the build still passes after changes."
+    },
+    {
+      "id": "reflect",
+      "depends_on": ["verify"],
+      "description": "Run rdcycle_notes to record improvement notes for this test cycle: what worked (sampling through MCP session), what to improve (iteration count, token usage), and suggestions for next cycle."
+    },
+    {
+      "id": "report",
+      "depends_on": ["reflect"],
+      "description": "Run rdcycle_report to generate a research report summarizing this test loop's findings."
+    },
+    {
+      "id": "schedule",
+      "depends_on": ["report"],
+      "description": "Run rdcycle_schedule to write the next cycle's spec file based on findings from this loop."
+    }
+  ]
+}

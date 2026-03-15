@@ -108,5 +108,31 @@
       "Coverage targets: mcpserver to 40%+, cmd/claudekit to 20%+"
     ],
     "timestamp": "2026-03-15T23:09:23Z"
+  },
+  {
+    "cycle_id": "test-loop-first-ralph-run",
+    "cycle_number": 6,
+    "what_worked": [
+      "All 7 rdcycle tools (scan, plan, verify, artifacts, notes, report, schedule) work end-to-end",
+      "make check passes clean — 126+ tests across 9 packages",
+      "CHANGELOG.md created summarizing all 7 tiers and 34 tools",
+      "Artifact store persists across tool calls within session",
+      "FinOps middleware wrapping works — all tool calls tracked"
+    ],
+    "what_failed": [
+      "ralph_start fails with 'sampler is required' — Claude Code does not support MCP sampling protocol",
+      "ServerSamplingClient wiring is correct in code but sampling/createMessage is not implemented by Claude Code as an MCP client",
+      "Cannot run truly autonomous Ralph loops without an alternative sampler (API-based or Agent SDK)"
+    ],
+    "wasted_iterations": 2,
+    "total_cost_dollars": 0,
+    "suggestions": [
+      "Implement APISamplingClient that calls Anthropic API directly with ANTHROPIC_API_KEY",
+      "Explore Claude Agent SDK as alternative autonomous loop runtime",
+      "Consider making Ralph loop callable as a CLI command that uses API key for sampling",
+      "Track Claude Code MCP sampling support — may be added in future versions",
+      "Remove debug logging added to ralph.go before committing"
+    ],
+    "timestamp": "2026-03-15T23:30:33Z"
   }
 ]
