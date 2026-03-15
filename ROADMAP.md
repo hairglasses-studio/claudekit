@@ -30,3 +30,16 @@
 - [x] Claude Code skill marketplace integration (skillkit package, CLI + MCP + WebMCP)
 - [x] Multi-terminal sync (one config → iTerm2 + Ghostty + WezTerm)
 - [x] CI/CD for dotfile validation (GitHub Actions)
+
+## Tier 6: Automated R&D
+- [x] Machine-readable roadmap with MCP tools (roadmap_read/update/gaps/next_phase)
+- [x] FinOps token tracking middleware + budget enforcement (finops_status/reset)
+- [x] Agent memory (get/set/list/search) for cross-step persistence
+- [x] R&D cycle tools (scan/plan/verify/artifacts/commit/report/schedule/notes/improve)
+- [x] Workflow engine with predefined setup graphs (workflow_run/list)
+
+## Tier 7: Hardening & Autonomous Ops
+- [x] Wire MCP sampling client into ralph for fully autonomous loops
+- [x] CostPolicy breach triggers ralph_stop automatically
+- [x] rdcycle_improve feeds suggestions back into next cycle spec
+- [x] CLI command to tail ralph progress in a parallel terminal (ralph tail/status)

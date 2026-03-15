@@ -5,6 +5,12 @@ go 1.26.1
 require github.com/hairglasses-studio/mcpkit v0.0.0
 
 require (
+	github.com/cespare/xxhash/v2 v2.3.0 // indirect
+	go.opentelemetry.io/otel v1.42.0 // indirect
+	go.opentelemetry.io/otel/trace v1.42.0 // indirect
+)
+
+require (
 	github.com/bahlo/generic-list-go v0.2.0 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
 	github.com/google/jsonschema-go v0.4.2 // indirect
