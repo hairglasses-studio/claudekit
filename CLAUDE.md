@@ -20,19 +20,24 @@ make test    # run tests
 | `statusline` | Claude Code statusline script + installer | `themekit` |
 | `pluginkit` | YAML plugin loading, subprocess handler, ToolModule bridge | `mcpkit/registry`, `yaml.v3` |
 | `skillkit` | Claude Code skill marketplace — discovery, install, remove | None (pure Go) |
-| `mcpserver` | MCP tool modules (font, theme, env, statusline, skill, ralph, gateway, discovery, webmcp) | `fontkit`, `themekit`, `envkit`, `statusline`, `skillkit`, mcpkit |
+| `mcpserver` | MCP tool modules (font, theme, env, statusline, skill, ralph, roadmap, finops, memory, rdcycle, workflow, gateway, discovery, webmcp) | `fontkit`, `themekit`, `envkit`, `statusline`, `skillkit`, mcpkit |
 | `cmd/claudekit` | CLI entrypoint | all packages |
 | `cmd/claudekit-mcp` | MCP server entrypoint | `mcpserver`, `pluginkit` |
 
 ## MCP Tools
 
-10 tools across 5 modules + ralph (3 more) + dynamic plugin tools:
+34 tools across 10 modules + dynamic plugin tools:
 - **fonts**: `font_status`, `font_install`, `font_configure`
 - **theme**: `theme_apply`, `theme_list`
 - **statusline**: `statusline_install`
 - **env**: `env_status`, `env_snapshot`
 - **skills**: `skill_list`, `skill_install`
 - **ralph**: `ralph_start`, `ralph_stop`, `ralph_status`
+- **roadmap**: `roadmap_read`, `roadmap_update`, `roadmap_gaps`, `roadmap_next_phase`
+- **finops**: `finops_status`, `finops_reset`
+- **memory**: `memory_get`, `memory_set`, `memory_list`, `memory_search`
+- **rdcycle**: `rdcycle_scan`, `rdcycle_plan`, `rdcycle_verify`, `rdcycle_artifacts`, `rdcycle_commit`, `rdcycle_report`, `rdcycle_schedule`, `rdcycle_notes`, `rdcycle_improve`
+- **workflow**: `workflow_run`, `workflow_list`
 
 ## Key Patterns
 

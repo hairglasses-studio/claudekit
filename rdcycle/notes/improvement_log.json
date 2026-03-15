@@ -1,0 +1,68 @@
+[
+  {
+    "cycle_id": "post-tier6-hardening-001",
+    "cycle_number": 1,
+    "what_worked": [
+      "Profile-aware finops wired cleanly using rdcycle.BuildFinOpsStack",
+      "Ralph module rewrite with config injection compiled on first attempt",
+      "rdcycle test fix from 4 to 9 tools was straightforward",
+      "Sampler wiring via SetSampler/ServerSamplingClient pattern resolved chicken-and-egg ordering",
+      "Cost-alert auto-stop added to OnCostUpdate hook without modifying mcpkit"
+    ],
+    "what_failed": [
+      "ralph_start failed with 'sampler is required' when run from CLI — sampler was nil before ServerSamplingClient wiring was added",
+      "rdcycle_verify does not support shell operators (\u0026\u0026) — had to use make check instead"
+    ],
+    "wasted_iterations": 1,
+    "total_cost_dollars": 0,
+    "suggestions": [
+      "Add integration test that starts MCP server and verifies sampler is non-nil",
+      "Document that rdcycle_verify command param is passed to exec not shell",
+      "Consider adding t7-progress-tail CLI command for parallel terminal monitoring"
+    ],
+    "timestamp": "2026-03-15T22:05:08Z"
+  },
+  {
+    "cycle_id": "tier7-self-improve-and-cli-001",
+    "cycle_number": 2,
+    "what_worked": [
+      "t7-self-improve already implemented upstream in mcpkit schedule.go — notes injection + self_improve task auto-added every 10 cycles",
+      "ServerSamplingClient wiring compiled cleanly with type alias matching across build tags",
+      "CostPolicy auto-stop integrated into OnCostUpdate hook without touching mcpkit",
+      "ralph tail CLI command built first try — watches progress file with live updates",
+      "SetSampler deferred wiring pattern solves chicken-and-egg between module registration and server creation"
+    ],
+    "what_failed": [
+      "No failures this cycle"
+    ],
+    "wasted_iterations": 0,
+    "total_cost_dollars": 0,
+    "suggestions": [
+      "Add integration test that verifies ralph tail output format",
+      "Consider adding --json flag to ralph status for machine-readable output",
+      "Tier 8 candidates: multi-project ralph orchestration, remote MCP sampling"
+    ],
+    "timestamp": "2026-03-15T22:23:19Z"
+  },
+  {
+    "cycle_id": "polish-and-docs-001",
+    "cycle_number": 3,
+    "what_worked": [
+      "Added --json flag to ralph status for scripting in 3 edits",
+      "README updated with all 34 tools, budget profiles section, model tier table, and ralph CLI docs",
+      "ROADMAP.md updated with Tier 7 items",
+      "hasFlag helper kept parseFlag backward compatible"
+    ],
+    "what_failed": [
+      "No failures this cycle"
+    ],
+    "wasted_iterations": 0,
+    "total_cost_dollars": 0,
+    "suggestions": [
+      "All documentation now current — next cycles should focus on test coverage for new CLI commands",
+      "Consider adding a Makefile target for integration tests",
+      "Tier 8 candidate: cross-project ralph orchestration with multiple roadmaps"
+    ],
+    "timestamp": "2026-03-15T22:27:14Z"
+  }
+]
