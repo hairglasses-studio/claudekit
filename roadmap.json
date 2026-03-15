@@ -1,0 +1,86 @@
+{
+  "title": "claudekit",
+  "description": "Claude Code terminal customization framework",
+  "updated_at": "2026-03-15",
+  "phases": [
+    {
+      "id": "tier-1",
+      "name": "Font Management + Statusline",
+      "status": "complete",
+      "items": [
+        {"id": "t1-font-detect", "description": "Monaspace/Monaspice detection and installation", "package": "fontkit", "status": "complete"},
+        {"id": "t1-iterm-profile", "description": "iTerm2 Dynamic Profile with font fallback", "package": "fontkit", "status": "complete"},
+        {"id": "t1-ghostty-config", "description": "Ghostty config with font fallback", "package": "fontkit", "status": "complete"},
+        {"id": "t1-mcp-skill", "description": "CLI + MCP server + Claude Code skill", "package": "mcpserver", "status": "complete"},
+        {"id": "t1-font-preview", "description": "Font preview command (ligatures, Nerd Font icons)", "package": "fontkit", "status": "complete"},
+        {"id": "t1-statusline", "description": "Claude Code statusline with Monaspace multi-font fallback", "package": "statusline", "status": "complete"}
+      ]
+    },
+    {
+      "id": "tier-2",
+      "name": "Terminal Theming",
+      "status": "complete",
+      "items": [
+        {"id": "t2-catppuccin", "description": "Catppuccin theme support (one palette → multiple targets)", "package": "themekit", "status": "complete"},
+        {"id": "t2-starship", "description": "Starship prompt configuration", "package": "themekit", "status": "complete"},
+        {"id": "t2-terminal-colors", "description": "Terminal color scheme management", "package": "themekit", "status": "complete"},
+        {"id": "t2-syntax-sync", "description": "Syntax highlighting theme sync (bat, delta)", "package": "themekit", "status": "complete"}
+      ]
+    },
+    {
+      "id": "tier-3",
+      "name": "Environment Bootstrap",
+      "status": "complete",
+      "items": [
+        {"id": "t3-dotfiles", "description": "Dotfile management (snapshot/restore)", "package": "envkit", "status": "complete"},
+        {"id": "t3-mise", "description": "Tool version management (mise integration)", "package": "envkit", "status": "complete"},
+        {"id": "t3-shell-detect", "description": "Shell plugin detection (oh-my-zsh, zinit)", "package": "envkit", "status": "complete"}
+      ]
+    },
+    {
+      "id": "tier-4",
+      "name": "Advanced MCP Integration",
+      "status": "complete",
+      "items": [
+        {"id": "t4-gateway", "description": "Gateway pattern — aggregate multiple MCP modules", "package": "mcpserver", "status": "complete"},
+        {"id": "t4-ralph", "description": "Ralph loop — autonomous terminal setup verification", "package": "mcpserver", "status": "complete"},
+        {"id": "t4-webmcp", "description": "WebMCP bridge — HTTP server with /tools and /health", "package": "mcpserver", "status": "complete"},
+        {"id": "t4-registry", "description": "MCP Registry publishing — discoverable via official registry", "package": "mcpserver", "status": "complete"}
+      ]
+    },
+    {
+      "id": "tier-5",
+      "name": "Ecosystem",
+      "status": "complete",
+      "items": [
+        {"id": "t5-plugins", "description": "Plugin system for community-contributed terminal configs", "package": "pluginkit", "status": "complete"},
+        {"id": "t5-skills", "description": "Claude Code skill marketplace integration", "package": "skillkit", "status": "complete"},
+        {"id": "t5-multi-terminal", "description": "Multi-terminal sync (iTerm2 + Ghostty + WezTerm)", "package": "fontkit", "status": "complete"},
+        {"id": "t5-ci", "description": "CI/CD for dotfile validation (GitHub Actions)", "package": "mcpserver", "status": "complete"}
+      ]
+    },
+    {
+      "id": "tier-6",
+      "name": "Automated R&D",
+      "status": "complete",
+      "items": [
+        {"id": "t6-roadmap", "description": "Machine-readable roadmap with MCP tools", "package": "mcpserver", "status": "complete"},
+        {"id": "t6-finops", "description": "FinOps token tracking middleware + budget enforcement", "package": "mcpserver", "status": "complete"},
+        {"id": "t6-memory", "description": "Agent memory for cross-step persistence", "package": "mcpserver", "status": "complete"},
+        {"id": "t6-rdcycle", "description": "R&D cycle tools for autonomous development", "package": "mcpserver", "status": "complete", "depends_on": ["t6-roadmap"]},
+        {"id": "t6-workflow", "description": "Workflow engine with predefined setup graphs", "package": "mcpserver", "status": "complete"}
+      ]
+    },
+    {
+      "id": "tier-7",
+      "name": "Hardening & Autonomous Ops",
+      "status": "complete",
+      "items": [
+        {"id": "t7-sampler-wire", "description": "Wire MCP sampling client into ralph so loops run fully autonomously", "package": "mcpserver", "status": "complete"},
+        {"id": "t7-cost-alerts", "description": "CostPolicy breach triggers ralph_stop automatically", "package": "mcpserver", "status": "complete"},
+        {"id": "t7-self-improve", "description": "rdcycle_improve feeds suggestions back into next cycle spec", "package": "mcpserver", "status": "complete"},
+        {"id": "t7-progress-tail", "description": "CLI command to tail ralph progress in a parallel terminal", "package": "cmd/claudekit", "status": "complete"}
+      ]
+    }
+  ]
+}

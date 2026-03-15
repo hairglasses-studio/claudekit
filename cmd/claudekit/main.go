@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"os"
@@ -16,6 +17,7 @@ import (
 	"github.com/hairglasses-studio/claudekit/skillkit"
 	"github.com/hairglasses-studio/claudekit/statusline"
 	"github.com/hairglasses-studio/claudekit/themekit"
+	"github.com/hairglasses-studio/mcpkit/ralph"
 	"github.com/hairglasses-studio/mcpkit/registry"
 )
 
@@ -50,6 +52,8 @@ func main() {
 		err = runPlugin(cmd)
 	case "skill":
 		err = runSkill(cmd)
+	case "ralph":
+		err = runRalph(ctx, cmd)
 	case "help", "--help", "-h":
 		usage()
 	default:
@@ -96,7 +100,22 @@ Usage:
 
   claudekit skill list           List installed and available skills
   claudekit skill install <name> Install a skill from the marketplace
-  claudekit skill remove <name>  Remove an installed skill`)
+  claudekit skill remove <name>  Remove an installed skill
+
+  claudekit ralph tail <file>    Watch ralph progress file in real time
+  claudekit ralph status <file>  Show current ralph progress snapshot
+  claudekit ralph status <file> --json  Output progress as JSON`)
+}
+
+// hasFlag returns true if --key is present in os.Args (with no value).
+func hasFlag(key string) bool {
+	flag := "--" + key
+	for _, arg := range os.Args {
+		if arg == flag {
+			return true
+		}
+	}
+	return false
 }
 
 // parseFlag returns the value of --key from os.Args, or fallback if not found.
@@ -781,4 +800,104 @@ func skillRemove(name string) error {
 	}
 	fmt.Printf("Removed skill: %s\n", name)
 	return nil
+}
+
+// --- ralph commands ---
+
+func runRalph(ctx context.Context, cmd string) error {
+	switch cmd {
+	case "tail":
+		if len(os.Args) < 4 {
+			return fmt.Errorf("usage: claudekit ralph tail <progress-file>")
+		}
+		return ralphTail(ctx, os.Args[3])
+	case "status":
+		if len(os.Args) < 4 {
+			return fmt.Errorf("usage: claudekit ralph status <progress-file>")
+		}
+		return ralphStatus(os.Args[3])
+	default:
+		return fmt.Errorf("unknown ralph command: %s (try: tail, status)", cmd)
+	}
+}
+
+func ralphStatus(path string) error {
+	p, err := ralph.LoadProgress(path)
+	if err != nil {
+		return fmt.Errorf("load progress: %w", err)
+	}
+	if parseFlag("json", "") == "true" || parseFlag("json", "") == "" && hasFlag("json") {
+		data, err := json.MarshalIndent(p, "", "  ")
+		if err != nil {
+			return err
+		}
+		fmt.Println(string(data))
+		return nil
+	}
+	printProgress(p)
+	return nil
+}
+
+func ralphTail(ctx context.Context, path string) error {
+	interval := parseFlag("interval", "2")
+	dur, err := time.ParseDuration(interval + "s")
+	if err != nil {
+		dur = 2 * time.Second
+	}
+
+	var lastIter int
+	fmt.Printf("Watching %s (Ctrl+C to stop)\n\n", path)
+
+	for {
+		select {
+		case <-ctx.Done():
+			return nil
+		default:
+		}
+
+		p, err := ralph.LoadProgress(path)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "  (waiting for progress file...)\r")
+			time.Sleep(dur)
+			continue
+		}
+
+		if p.Iteration != lastIter {
+			fmt.Printf("\033[2K") // clear line
+			printProgress(p)
+
+			// Print last log entry if new
+			if len(p.Log) > 0 {
+				last := p.Log[len(p.Log)-1]
+				fmt.Printf("  Last: [%s] %s\n", last.TaskID, truncate(last.Result, 80))
+			}
+			fmt.Println()
+			lastIter = p.Iteration
+		}
+
+		if p.Status == ralph.StatusCompleted || p.Status == ralph.StatusFailed || p.Status == ralph.StatusStopped {
+			fmt.Printf("Loop finished: %s\n", p.Status)
+			return nil
+		}
+
+		time.Sleep(dur)
+	}
+}
+
+func printProgress(p ralph.Progress) {
+	fmt.Printf("Status: %s | Iteration: %d | Completed: %v\n", p.Status, p.Iteration, p.CompletedIDs)
+	if p.SpecFile != "" {
+		fmt.Printf("Spec: %s\n", p.SpecFile)
+	}
+	if !p.StartedAt.IsZero() {
+		elapsed := time.Since(p.StartedAt).Truncate(time.Second)
+		fmt.Printf("Elapsed: %s\n", elapsed)
+	}
+}
+
+func truncate(s string, n int) string {
+	if len(s) <= n {
+		return s
+	}
+	return s[:n-3] + "..."
 }

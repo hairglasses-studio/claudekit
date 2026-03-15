@@ -156,6 +156,14 @@ The plugin subprocess receives `{"method":"<tool>","params":<input>}` on stdin a
 
 Skills are Claude Code behavior guides (SKILL.md files) that teach Claude how to use claudekit MCP tools for specific workflows. The built-in marketplace includes: `font-setup`, `theme-setup`, `env-setup`.
 
+### Ralph (Autonomous Loop)
+
+| Command | Description |
+|---------|-------------|
+| `claudekit ralph tail <file>` | Watch ralph progress file in real time |
+| `claudekit ralph status <file>` | Show current progress snapshot |
+| `claudekit ralph status <file> --json` | Output progress as JSON |
+
 ### MCP Management
 
 | Command | Description |
@@ -182,6 +190,60 @@ Skills are Claude Code behavior guides (SKILL.md files) that teach Claude how to
 | `ralph_start` | Start autonomous task loop | Yes |
 | `ralph_stop` | Stop running loop | No |
 | `ralph_status` | Get loop status | No |
+| `roadmap_read` | Read project roadmap | No |
+| `roadmap_update` | Update roadmap item status | Yes |
+| `roadmap_gaps` | Find incomplete roadmap items | No |
+| `roadmap_next_phase` | Get next actionable phase | No |
+| `finops_status` | Get token usage summary | No |
+| `finops_reset` | Reset token usage counters | Yes |
+| `memory_get` | Retrieve value from agent memory | No |
+| `memory_set` | Store value in agent memory | Yes |
+| `memory_list` | List memory entries with filters | No |
+| `memory_search` | Search memory by text query | No |
+| `rdcycle_scan` | Scan ecosystem repos for changes | No |
+| `rdcycle_plan` | Plan next work from roadmap gaps | No |
+| `rdcycle_verify` | Run build/test verification | No |
+| `rdcycle_artifacts` | List R&D cycle artifacts | No |
+| `rdcycle_commit` | Stage files and commit on feature branch | Yes |
+| `rdcycle_report` | Generate RESEARCH-*.md report | Yes |
+| `rdcycle_schedule` | Write next cycle's Ralph spec file | Yes |
+| `rdcycle_notes` | Record improvement notes per cycle | Yes |
+| `rdcycle_improve` | Analyze notes for patterns and cost trends | No |
+| `workflow_run` | Execute a predefined workflow | Yes |
+| `workflow_list` | List available workflows | No |
+
+## Automated R&D (Tiers 6–7)
+
+Claudekit includes self-improving R&D tools powered by [mcpkit](https://github.com/hairglasses-studio/mcpkit):
+
+- **Roadmap** — Machine-readable `roadmap.json` with gap analysis and phase planning
+- **FinOps** — Profile-aware budget tracking with dollar costs, token budgets, and per-tool breakdown
+- **Memory** — In-memory key/value store with tiers (episodic/semantic/procedural), tags, and text search
+- **R&D Cycle** — Ecosystem scanning, roadmap-driven planning, build verification, artifact tracking, improvement notes, and self-analysis
+- **Workflow** — Predefined multi-step graphs (e.g., `full-setup`: detect → font install → theme → statusline → env snapshot)
+- **Ralph** — Autonomous loop with budget profiles, model tier selection, cost-breach auto-stop, and MCP sampling
+
+### Budget Profiles
+
+```bash
+# Conservative (Claude Max subscription): $5/cycle, 50 iterations
+CLAUDEKIT_BUDGET_PROFILE=personal go run ./cmd/claudekit-mcp
+
+# Higher limits (API credits): $50/cycle, 200 iterations
+CLAUDEKIT_BUDGET_PROFILE=work-api go run ./cmd/claudekit-mcp
+
+# Custom profile from JSON file
+go run ./cmd/claudekit-mcp --budget=my-profile.json
+```
+
+### Model Tier Selection
+
+Ralph uses Opus for planning/implementation and Sonnet for lighter tasks:
+
+| Task | Model |
+|------|-------|
+| plan, implement | claude-opus-4-6 |
+| scan, verify, reflect, report, schedule | claude-sonnet-4-6 |
 
 ## Architecture
 
