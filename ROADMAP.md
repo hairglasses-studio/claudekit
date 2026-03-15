@@ -10,7 +10,7 @@
 
 ## Tier 2: Terminal Theming
 - [x] Catppuccin theme support (one palette → multiple targets)
-- [ ] Starship prompt configuration
+- [x] Starship prompt configuration
 - [x] Terminal color scheme management
 - [x] Syntax highlighting theme sync (bat, delta, etc.)
 
@@ -20,8 +20,8 @@
 - [ ] Shell plugin management (oh-my-zsh, zinit)
 
 ## Tier 4: Advanced MCP Integration
-- [ ] Gateway pattern — aggregate multiple claudekit MCP modules
-- [ ] Ralph loop — autonomous terminal setup verification
+- [x] Gateway pattern — aggregate multiple claudekit MCP modules
+- [x] Ralph loop — autonomous terminal setup verification
 - [ ] WebMCP bridge — browser-based config previewer
 - [ ] MCP Registry publishing — discoverable via official registry
 
