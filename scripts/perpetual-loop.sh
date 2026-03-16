@@ -10,6 +10,13 @@ ALARM="${2:-8.0}"
 CADENCE="${3:-4}"
 MAX_CYCLES="${4:-0}"
 
+# Guard: cannot launch inside another Claude Code session.
+if [[ -n "${CLAUDECODE:-}" ]]; then
+    echo "error: cannot launch inside a Claude Code session (CLAUDECODE is set)." >&2
+    echo "Run this script from a regular terminal." >&2
+    exit 1
+fi
+
 PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$PROJECT_DIR"
 
