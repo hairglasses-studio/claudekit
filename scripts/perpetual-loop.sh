@@ -23,25 +23,33 @@ if [[ ! -f "$PROFILE" ]]; then
     exit 1
 fi
 
-# Validate API key.
-if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
-    ENV_FILE="$PROJECT_DIR/.env"
-    if [[ -f "$ENV_FILE" ]]; then
-        eval "$(grep -E '^ANTHROPIC_API_KEY=' "$ENV_FILE" | head -1)"
-        export ANTHROPIC_API_KEY
-    fi
+# Load all env vars from .env (does not override existing).
+ENV_FILE="$PROJECT_DIR/.env"
+if [[ -f "$ENV_FILE" ]]; then
+    while IFS= read -r line || [[ -n "$line" ]]; do
+        line="${line%%#*}"          # strip comments
+        line="${line#"${line%%[![:space:]]*}"}"  # trim leading whitespace
+        line="${line%"${line##*[![:space:]]}"}"  # trim trailing whitespace
+        [[ -z "$line" ]] && continue
+        key="${line%%=*}"
+        val="${line#*=}"
+        val="${val#[\"\']}"        # strip leading quote
+        val="${val%[\"\']}"        # strip trailing quote
+        if [[ -z "${!key:-}" ]]; then
+            export "$key=$val"
+        fi
+    done < "$ENV_FILE"
 fi
 
+# Validate API key.
 if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
     echo "error: ANTHROPIC_API_KEY not set and not found in .env" >&2
     exit 1
 fi
 
-# Build if needed.
-if [[ ! -x bin/claudekit-mcp ]]; then
-    echo "Building claudekit-mcp..."
-    make build
-fi
+# Verify build compiles (the MCP server runs via 'go run' so no binary is needed).
+echo "Verifying build..."
+go build ./... || { echo "error: build failed" >&2; exit 1; }
 
 echo "=== Perpetual R&D Loop ==="
 echo "  profile:       $PROFILE"

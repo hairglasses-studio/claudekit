@@ -73,6 +73,11 @@ func main() {
 	}
 	rdcycleMod := mcpserver.SetupRDCycle(reg, wd, fileStore)
 
+	// Wire cost reader so the perpetual orchestrator can track per-cycle cost.
+	if costPolicy != nil {
+		rdcycleMod.SetCostReader(costPolicy.TotalCost)
+	}
+
 	// Wire RalphStarter so perpetual orchestrator can launch ralph loops.
 	rdcycleMod.SetRalphStarter(func(ctx context.Context, specPath string) error {
 		maxIter := profile.MaxIterations
