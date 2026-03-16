@@ -62,6 +62,13 @@ func (m *ralphModule) SetSampler(s sampling.SamplingClient) {
 	m.sampler = s
 }
 
+// CurrentSampler returns the currently configured sampling client.
+func (m *ralphModule) CurrentSampler() sampling.SamplingClient {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	return m.sampler
+}
+
 type ralphStartInput struct {
 	SpecFile      string `json:"spec_file" jsonschema:"required,description=Path to the task specification JSON file"`
 	MaxIterations int    `json:"max_iterations,omitempty" jsonschema:"description=Maximum loop iterations (capped by budget profile)"`
