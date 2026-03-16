@@ -24,6 +24,10 @@ coverage.html
 claudekit.log
 *.progress.json
 
+# Secrets
+.env
+.env.*
+
 # OS
 .DS_Store
 Thumbs.db
