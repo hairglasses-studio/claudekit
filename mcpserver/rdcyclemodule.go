@@ -23,6 +23,8 @@ func NewRDCycleModule(projectDir string, store rdcycle.ArtifactStore) *rdcycle.M
 			"hairglasses-studio/claudekit",
 			"githubnext/monaspace",
 			"catppuccin/catppuccin",
+			"anthropics/anthropic-sdk-go",
+			"mark3labs/mcp-go",
 		},
 	}, opts...)
 }

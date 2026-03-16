@@ -26,7 +26,7 @@ make test    # run tests
 
 ## MCP Tools
 
-34 tools across 10 modules + dynamic plugin tools:
+37 tools across 10 modules + dynamic plugin tools:
 - **fonts**: `font_status`, `font_install`, `font_configure`
 - **theme**: `theme_apply`, `theme_list`
 - **statusline**: `statusline_install`
@@ -36,7 +36,7 @@ make test    # run tests
 - **roadmap**: `roadmap_read`, `roadmap_update`, `roadmap_gaps`, `roadmap_next_phase`
 - **finops**: `finops_status`, `finops_reset`
 - **memory**: `memory_get`, `memory_set`, `memory_list`, `memory_search`
-- **rdcycle**: `rdcycle_scan`, `rdcycle_plan`, `rdcycle_verify`, `rdcycle_artifacts`, `rdcycle_commit`, `rdcycle_report`, `rdcycle_schedule`, `rdcycle_notes`, `rdcycle_improve`
+- **rdcycle**: `rdcycle_scan`, `rdcycle_plan`, `rdcycle_verify`, `rdcycle_artifacts`, `rdcycle_commit`, `rdcycle_report`, `rdcycle_schedule`, `rdcycle_notes`, `rdcycle_improve`, `rdcycle_perpetual_start`, `rdcycle_perpetual_stop`, `rdcycle_perpetual_status`
 - **workflow**: `workflow_run`, `workflow_list`
 
 ## Key Patterns

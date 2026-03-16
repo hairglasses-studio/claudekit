@@ -1,0 +1,11 @@
+{
+  "id": "verify-1773652529992457766",
+  "type": "verify",
+  "content": {
+    "command": "make check",
+    "duration": "11.148109662s",
+    "output": "go vet ./...\ngo test ./... -count=1\nok  \tgithub.com/hairglasses-studio/claudekit/cmd/claudekit\t0.010s\nok  \tgithub.com/hairglasses-studio/claudekit/cmd/claudekit-mcp\t0.004s\nok  \tgithub.com/hairglasses-studio/claudekit/envkit\t0.022s\nok  \tgithub.com/hairglasses-studio/claudekit/fontkit\t0.072s\nok  \tgithub.com/hairglasses-studio/claudekit/mcpserver\t0.052s\nok  \tgithub.com/hairglasses-studio/claudekit/pluginkit\t10.013s\nok  \tgithub.com/hairglasses-studio/claudekit/skillkit\t0.011s\nok  \tgithub.com/hairglasses-studio/claudekit/statusline\t0.005s\nok  \tgithub.com/hairglasses-studio/claudekit/themekit\t0.025s\ngo build ./...\n",
+    "passed": true
+  },
+  "created_at": "2026-03-16T09:15:29Z"
+}
