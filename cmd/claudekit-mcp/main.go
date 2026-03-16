@@ -2,6 +2,7 @@
 package main
 
 import (
+	"bufio"
 	"log"
 	"os"
 	"strings"
@@ -14,6 +15,8 @@ import (
 )
 
 func main() {
+	loadDotenv(".env")
+
 	reg := registry.NewToolRegistry()
 	wd, _ := os.Getwd()
 
@@ -72,8 +75,18 @@ func main() {
 	s := registry.NewMCPServer("claudekit", "0.1.0")
 	reg.RegisterWithServer(s)
 
-	// Wire the MCP server as ralph's sampling client so loops can run autonomously.
-	ralphMod.SetSampler(&sampling.ServerSamplingClient{Server: s})
+	// Wire ralph's sampler. Prefer API-based sampling (direct Anthropic API call)
+	// over MCP sampling (which requires client support that Claude Code lacks).
+	if apiKey := os.Getenv("ANTHROPIC_API_KEY"); apiKey != "" {
+		log.Printf("[ralph] using API sampler (ANTHROPIC_API_KEY set)")
+		ralphMod.SetSampler(&sampling.APISamplingClient{
+			APIKey:       apiKey,
+			DefaultModel: "claude-sonnet-4-6",
+		})
+	} else {
+		// Fallback to MCP server sampling (works if client supports it).
+		ralphMod.SetSampler(&sampling.ServerSamplingClient{Server: s})
+	}
 
 	// Optional gateway for aggregating external MCP servers.
 	var gatewayUpstreams []string
@@ -99,6 +112,32 @@ func main() {
 
 	if err := registry.ServeStdio(s); err != nil {
 		log.Fatal(err)
+	}
+}
+
+// loadDotenv reads KEY=VALUE pairs from a file and sets them as env vars.
+// Silently skips if the file doesn't exist. Does not override existing env vars.
+func loadDotenv(path string) {
+	f, err := os.Open(path)
+	if err != nil {
+		return
+	}
+	defer f.Close()
+	sc := bufio.NewScanner(f)
+	for sc.Scan() {
+		line := strings.TrimSpace(sc.Text())
+		if line == "" || strings.HasPrefix(line, "#") {
+			continue
+		}
+		k, v, ok := strings.Cut(line, "=")
+		if !ok {
+			continue
+		}
+		k = strings.TrimSpace(k)
+		v = strings.Trim(strings.TrimSpace(v), "'\"")
+		if os.Getenv(k) == "" {
+			os.Setenv(k, v)
+		}
 	}
 }
 
