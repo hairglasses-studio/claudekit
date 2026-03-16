@@ -75,10 +75,13 @@ func main() {
 	s := registry.NewMCPServer("claudekit", "0.1.0")
 	reg.RegisterWithServer(s)
 
-	// Wire ralph's sampler. Prefer API-based sampling (direct Anthropic API call)
-	// over MCP sampling (which requires client support that Claude Code lacks).
-	if apiKey := os.Getenv("ANTHROPIC_API_KEY"); apiKey != "" {
-		log.Printf("[ralph] using API sampler (ANTHROPIC_API_KEY set)")
+	// Wire ralph's sampler. Select API key based on budget profile:
+	//   personal  → PERSONAL_CLAUDE_MAX_ANTHROPIC_API_KEY (Claude Max billing)
+	//   work-api  → ANTHROPIC_API_KEY (API console billing, $10K credits)
+	// Falls back to ANTHROPIC_API_KEY if profile-specific key is not set.
+	apiKey := resolveAPIKey(profile.Name)
+	if apiKey != "" {
+		log.Printf("[ralph] using API sampler (profile=%s)", profile.Name)
 		ralphMod.SetSampler(&sampling.APISamplingClient{
 			APIKey:       apiKey,
 			DefaultModel: "claude-sonnet-4-6",
@@ -139,6 +142,23 @@ func loadDotenv(path string) {
 			os.Setenv(k, v)
 		}
 	}
+}
+
+// resolveAPIKey selects the Anthropic API key based on budget profile name.
+// Personal profile uses the Claude Max key; work-api uses the console key.
+func resolveAPIKey(profileName string) string {
+	switch profileName {
+	case "personal":
+		if key := os.Getenv("PERSONAL_CLAUDE_MAX_ANTHROPIC_API_KEY"); key != "" {
+			return key
+		}
+	case "work-api":
+		if key := os.Getenv("ANTHROPIC_API_KEY"); key != "" {
+			return key
+		}
+	}
+	// Fallback: try ANTHROPIC_API_KEY for any profile.
+	return os.Getenv("ANTHROPIC_API_KEY")
 }
 
 // resolveProfile returns the budget profile based on CLAUDEKIT_BUDGET_PROFILE env var
