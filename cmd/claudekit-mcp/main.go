@@ -3,8 +3,10 @@ package main
 
 import (
 	"bufio"
+	"context"
 	"log"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/hairglasses-studio/claudekit/mcpserver"
@@ -61,7 +63,38 @@ func main() {
 
 	// Register Tier 6: Automated R&D modules.
 	mcpserver.SetupRoadmap(reg, wd)
-	mcpserver.SetupRDCycle(reg, wd)
+
+	// Persistent artifact store for rdcycle.
+	artDir := filepath.Join(wd, "rdcycle", "artifacts")
+	fileStore, err := rdcycle.NewFileArtifactStore(artDir)
+	if err != nil {
+		log.Printf("warning: file artifact store: %v (using in-memory)", err)
+		fileStore = nil
+	}
+	rdcycleMod := mcpserver.SetupRDCycle(reg, wd, fileStore)
+
+	// Wire RalphStarter so perpetual orchestrator can launch ralph loops.
+	rdcycleMod.SetRalphStarter(func(ctx context.Context, specPath string) error {
+		maxIter := profile.MaxIterations
+		config := ralph.Config{
+			SpecFile:      specPath,
+			ProjectRoot:   wd,
+			MaxIterations: maxIter,
+			MaxTokens:     profile.MaxTokensPerReq,
+			ToolRegistry:  reg,
+			Sampler:       ralphMod.CurrentSampler(),
+			CostTracker:   tracker,
+		}
+		if modelTiers.Default != "" {
+			config.ModelSelector = modelTiers.Selector()
+		}
+		loop, err := ralph.NewLoop(config)
+		if err != nil {
+			return err
+		}
+		return loop.Run(ctx)
+	})
+
 	reg.RegisterModule(mcpserver.NewWorkflowModule())
 	mcpserver.SetupMemory(reg)
 
