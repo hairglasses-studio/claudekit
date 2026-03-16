@@ -11,7 +11,7 @@
       "depends_on": [
         "scan"
       ],
-      "description": "Run rdcycle_plan with scan results and roadmap at /Users/mitchnotmitchell/hairglasses-studio/claudekit/roadmap.json.",
+      "description": "Run rdcycle_plan with scan results and roadmap at roadmap.json (project root).",
       "id": "plan"
     },
     {
