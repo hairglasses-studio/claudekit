@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
+	"path/filepath"
 	"sync"
 
 	"github.com/hairglasses-studio/mcpkit/finops"
@@ -115,8 +117,15 @@ func (m *ralphModule) Tools() []registry.ToolDefinition {
 					}
 				}
 
-				config := ralph.Config{
+				// Derive project root: prefer cwd, fall back to spec file's directory.
+			projectRoot, _ := os.Getwd()
+			if projectRoot == "" {
+				projectRoot = filepath.Dir(input.SpecFile)
+			}
+
+			config := ralph.Config{
 					SpecFile:      input.SpecFile,
+					ProjectRoot:   projectRoot,
 					MaxIterations: maxIter,
 					MaxTokens:     m.rcfg.Profile.MaxTokensPerReq,
 					ToolRegistry:  m.registry,
