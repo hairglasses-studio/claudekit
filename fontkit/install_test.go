@@ -2,10 +2,14 @@ package fontkit
 
 import (
 	"context"
+	"os/exec"
 	"testing"
 )
 
 func TestInstallDryRun(t *testing.T) {
+	if _, err := exec.LookPath("brew"); err != nil {
+		t.Skip("homebrew not available")
+	}
 	result, err := Install(context.Background(), InstallOpts{
 		NerdFont: true,
 		DryRun:   true,
@@ -25,6 +29,9 @@ func TestInstallDryRun(t *testing.T) {
 }
 
 func TestInstallDryRunMonaspace(t *testing.T) {
+	if _, err := exec.LookPath("brew"); err != nil {
+		t.Skip("homebrew not available")
+	}
 	result, err := Install(context.Background(), InstallOpts{
 		NerdFont: false,
 		DryRun:   true,
