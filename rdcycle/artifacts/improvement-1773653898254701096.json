@@ -1,0 +1,25 @@
+{
+  "id": "improvement-1773653898254701096",
+  "type": "improvement",
+  "content": {
+    "cycle_id": "cycle-2-t8-maintenance-mode",
+    "cycle_number": 2,
+    "suggestions": [
+      "For tasks tagged mcpkit/rdcycle, the agent should immediately check ../mcpkit path and note the cross-repo constraint",
+      "Consider adding a maintenance_mode flag to rdcycle.CycleConfig that can be set from claudekit's NewRDCycleModule",
+      "The perpetual orchestrator in mcpkit should check AllPhasesComplete() before calling HandlePlan/HandleSynthesize"
+    ],
+    "total_cost": 0,
+    "wasted_iters": 8,
+    "what_failed": [
+      "Spent 10+ iterations re-reading the same claudekit files trying to find rdcycle orchestrator code that lives in ../mcpkit",
+      "Could not directly modify mcpkit files from claudekit project scope"
+    ],
+    "what_worked": [
+      "Identified that t8-maintenance-mode requires changes in mcpkit/rdcycle (sibling repo), not claudekit",
+      "The rdcycle_plan tool already identifies when all phases are complete (gap_count=0) which provides the signal needed for maintenance mode",
+      "Existing AllPhasesComplete() check in rdcycle planner already supports this pattern"
+    ]
+  },
+  "created_at": "2026-03-16T09:38:18Z"
+}

@@ -1,14 +1,43 @@
 {
   "name": "R\u0026D Cycle: cycle-2",
-  "description": "Autonomous R\u0026D cycle 'cycle-2' (strategy: meta_improve, since: 2026-03-16T09:15:34Z).\n\nLearning signals:\n- Cost trend: decreasing\n- Avoid: No failures this cycle\n- Avoid: CI fails because MCPKIT_TOKEN secret is not configured — requires user action\n- Avoid: 1Password field name was 'credential' not 'password' as documented in RESUME.md\n- Avoid: Cannot run truly autonomous Ralph loops without an alternative sampler (API-based or Agent SDK)\n- Avoid: 1Password CLI (op) not configured in WSL — had to use Windows op.exe bridge",
+  "description": "Autonomous R\u0026D cycle 'cycle-2' (strategy: full, since: 2026-03-16T09:33:05Z).",
   "completion": "All planned work items are implemented, tests pass, and roadmap is updated.",
   "tasks": [
     {
-      "id": "self_improve",
-      "description": "Run rdcycle_improve to analyze accumulated notes and apply recommendations.",
+      "id": "scan",
+      "description": "Run rdcycle_scan to check ecosystem activity since 2026-03-16T09:33:05Z.",
+      "done": false
+    },
+    {
+      "id": "plan",
+      "description": "Run rdcycle_plan with scan results and roadmap at /home/hairglasses/Docs/hairglasses-studio/claudekit/roadmap.json.",
+      "done": false,
+      "depends_on": [
+        "scan"
+      ]
+    },
+    {
+      "id": "t8-verify-stuck",
+      "description": "Fix verify task stuck-loop: mark_done immediately when make check passes with no code changes",
       "done": false,
       "depends_on": [
         "plan"
+      ]
+    },
+    {
+      "id": "t8-maintenance-mode",
+      "description": "Orchestrator maintenance mode: skip plan/synthesize when all roadmap phases complete",
+      "done": false,
+      "depends_on": [
+        "t8-verify-stuck"
+      ]
+    },
+    {
+      "id": "t8-dedup-notes",
+      "description": "Deduplicate orchestrator notes: don't write hollow 'Completed cycle N' when HandleNotes already ran",
+      "done": false,
+      "depends_on": [
+        "t8-maintenance-mode"
       ]
     },
     {
@@ -16,7 +45,7 @@
       "description": "Run rdcycle_verify to execute make check. Fix issues and re-verify if needed.",
       "done": false,
       "depends_on": [
-        "self_improve"
+        "t8-dedup-notes"
       ]
     },
     {
