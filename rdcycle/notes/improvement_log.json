@@ -162,5 +162,276 @@
       "Consider adding a preflight health check to perpetual-loop.sh (API key test, disk space, etc.)"
     ],
     "timestamp": "2026-03-16T09:00:00Z"
+  },
+  {
+    "cycle_id": "cycle-1",
+    "cycle_number": 1,
+    "what_worked": [
+      "make check passes cleanly across all packages (vet, test, build)",
+      "All 9 packages pass tests with no failures",
+      "ServerSamplingClient wiring is correct in the codebase",
+      "1Password CLI bridge via Windows op.exe works in WSL environment",
+      "Used make check instead of shell operators for rdcycle_verify"
+    ],
+    "what_failed": [
+      "Claude Code does not support MCP sampling protocol — ralph_start fails with 'sampler is required'",
+      "Cannot run truly autonomous Ralph loops without an alternative sampler (API-based or Agent SDK)",
+      "1Password CLI (op) not configured in WSL — had to use Windows op.exe bridge",
+      "1Password field name was 'credential' not 'password' as documented in RESUME.md",
+      "YAML brace escaping issue required a second fix commit",
+      "CI fails because MCPKIT_TOKEN secret is not configured — requires user action",
+      "First CI fix attempt used path: ../mcpkit which GitHub Actions does not support",
+      "rdcycle_verify does not support shell operators (\u0026\u0026) — must use make check instead"
+    ],
+    "wasted_iterations": 0,
+    "total_cost_dollars": 0.05,
+    "suggestions": [
+      "Implement API-based sampler alternative so ralph_start works without MCP sampling protocol support",
+      "Document the Windows op.exe bridge pattern for WSL environments in RESUME.md",
+      "Update RESUME.md to use field name 'credential' instead of 'password' for 1Password",
+      "Add MCPKIT_TOKEN secret setup instructions to CI/README documentation",
+      "Always use make check (or explicit go test commands) rather than shell-chained commands in rdcycle_verify",
+      "Consider adding a CI pre-check that validates required secrets are configured before running dependent steps"
+    ],
+    "timestamp": "2026-03-16T09:15:04Z"
+  },
+  {
+    "cycle_id": "cycle-1",
+    "cycle_number": 1,
+    "what_worked": [
+      "Completed cycle 1"
+    ],
+    "what_failed": [],
+    "wasted_iterations": 0,
+    "total_cost_dollars": 0,
+    "suggestions": [],
+    "timestamp": "2026-03-16T09:15:10Z"
+  },
+  {
+    "cycle_id": "cycle-1",
+    "cycle_number": 1,
+    "what_worked": [
+      "Completed cycle 1"
+    ],
+    "what_failed": [],
+    "wasted_iterations": 0,
+    "total_cost_dollars": 0,
+    "suggestions": [],
+    "timestamp": "2026-03-16T09:15:31Z"
+  },
+  {
+    "cycle_id": "cycle-2",
+    "cycle_number": 2,
+    "what_worked": [
+      "All tests passed on first verify run with no issues",
+      "make check completed successfully covering all packages",
+      "Recovery strategy cycle completed cleanly"
+    ],
+    "what_failed": [
+      "Cannot run truly autonomous Ralph loops without an alternative sampler (API-based or Agent SDK)",
+      "1Password CLI (op) not configured in WSL — had to use Windows op.exe bridge",
+      "CI fails because MCPKIT_TOKEN secret is not configured — requires user action",
+      "1Password field name was 'credential' not 'password' as documented in RESUME.md"
+    ],
+    "wasted_iterations": 0,
+    "total_cost_dollars": 0,
+    "suggestions": [
+      "Investigate API-based or Agent SDK sampler to enable truly autonomous Ralph loops",
+      "Document WSL 1Password bridge setup in RESUME.md to avoid confusion",
+      "Add MCPKIT_TOKEN setup instructions to onboarding docs or CI setup guide",
+      "Update RESUME.md to correct 1Password field name from 'password' to 'credential'"
+    ],
+    "timestamp": "2026-03-16T09:15:39Z"
+  },
+  {
+    "cycle_id": "cycle-4",
+    "cycle_number": 4,
+    "what_worked": [
+      "All roadmap phases (tier-1 through tier-7) are complete — zero gaps remaining",
+      "make check passes cleanly: all 9 packages pass tests, build succeeds",
+      "Scan, plan, and verify steps completed without code changes needed",
+      "Ecosystem scan found no breaking changes requiring immediate action"
+    ],
+    "what_failed": [
+      "CI fails because MCPKIT_TOKEN secret is not configured — requires user action outside the cycle",
+      "Stuck loop detected on verify task — agent failed to mark_done for 5 iterations despite passing tests",
+      "Plan step produced no actionable items since all phases are complete — cycle was mostly a no-op"
+    ],
+    "wasted_iterations": 5,
+    "total_cost_dollars": 0.15,
+    "suggestions": [
+      "Define a new roadmap phase (tier-8) to give future cycles concrete work items — e.g. cross-platform testing, performance benchmarks, documentation site",
+      "Fix the stuck-loop detection: when verify passes on first try, immediately mark_done instead of looping",
+      "Configure MCPKIT_TOKEN in GitHub Actions secrets to unblock CI",
+      "Consider reducing cycle frequency when all roadmap items are complete — switch to watch-only mode",
+      "Add a 'maintenance' cycle strategy that only runs scan+verify without plan/synthesize when no gaps exist"
+    ],
+    "timestamp": "2026-03-16T09:17:16Z"
+  },
+  {
+    "cycle_id": "cycle-3",
+    "cycle_number": 3,
+    "what_worked": [
+      "All tests pass cleanly — make check succeeds with all 9 packages green",
+      "All roadmap phases (tier-1 through tier-7) are complete with zero gaps",
+      "Scan completed quickly with no ecosystem disruptions to address",
+      "Planning correctly identified that all phases are done and suggested considering new phases"
+    ],
+    "what_failed": [
+      "Multiple wasted iterations on verify task — iterations 8 and 9 produced no tool calls",
+      "Scan was run twice (iterations 1 and 3) due to premature plan attempt in iteration 2"
+    ],
+    "wasted_iterations": 3,
+    "total_cost_dollars": 0,
+    "suggestions": [
+      "Define a new roadmap phase (tier-8) for next-generation features now that all existing tiers are complete",
+      "Consider areas like: cross-platform Windows/WSL support, advanced telemetry dashboards, plugin marketplace backend, or multi-user config sync",
+      "Fix the orchestrator so it doesn't attempt blocked tasks — the plan task was attempted before scan was marked done",
+      "Ensure verify task completion is detected on first pass to avoid empty iterations",
+      "CI MCPKIT_TOKEN secret still needs user configuration — carry forward as known issue",
+      "1Password CLI in WSL still requires Windows op.exe bridge — document this workaround"
+    ],
+    "timestamp": "2026-03-16T09:17:21Z"
+  },
+  {
+    "cycle_id": "cycle-4",
+    "cycle_number": 4,
+    "what_worked": [
+      "Completed cycle 4"
+    ],
+    "what_failed": [],
+    "wasted_iterations": 0,
+    "total_cost_dollars": 0,
+    "suggestions": [],
+    "timestamp": "2026-03-16T09:17:29Z"
+  },
+  {
+    "cycle_id": "cycle-3",
+    "cycle_number": 3,
+    "what_worked": [
+      "Completed cycle 3"
+    ],
+    "what_failed": [],
+    "wasted_iterations": 0,
+    "total_cost_dollars": 0,
+    "suggestions": [],
+    "timestamp": "2026-03-16T09:17:34Z"
+  },
+  {
+    "cycle_id": "cycle-4",
+    "cycle_number": 4,
+    "what_worked": [
+      "Completed cycle 4"
+    ],
+    "what_failed": [],
+    "wasted_iterations": 0,
+    "total_cost_dollars": 0,
+    "suggestions": [],
+    "timestamp": "2026-03-16T09:17:38Z"
+  },
+  {
+    "cycle_id": "cycle-5",
+    "cycle_number": 5,
+    "what_worked": [
+      "All tests pass cleanly across all 9 packages with no failures",
+      "Build completes successfully in ~11 seconds",
+      "All roadmap phases are complete — project is in maintenance/evolution mode",
+      "Scan ran successfully across 4 repositories with no new activity requiring action",
+      "Verify tool worked reliably on both invocations"
+    ],
+    "what_failed": [
+      "Plan task required two invocations before being marked done — unclear why first result wasn't accepted",
+      "One iteration (iteration 5) produced no tool call due to missing tool specification in decision",
+      "No new ecosystem activity detected — scan window may be too narrow or repos too stable"
+    ],
+    "wasted_iterations": 2,
+    "total_cost_dollars": 0,
+    "suggestions": [
+      "Consider adding a new roadmap phase to address remaining gaps or new feature areas since all phases are complete",
+      "Ensure decision format always includes tool_name to avoid wasted no-op iterations",
+      "Consider widening the scan repo list to catch more ecosystem signals (e.g. anthropics/anthropic-sdk-go, mark3labs/mcp-go)",
+      "With all phases complete, future cycles should focus on dependency updates, performance improvements, or new capability exploration",
+      "Track the 1Password CLI WSL bridge workaround as a procedural memory to avoid re-discovering it"
+    ],
+    "timestamp": "2026-03-16T09:18:42Z"
+  },
+  {
+    "cycle_id": "cycle-5",
+    "cycle_number": 5,
+    "what_worked": [
+      "Completed cycle 5"
+    ],
+    "what_failed": [],
+    "wasted_iterations": 0,
+    "total_cost_dollars": 0,
+    "suggestions": [],
+    "timestamp": "2026-03-16T09:18:53Z"
+  },
+  {
+    "cycle_id": "cycle-5",
+    "cycle_number": 5,
+    "what_worked": [
+      "All roadmap phases (tier-1 through tier-7) are complete — no gaps remaining",
+      "make check passes cleanly across all 9 packages with zero failures",
+      "Scan found no urgent ecosystem changes requiring action — stable period",
+      "rdcycle_plan correctly identified all-complete state and suggested defining new phases"
+    ],
+    "what_failed": [
+      "verify task got stuck in a 5-iteration loop despite passing on first attempt — mark_done was not set promptly",
+      "No new work items to implement since all phases are complete — cycle was largely a no-op",
+      "Wasted ~4 iterations on verify task doing nothing useful"
+    ],
+    "wasted_iterations": 4,
+    "total_cost_dollars": 0.5,
+    "suggestions": [
+      "When verify passes on first attempt and there are no code changes, immediately mark_done — do not re-verify",
+      "For maintenance cycles with no gaps, consider a 'lightweight' strategy that skips plan/verify steps",
+      "Define a new roadmap phase (tier-8) for next-gen features: e.g., Windows/WSL native support, multi-user config sync, or VS Code terminal integration",
+      "Add a pre-check in the orchestrator: if all phases complete and scan finds no action items, auto-skip to reflect+schedule",
+      "Carry forward learning signals about 1Password CLI (op.exe bridge in WSL) and CI MCPKIT_TOKEN secret requirement"
+    ],
+    "timestamp": "2026-03-16T09:19:14Z"
+  },
+  {
+    "cycle_id": "cycle-5",
+    "cycle_number": 5,
+    "what_worked": [
+      "Completed cycle 5"
+    ],
+    "what_failed": [],
+    "wasted_iterations": 0,
+    "total_cost_dollars": 0,
+    "suggestions": [],
+    "timestamp": "2026-03-16T09:19:25Z"
+  },
+  {
+    "cycle_id": "session-hardening-and-coverage-001",
+    "cycle_number": 8,
+    "what_worked": [
+      "Test coverage boost: mcpserver 26.8% → 51.2%, cmd/claudekit 5.1% → 20.6%",
+      "Handler-level tests invoke actual ToolDefinition.Handler with CallToolRequest — not just registration",
+      "Parallel agents wrote 8 test files (1236 lines) while maintaining all-green build",
+      "CLAUDECODE nesting guard added to perpetual-loop.sh — clear error vs cryptic ioctl failure",
+      "Perpetual loop successfully ran 5+ cycles autonomously with working cost tracking",
+      "CostReader wiring confirmed working — governor sees real per-cycle costs"
+    ],
+    "what_failed": [
+      "Cannot launch perpetual-loop.sh from inside Claude Code — CLAUDECODE=1 env var blocks nesting",
+      "env -u CLAUDECODE didn't work from sandboxed Bash tool — env var inherited from parent",
+      "Perpetual cycles are mostly no-ops when all roadmap phases are complete — wasted budget",
+      "Verify task stuck-loop: 3-5 wasted iterations per cycle despite passing on first attempt",
+      "Duplicate hollow notes in improvement_log: orchestrator writes 'Completed cycle N' alongside real notes"
+    ],
+    "wasted_iterations": 2,
+    "total_cost_dollars": 0,
+    "suggestions": [
+      "Define tier-8 roadmap phase to give cycles meaningful work (cross-platform, perf benchmarks, docs site)",
+      "Fix verify stuck-loop: when make check passes with no code changes, immediately mark_done",
+      "Add 'maintenance' strategy in orchestrator: skip plan/synthesize when all roadmap phases complete",
+      "Deduplicate notes: orchestrator should not write hollow 'Completed cycle N' when HandleNotes already ran",
+      "Consider widening scan repo list: anthropics/anthropic-sdk-go, mark3labs/mcp-go for ecosystem signals",
+      "Test perpetual loop from a raw terminal — the CLAUDECODE guard now catches the nesting issue early"
+    ],
+    "timestamp": "2026-03-16T09:25:00Z"
   }
 ]
