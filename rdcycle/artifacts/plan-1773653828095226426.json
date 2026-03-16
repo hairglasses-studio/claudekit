@@ -1,0 +1,16 @@
+{
+  "id": "plan-1773653828095226426",
+  "type": "plan",
+  "content": {
+    "action_items": null,
+    "gap_count": 2,
+    "ready_count": 2,
+    "roadmap_path": "/home/hairglasses/Docs/hairglasses-studio/claudekit/roadmap.json",
+    "suggestions": [
+      "Focus on phase \"Cross-Platform \u0026 Loop Reliability\" (tier-8): 2 item(s) ready to start.",
+      "Ready items: t8-maintenance-mode (Orchestrator maintenance mode: skip plan/synthesize when ...); t8-dedup-notes (Deduplicate orchestrator notes: don't write hollow 'Compl...)",
+      "Gap analysis: 2 planned item(s) remain across all phases."
+    ]
+  },
+  "created_at": "2026-03-16T09:37:08Z"
+}

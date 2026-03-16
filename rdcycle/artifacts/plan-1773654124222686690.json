@@ -1,0 +1,49 @@
+{
+  "id": "plan-1773654124222686690",
+  "type": "plan",
+  "content": {
+    "action_items": [
+      "Review 30 new commits in hairglasses-studio/mcpkit",
+      "Review 30 new commits in hairglasses-studio/claudekit",
+      "Investigate githubnext/monaspace#373: Preview of character variants / Create own character variants?",
+      "Investigate githubnext/monaspace#322: Ligatures do not work inside VS Code terminal",
+      "Investigate catppuccin/catppuccin#3016: chore(ports): update icons",
+      "Investigate catppuccin/catppuccin#3008: hyprtoolkit",
+      "Investigate catppuccin/catppuccin#2889: Ditto",
+      "Investigate anthropics/anthropic-sdk-go#293: Bugfix: missing adaptive union register which cause unmarshal field missing.",
+      "Investigate anthropics/anthropic-sdk-go#292: Streaming:  json: error calling MarshalJSON for type json.RawMessage: unexpected end of JSON input",
+      "Investigate anthropics/anthropic-sdk-go#283: release: 1.27.0",
+      "Review 6 new commits in mark3labs/mcp-go",
+      "Investigate mark3labs/mcp-go#751: feature: Add prompt filter and handler middleware support (parity with tools)",
+      "Investigate mark3labs/mcp-go#750: feature: Add prompt filter and handler middleware support (parity with tools)",
+      "Investigate mark3labs/mcp-go#748: bug: AddTaskTool tasks/result does not return final tool payload",
+      "Investigate mark3labs/mcp-go#738: Upgrade to go 1.25.5",
+      "Investigate mark3labs/mcp-go#705: docs: docs error",
+      "Investigate mark3labs/mcp-go#694: ToolInputSchema doesn't inherit MarshalJSON from ToolArgumentsSchema"
+    ],
+    "gap_count": 0,
+    "ready_count": 0,
+    "roadmap_path": "/home/hairglasses/Docs/hairglasses-studio/claudekit/roadmap.json",
+    "suggestions": [
+      "Focus on phase \"Cross-Platform \u0026 Loop Reliability\" (tier-8): 0 item(s) ready to start.",
+      "Ecosystem signal: Review 30 new commits in hairglasses-studio/mcpkit",
+      "Ecosystem signal: Review 30 new commits in hairglasses-studio/claudekit",
+      "Ecosystem signal: Investigate githubnext/monaspace#373: Preview of character variants / Create own character variants?",
+      "Ecosystem signal: Investigate githubnext/monaspace#322: Ligatures do not work inside VS Code terminal",
+      "Ecosystem signal: Investigate catppuccin/catppuccin#3016: chore(ports): update icons",
+      "Ecosystem signal: Investigate catppuccin/catppuccin#3008: hyprtoolkit",
+      "Ecosystem signal: Investigate catppuccin/catppuccin#2889: Ditto",
+      "Ecosystem signal: Investigate anthropics/anthropic-sdk-go#293: Bugfix: missing adaptive union register which cause unmarshal field missing.",
+      "Ecosystem signal: Investigate anthropics/anthropic-sdk-go#292: Streaming:  json: error calling MarshalJSON for type json.RawMessage: unexpected end of JSON input",
+      "Ecosystem signal: Investigate anthropics/anthropic-sdk-go#283: release: 1.27.0",
+      "Ecosystem signal: Review 6 new commits in mark3labs/mcp-go",
+      "Ecosystem signal: Investigate mark3labs/mcp-go#751: feature: Add prompt filter and handler middleware support (parity with tools)",
+      "Ecosystem signal: Investigate mark3labs/mcp-go#750: feature: Add prompt filter and handler middleware support (parity with tools)",
+      "Ecosystem signal: Investigate mark3labs/mcp-go#748: bug: AddTaskTool tasks/result does not return final tool payload",
+      "Ecosystem signal: Investigate mark3labs/mcp-go#738: Upgrade to go 1.25.5",
+      "Ecosystem signal: Investigate mark3labs/mcp-go#705: docs: docs error",
+      "Ecosystem signal: Investigate mark3labs/mcp-go#694: ToolInputSchema doesn't inherit MarshalJSON from ToolArgumentsSchema"
+    ]
+  },
+  "created_at": "2026-03-16T09:42:04Z"
+}

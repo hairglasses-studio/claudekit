@@ -1,14 +1,19 @@
 {
   "name": "R\u0026D Cycle: cycle-6",
-  "description": "Autonomous R\u0026D cycle 'cycle-6' (strategy: meta_improve, since: 2026-03-16T09:19:29Z).",
+  "description": "Autonomous R\u0026D cycle 'cycle-6' (strategy: full, since: 2026-03-16T09:42:04Z).",
   "completion": "All planned work items are implemented, tests pass, and roadmap is updated.",
   "tasks": [
     {
-      "id": "self_improve",
-      "description": "Run rdcycle_improve to analyze accumulated notes and apply recommendations.",
+      "id": "scan",
+      "description": "Run rdcycle_scan to check ecosystem activity since 2026-03-16T09:42:04Z.",
+      "done": false
+    },
+    {
+      "id": "plan",
+      "description": "Run rdcycle_plan with scan results and roadmap at /home/hairglasses/Docs/hairglasses-studio/claudekit/roadmap.json.",
       "done": false,
       "depends_on": [
-        "plan"
+        "scan"
       ]
     },
     {
@@ -16,7 +21,7 @@
       "description": "Run rdcycle_verify to execute make check. Fix issues and re-verify if needed.",
       "done": false,
       "depends_on": [
-        "self_improve"
+        "plan"
       ]
     },
     {
