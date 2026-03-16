@@ -43,3 +43,15 @@
 - [x] CostPolicy breach triggers ralph_stop automatically
 - [x] rdcycle_improve feeds suggestions back into next cycle spec
 - [x] CLI command to tail ralph progress in a parallel terminal (ralph tail/status)
+
+## Tier 8: Cross-Platform & Loop Reliability
+- [x] WSL/Linux compatibility (skip brew-dependent tests, op.exe bridge docs)
+- [ ] Fix verify task stuck-loop: mark_done immediately when make check passes with no changes
+- [ ] Orchestrator maintenance mode: skip plan/synthesize when all phases complete
+- [ ] Deduplicate orchestrator notes (don't write hollow "Completed cycle N")
+- [x] mcpserver test coverage to 51%+ with handler-level tests
+- [x] cmd/claudekit test coverage to 20%+ with routing and helper tests
+- [x] CLAUDECODE nesting guard in perpetual-loop.sh
+- [x] Wire CostReader for real per-cycle dollar tracking in governor
+- [x] Consecutive sampler failure limit (5) for fast-fail on API outages
+- [x] Widen scan repo list (anthropics/anthropic-sdk-go, mark3labs/mcp-go)

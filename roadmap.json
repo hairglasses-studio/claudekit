@@ -81,6 +81,23 @@
         {"id": "t7-self-improve", "description": "rdcycle_improve feeds suggestions back into next cycle spec", "package": "mcpserver", "status": "complete"},
         {"id": "t7-progress-tail", "description": "CLI command to tail ralph progress in a parallel terminal", "package": "cmd/claudekit", "status": "complete"}
       ]
+    },
+    {
+      "id": "tier-8",
+      "name": "Cross-Platform & Loop Reliability",
+      "status": "in-progress",
+      "items": [
+        {"id": "t8-wsl-compat", "description": "WSL/Linux compatibility: skip brew-dependent tests, op.exe bridge docs", "package": "fontkit", "status": "complete"},
+        {"id": "t8-verify-stuck", "description": "Fix verify task stuck-loop: mark_done immediately when make check passes with no code changes", "package": "mcpkit/ralph", "status": "planned"},
+        {"id": "t8-maintenance-mode", "description": "Orchestrator maintenance mode: skip plan/synthesize when all roadmap phases complete", "package": "mcpkit/rdcycle", "status": "planned"},
+        {"id": "t8-dedup-notes", "description": "Deduplicate orchestrator notes: don't write hollow 'Completed cycle N' when HandleNotes already ran", "package": "mcpkit/rdcycle", "status": "planned"},
+        {"id": "t8-coverage-mcpserver", "description": "mcpserver test coverage to 51%+ with handler-level tests", "package": "mcpserver", "status": "complete"},
+        {"id": "t8-coverage-cli", "description": "cmd/claudekit test coverage to 20%+ with routing and helper tests", "package": "cmd/claudekit", "status": "complete"},
+        {"id": "t8-nesting-guard", "description": "CLAUDECODE nesting guard in perpetual-loop.sh", "package": "scripts", "status": "complete"},
+        {"id": "t8-cost-reader", "description": "Wire CostReader into orchestrator for real per-cycle dollar tracking", "package": "mcpserver", "status": "complete"},
+        {"id": "t8-sampler-failfast", "description": "Consecutive sampler failure limit (5) for fast-fail on API outages", "package": "mcpkit/ralph", "status": "complete"},
+        {"id": "t8-widen-scan", "description": "Widen scan repo list: add anthropics/anthropic-sdk-go, mark3labs/mcp-go", "package": "mcpserver", "status": "complete"}
+      ]
     }
   ]
 }
