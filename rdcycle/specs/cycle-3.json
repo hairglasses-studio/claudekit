@@ -1,28 +1,12 @@
 {
   "name": "R\u0026D Cycle: cycle-3",
-  "description": "Autonomous R\u0026D cycle 'cycle-3' (strategy: full, since: 2026-03-16T09:15:43Z).\n\nLearning signals:\n- Avoid: 1Password field name was 'credential' not 'password' as documented in RESUME.md\n- Avoid: No failures this cycle\n- Avoid: CI fails because MCPKIT_TOKEN secret is not configured — requires user action\n- Avoid: Cannot run truly autonomous Ralph loops without an alternative sampler (API-based or Agent SDK)\n- Avoid: 1Password CLI (op) not configured in WSL — had to use Windows op.exe bridge",
+  "description": "Autonomous R\u0026D cycle 'cycle-3' (strategy: recovery, since: 2026-03-16T09:41:45Z).",
   "completion": "All planned work items are implemented, tests pass, and roadmap is updated.",
   "tasks": [
     {
-      "id": "scan",
-      "description": "Run rdcycle_scan to check ecosystem activity since 2026-03-16T09:15:43Z.",
-      "done": false
-    },
-    {
-      "id": "plan",
-      "description": "Run rdcycle_plan with scan results and roadmap at /home/hairglasses/Docs/hairglasses-studio/claudekit/roadmap.json.",
-      "done": false,
-      "depends_on": [
-        "scan"
-      ]
-    },
-    {
       "id": "verify",
       "description": "Run rdcycle_verify to execute make check. Fix issues and re-verify if needed.",
-      "done": false,
-      "depends_on": [
-        "plan"
-      ]
+      "done": false
     },
     {
       "id": "reflect",

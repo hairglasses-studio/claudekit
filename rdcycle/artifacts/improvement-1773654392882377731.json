@@ -1,0 +1,28 @@
+{
+  "id": "improvement-1773654392882377731",
+  "type": "improvement",
+  "content": {
+    "cycle_id": "cycle-7",
+    "cycle_number": 7,
+    "suggestions": [
+      "Add roadmap_update support for updating phase-level status (not just item-level) to avoid write_file workarounds",
+      "When verify passes with no code changes, the orchestrator should immediately mark_done without extra iterations",
+      "Consider adding a tier-9 phase for documentation, performance benchmarks, or API stability work now that all features are complete"
+    ],
+    "total_cost": 0,
+    "wasted_iters": 3,
+    "what_failed": [
+      "roadmap_update failed when trying to update phase status by phase ID 'tier-8' — phases aren't directly addressable as items",
+      "Had to fall back to write_file to update the phase status field manually",
+      "Multiple iterations (13, 14) in verify produced no tool calls — wasted decision rounds"
+    ],
+    "what_worked": [
+      "All tests pass cleanly across all 9 packages with zero failures",
+      "Roadmap tier-8 phase completed — all 10 items marked complete and phase status updated to complete",
+      "Maintenance mode planning correctly identified no new work items needed (0 gaps)",
+      "Verify passed on first attempt with no code changes required",
+      "Scan and plan phases completed efficiently with ecosystem check"
+    ]
+  },
+  "created_at": "2026-03-16T09:46:32Z"
+}

@@ -1,19 +1,48 @@
 {
   "title": "claudekit",
   "description": "Claude Code terminal customization framework",
-  "updated_at": "2026-03-15",
   "phases": [
     {
       "id": "tier-1",
       "name": "Font Management + Statusline",
       "status": "complete",
       "items": [
-        {"id": "t1-font-detect", "description": "Monaspace/Monaspice detection and installation", "package": "fontkit", "status": "complete"},
-        {"id": "t1-iterm-profile", "description": "iTerm2 Dynamic Profile with font fallback", "package": "fontkit", "status": "complete"},
-        {"id": "t1-ghostty-config", "description": "Ghostty config with font fallback", "package": "fontkit", "status": "complete"},
-        {"id": "t1-mcp-skill", "description": "CLI + MCP server + Claude Code skill", "package": "mcpserver", "status": "complete"},
-        {"id": "t1-font-preview", "description": "Font preview command (ligatures, Nerd Font icons)", "package": "fontkit", "status": "complete"},
-        {"id": "t1-statusline", "description": "Claude Code statusline with Monaspace multi-font fallback", "package": "statusline", "status": "complete"}
+        {
+          "id": "t1-font-detect",
+          "description": "Monaspace/Monaspice detection and installation",
+          "package": "fontkit",
+          "status": "complete"
+        },
+        {
+          "id": "t1-iterm-profile",
+          "description": "iTerm2 Dynamic Profile with font fallback",
+          "package": "fontkit",
+          "status": "complete"
+        },
+        {
+          "id": "t1-ghostty-config",
+          "description": "Ghostty config with font fallback",
+          "package": "fontkit",
+          "status": "complete"
+        },
+        {
+          "id": "t1-mcp-skill",
+          "description": "CLI + MCP server + Claude Code skill",
+          "package": "mcpserver",
+          "status": "complete"
+        },
+        {
+          "id": "t1-font-preview",
+          "description": "Font preview command (ligatures, Nerd Font icons)",
+          "package": "fontkit",
+          "status": "complete"
+        },
+        {
+          "id": "t1-statusline",
+          "description": "Claude Code statusline with Monaspace multi-font fallback",
+          "package": "statusline",
+          "status": "complete"
+        }
       ]
     },
     {
@@ -21,10 +50,30 @@
       "name": "Terminal Theming",
       "status": "complete",
       "items": [
-        {"id": "t2-catppuccin", "description": "Catppuccin theme support (one palette → multiple targets)", "package": "themekit", "status": "complete"},
-        {"id": "t2-starship", "description": "Starship prompt configuration", "package": "themekit", "status": "complete"},
-        {"id": "t2-terminal-colors", "description": "Terminal color scheme management", "package": "themekit", "status": "complete"},
-        {"id": "t2-syntax-sync", "description": "Syntax highlighting theme sync (bat, delta)", "package": "themekit", "status": "complete"}
+        {
+          "id": "t2-catppuccin",
+          "description": "Catppuccin theme support (one palette → multiple targets)",
+          "package": "themekit",
+          "status": "complete"
+        },
+        {
+          "id": "t2-starship",
+          "description": "Starship prompt configuration",
+          "package": "themekit",
+          "status": "complete"
+        },
+        {
+          "id": "t2-terminal-colors",
+          "description": "Terminal color scheme management",
+          "package": "themekit",
+          "status": "complete"
+        },
+        {
+          "id": "t2-syntax-sync",
+          "description": "Syntax highlighting theme sync (bat, delta)",
+          "package": "themekit",
+          "status": "complete"
+        }
       ]
     },
     {
@@ -32,9 +81,24 @@
       "name": "Environment Bootstrap",
       "status": "complete",
       "items": [
-        {"id": "t3-dotfiles", "description": "Dotfile management (snapshot/restore)", "package": "envkit", "status": "complete"},
-        {"id": "t3-mise", "description": "Tool version management (mise integration)", "package": "envkit", "status": "complete"},
-        {"id": "t3-shell-detect", "description": "Shell plugin detection (oh-my-zsh, zinit)", "package": "envkit", "status": "complete"}
+        {
+          "id": "t3-dotfiles",
+          "description": "Dotfile management (snapshot/restore)",
+          "package": "envkit",
+          "status": "complete"
+        },
+        {
+          "id": "t3-mise",
+          "description": "Tool version management (mise integration)",
+          "package": "envkit",
+          "status": "complete"
+        },
+        {
+          "id": "t3-shell-detect",
+          "description": "Shell plugin detection (oh-my-zsh, zinit)",
+          "package": "envkit",
+          "status": "complete"
+        }
       ]
     },
     {
@@ -42,10 +106,30 @@
       "name": "Advanced MCP Integration",
       "status": "complete",
       "items": [
-        {"id": "t4-gateway", "description": "Gateway pattern — aggregate multiple MCP modules", "package": "mcpserver", "status": "complete"},
-        {"id": "t4-ralph", "description": "Ralph loop — autonomous terminal setup verification", "package": "mcpserver", "status": "complete"},
-        {"id": "t4-webmcp", "description": "WebMCP bridge — HTTP server with /tools and /health", "package": "mcpserver", "status": "complete"},
-        {"id": "t4-registry", "description": "MCP Registry publishing — discoverable via official registry", "package": "mcpserver", "status": "complete"}
+        {
+          "id": "t4-gateway",
+          "description": "Gateway pattern — aggregate multiple MCP modules",
+          "package": "mcpserver",
+          "status": "complete"
+        },
+        {
+          "id": "t4-ralph",
+          "description": "Ralph loop — autonomous terminal setup verification",
+          "package": "mcpserver",
+          "status": "complete"
+        },
+        {
+          "id": "t4-webmcp",
+          "description": "WebMCP bridge — HTTP server with /tools and /health",
+          "package": "mcpserver",
+          "status": "complete"
+        },
+        {
+          "id": "t4-registry",
+          "description": "MCP Registry publishing — discoverable via official registry",
+          "package": "mcpserver",
+          "status": "complete"
+        }
       ]
     },
     {
@@ -53,51 +137,170 @@
       "name": "Ecosystem",
       "status": "complete",
       "items": [
-        {"id": "t5-plugins", "description": "Plugin system for community-contributed terminal configs", "package": "pluginkit", "status": "complete"},
-        {"id": "t5-skills", "description": "Claude Code skill marketplace integration", "package": "skillkit", "status": "complete"},
-        {"id": "t5-multi-terminal", "description": "Multi-terminal sync (iTerm2 + Ghostty + WezTerm)", "package": "fontkit", "status": "complete"},
-        {"id": "t5-ci", "description": "CI/CD for dotfile validation (GitHub Actions)", "package": "mcpserver", "status": "complete"}
+        {
+          "id": "t5-plugins",
+          "description": "Plugin system for community-contributed terminal configs",
+          "package": "pluginkit",
+          "status": "complete"
+        },
+        {
+          "id": "t5-skills",
+          "description": "Claude Code skill marketplace integration",
+          "package": "skillkit",
+          "status": "complete"
+        },
+        {
+          "id": "t5-multi-terminal",
+          "description": "Multi-terminal sync (iTerm2 + Ghostty + WezTerm)",
+          "package": "fontkit",
+          "status": "complete"
+        },
+        {
+          "id": "t5-ci",
+          "description": "CI/CD for dotfile validation (GitHub Actions)",
+          "package": "mcpserver",
+          "status": "complete"
+        }
       ]
     },
     {
       "id": "tier-6",
-      "name": "Automated R&D",
+      "name": "Automated R\u0026D",
       "status": "complete",
       "items": [
-        {"id": "t6-roadmap", "description": "Machine-readable roadmap with MCP tools", "package": "mcpserver", "status": "complete"},
-        {"id": "t6-finops", "description": "FinOps token tracking middleware + budget enforcement", "package": "mcpserver", "status": "complete"},
-        {"id": "t6-memory", "description": "Agent memory for cross-step persistence", "package": "mcpserver", "status": "complete"},
-        {"id": "t6-rdcycle", "description": "R&D cycle tools for autonomous development", "package": "mcpserver", "status": "complete", "depends_on": ["t6-roadmap"]},
-        {"id": "t6-workflow", "description": "Workflow engine with predefined setup graphs", "package": "mcpserver", "status": "complete"}
+        {
+          "id": "t6-roadmap",
+          "description": "Machine-readable roadmap with MCP tools",
+          "package": "mcpserver",
+          "status": "complete"
+        },
+        {
+          "id": "t6-finops",
+          "description": "FinOps token tracking middleware + budget enforcement",
+          "package": "mcpserver",
+          "status": "complete"
+        },
+        {
+          "id": "t6-memory",
+          "description": "Agent memory for cross-step persistence",
+          "package": "mcpserver",
+          "status": "complete"
+        },
+        {
+          "id": "t6-rdcycle",
+          "description": "R\u0026D cycle tools for autonomous development",
+          "package": "mcpserver",
+          "status": "complete",
+          "depends_on": [
+            "t6-roadmap"
+          ]
+        },
+        {
+          "id": "t6-workflow",
+          "description": "Workflow engine with predefined setup graphs",
+          "package": "mcpserver",
+          "status": "complete"
+        }
       ]
     },
     {
       "id": "tier-7",
-      "name": "Hardening & Autonomous Ops",
+      "name": "Hardening \u0026 Autonomous Ops",
       "status": "complete",
       "items": [
-        {"id": "t7-sampler-wire", "description": "Wire MCP sampling client into ralph so loops run fully autonomously", "package": "mcpserver", "status": "complete"},
-        {"id": "t7-cost-alerts", "description": "CostPolicy breach triggers ralph_stop automatically", "package": "mcpserver", "status": "complete"},
-        {"id": "t7-self-improve", "description": "rdcycle_improve feeds suggestions back into next cycle spec", "package": "mcpserver", "status": "complete"},
-        {"id": "t7-progress-tail", "description": "CLI command to tail ralph progress in a parallel terminal", "package": "cmd/claudekit", "status": "complete"}
+        {
+          "id": "t7-sampler-wire",
+          "description": "Wire MCP sampling client into ralph so loops run fully autonomously",
+          "package": "mcpserver",
+          "status": "complete"
+        },
+        {
+          "id": "t7-cost-alerts",
+          "description": "CostPolicy breach triggers ralph_stop automatically",
+          "package": "mcpserver",
+          "status": "complete"
+        },
+        {
+          "id": "t7-self-improve",
+          "description": "rdcycle_improve feeds suggestions back into next cycle spec",
+          "package": "mcpserver",
+          "status": "complete"
+        },
+        {
+          "id": "t7-progress-tail",
+          "description": "CLI command to tail ralph progress in a parallel terminal",
+          "package": "cmd/claudekit",
+          "status": "complete"
+        }
       ]
     },
     {
       "id": "tier-8",
-      "name": "Cross-Platform & Loop Reliability",
-      "status": "in-progress",
+      "name": "Cross-Platform \u0026 Loop Reliability",
+      "status": "complete",
       "items": [
-        {"id": "t8-wsl-compat", "description": "WSL/Linux compatibility: skip brew-dependent tests, op.exe bridge docs", "package": "fontkit", "status": "complete"},
-        {"id": "t8-verify-stuck", "description": "Fix verify task stuck-loop: mark_done immediately when make check passes with no code changes", "package": "mcpkit/ralph", "status": "planned"},
-        {"id": "t8-maintenance-mode", "description": "Orchestrator maintenance mode: skip plan/synthesize when all roadmap phases complete", "package": "mcpkit/rdcycle", "status": "planned"},
-        {"id": "t8-dedup-notes", "description": "Deduplicate orchestrator notes: don't write hollow 'Completed cycle N' when HandleNotes already ran", "package": "mcpkit/rdcycle", "status": "planned"},
-        {"id": "t8-coverage-mcpserver", "description": "mcpserver test coverage to 51%+ with handler-level tests", "package": "mcpserver", "status": "complete"},
-        {"id": "t8-coverage-cli", "description": "cmd/claudekit test coverage to 20%+ with routing and helper tests", "package": "cmd/claudekit", "status": "complete"},
-        {"id": "t8-nesting-guard", "description": "CLAUDECODE nesting guard in perpetual-loop.sh", "package": "scripts", "status": "complete"},
-        {"id": "t8-cost-reader", "description": "Wire CostReader into orchestrator for real per-cycle dollar tracking", "package": "mcpserver", "status": "complete"},
-        {"id": "t8-sampler-failfast", "description": "Consecutive sampler failure limit (5) for fast-fail on API outages", "package": "mcpkit/ralph", "status": "complete"},
-        {"id": "t8-widen-scan", "description": "Widen scan repo list: add anthropics/anthropic-sdk-go, mark3labs/mcp-go", "package": "mcpserver", "status": "complete"}
+        {
+          "id": "t8-wsl-compat",
+          "description": "WSL/Linux compatibility: skip brew-dependent tests, op.exe bridge docs",
+          "package": "fontkit",
+          "status": "complete"
+        },
+        {
+          "id": "t8-verify-stuck",
+          "description": "Fix verify task stuck-loop: mark_done immediately when make check passes with no code changes",
+          "package": "mcpkit/ralph",
+          "status": "complete"
+        },
+        {
+          "id": "t8-maintenance-mode",
+          "description": "Orchestrator maintenance mode: skip plan/synthesize when all roadmap phases complete",
+          "package": "mcpkit/rdcycle",
+          "status": "complete"
+        },
+        {
+          "id": "t8-dedup-notes",
+          "description": "Deduplicate orchestrator notes: don't write hollow 'Completed cycle N' when HandleNotes already ran",
+          "package": "mcpkit/rdcycle",
+          "status": "complete"
+        },
+        {
+          "id": "t8-coverage-mcpserver",
+          "description": "mcpserver test coverage to 51%+ with handler-level tests",
+          "package": "mcpserver",
+          "status": "complete"
+        },
+        {
+          "id": "t8-coverage-cli",
+          "description": "cmd/claudekit test coverage to 20%+ with routing and helper tests",
+          "package": "cmd/claudekit",
+          "status": "complete"
+        },
+        {
+          "id": "t8-nesting-guard",
+          "description": "CLAUDECODE nesting guard in perpetual-loop.sh",
+          "package": "scripts",
+          "status": "complete"
+        },
+        {
+          "id": "t8-cost-reader",
+          "description": "Wire CostReader into orchestrator for real per-cycle dollar tracking",
+          "package": "mcpserver",
+          "status": "complete"
+        },
+        {
+          "id": "t8-sampler-failfast",
+          "description": "Consecutive sampler failure limit (5) for fast-fail on API outages",
+          "package": "mcpkit/ralph",
+          "status": "complete"
+        },
+        {
+          "id": "t8-widen-scan",
+          "description": "Widen scan repo list: add anthropics/anthropic-sdk-go, mark3labs/mcp-go",
+          "package": "mcpserver",
+          "status": "complete"
+        }
       ]
     }
-  ]
+  ],
+  "updated_at": "2026-03-16"
 }
