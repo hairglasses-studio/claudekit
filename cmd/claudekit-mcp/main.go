@@ -9,6 +9,7 @@ import (
 
 	"github.com/hairglasses-studio/claudekit/mcpserver"
 	"github.com/hairglasses-studio/claudekit/pluginkit"
+	"github.com/hairglasses-studio/mcpkit/ralph"
 	"github.com/hairglasses-studio/mcpkit/rdcycle"
 	"github.com/hairglasses-studio/mcpkit/registry"
 	"github.com/hairglasses-studio/mcpkit/sampling"
@@ -45,6 +46,9 @@ func main() {
 			"schedule": "claude-sonnet-4-6",
 		},
 	}
+
+	// Register file tools for ralph autonomous loops.
+	reg.RegisterModule(&ralph.FileToolModule{Root: wd})
 
 	// Register ralph autonomous loop module with budget-aware config.
 	// Sampler is wired after MCP server creation (see below).
