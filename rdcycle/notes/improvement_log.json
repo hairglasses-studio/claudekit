@@ -134,5 +134,33 @@
       "Remove debug logging added to ralph.go before committing"
     ],
     "timestamp": "2026-03-15T23:30:33Z"
+  },
+  {
+    "cycle_id": "new-machine-hardening-001",
+    "cycle_number": 7,
+    "what_worked": [
+      "Cross-machine session restore completed: mcpkit checkout, .env setup via op.exe, all tests green",
+      "fontkit install tests now skip on non-macOS via t.Skip — WSL/Linux compat",
+      "CostReader wired into orchestrator — governor now tracks actual per-cycle dollar costs",
+      "Consecutive sampler failure limit (5) added to ralph loop — fast-fail on persistent API errors",
+      "Orchestrator errors now logged and surfaced in perpetual status output",
+      "perpetual-loop.sh hardened: loads all .env vars, validates build, removes dead bin/ check",
+      "Previous session had already committed identical mcpkit fixes — independent verification",
+      "API key validated against Anthropic endpoint (HTTP 200) before committing to run"
+    ],
+    "what_failed": [
+      "1Password CLI (op) not configured in WSL — had to use Windows op.exe bridge",
+      "1Password field name was 'credential' not 'password' as documented in RESUME.md"
+    ],
+    "wasted_iterations": 1,
+    "total_cost_dollars": 0,
+    "suggestions": [
+      "Update RESUME.md 1Password commands to use --fields credential instead of --fields password",
+      "Document op.exe workaround for WSL2 machines",
+      "Coverage targets still pending: mcpserver 40%+, cmd/claudekit 20%+",
+      "Module registration pattern is intentional (3 patterns for 3 complexity levels) — not worth standardizing",
+      "Consider adding a preflight health check to perpetual-loop.sh (API key test, disk space, etc.)"
+    ],
+    "timestamp": "2026-03-16T09:00:00Z"
   }
 ]
