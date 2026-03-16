@@ -29,9 +29,9 @@ git checkout feature/rdcycle-auto-2
 
 # 3. Retrieve secrets from 1Password
 #    Account: my.1password.com | Vault: Personal
-op item get "Anthropic API Key (Work - 10K credits)" --account my.1password.com --vault Personal --fields password --reveal
-op item get "AFTRS MCP - Claude Max Personal API Key" --account my.1password.com --vault Personal --fields password --reveal
-op item get "AFTRS MCP - mcpkit GitHub PAT" --account my.1password.com --vault Personal --fields password --reveal
+op item get "Anthropic API Key (Work - 10K credits)" --account my.1password.com --vault Personal --fields credential --reveal
+op item get "AFTRS MCP - Claude Max Personal API Key" --account my.1password.com --vault Personal --fields credential --reveal
+op item get "AFTRS MCP - mcpkit GitHub PAT" --account my.1password.com --vault Personal --fields credential --reveal
 
 # 4. Create .env in claudekit root
 cd ../claudekit
