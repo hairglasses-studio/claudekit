@@ -1,0 +1,26 @@
+{
+  "id": "scan-1773652543563100593",
+  "type": "scan",
+  "content": {
+    "action_items": [
+      "Review 30 new commits in hairglasses-studio/mcpkit",
+      "Review 30 new commits in hairglasses-studio/claudekit",
+      "Investigate githubnext/monaspace#373: Preview of character variants / Create own character variants?",
+      "Investigate githubnext/monaspace#322: Ligatures do not work inside VS Code terminal",
+      "Investigate catppuccin/catppuccin#3016: chore(ports): update icons",
+      "Investigate catppuccin/catppuccin#3008: hyprtoolkit",
+      "Investigate catppuccin/catppuccin#2889: Ditto"
+    ],
+    "commit_count": 60,
+    "issue_count": 5,
+    "repo_count": 4,
+    "repos": [
+      "hairglasses-studio/mcpkit",
+      "hairglasses-studio/claudekit",
+      "githubnext/monaspace",
+      "catppuccin/catppuccin"
+    ],
+    "since": "2026-03-09T09:15:39Z"
+  },
+  "created_at": "2026-03-16T09:15:43Z"
+}

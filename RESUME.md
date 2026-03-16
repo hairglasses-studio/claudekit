@@ -76,6 +76,15 @@ Or with custom args:
 | AFTRS MCP - Claude Max Personal API Key | PERSONAL_CLAUDE_MAX_ANTHROPIC_API_KEY |
 | AFTRS MCP - mcpkit GitHub PAT | MCPKIT_TOKEN |
 
+## WSL/Linux notes
+
+- **No Homebrew**: fontkit install tests auto-skip via `t.Skip`
+- **1Password CLI**: Use `op.exe` (Windows bridge), not `op` (Linux). Field name is `credential`, not `password`.
+  ```bash
+  op.exe item get "Anthropic API Key (Work - 10K credits)" --account my.1password.com --vault Personal --fields credential --reveal
+  ```
+- **Nesting guard**: `perpetual-loop.sh` will refuse to run inside a Claude Code session (`CLAUDECODE=1`). Always launch from a raw terminal.
+
 ## Key files
 
 | File | Purpose |
@@ -84,3 +93,5 @@ Or with custom args:
 | `rdcycle/profiles/overnight-100.json` | Budget profile for 12hr/$100 run |
 | `mcpserver/rdcyclemodule.go` | Wires FileArtifactStore + returns module |
 | `cmd/claudekit-mcp/main.go` | RalphStarter closure + profile loading |
+| `rdcycle/notes/improvement_log.json` | Cross-cycle learning log |
+| `roadmap.json` | Machine-readable roadmap (tier-1 through tier-8) |
