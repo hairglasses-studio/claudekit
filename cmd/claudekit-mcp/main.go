@@ -122,6 +122,10 @@ func main() {
 	//   work-api  → ANTHROPIC_API_KEY (API console billing, $10K credits)
 	// Falls back to ANTHROPIC_API_KEY if profile-specific key is not set.
 	apiKey := resolveAPIKey(profile.Name)
+
+	// Register prompt improvement module.
+	reg.RegisterModule(&mcpserver.PromptModule{APIKey: apiKey})
+
 	if apiKey != "" {
 		log.Printf("[ralph] using API sampler (profile=%s)", profile.Name)
 		ralphMod.SetSampler(&sampling.APISamplingClient{
