@@ -62,7 +62,11 @@ func (h *SubprocessHandler) Call(ctx context.Context, toolName string, input jso
 
 	var resp subprocessResponse
 	if err := json.Unmarshal(stdout.Bytes(), &resp); err != nil {
-		return nil, fmt.Errorf("parse plugin response: %w (raw: %s)", err, stdout.String())
+		raw := stdout.String()
+		if len(raw) > 256 {
+			raw = raw[:256] + "..."
+		}
+		return nil, fmt.Errorf("parse plugin response: %w (raw: %s)", err, raw)
 	}
 
 	if resp.Error != "" {
