@@ -91,7 +91,7 @@ func TestInstall(t *testing.T) {
 
 func TestRenderEmptyInput(t *testing.T) {
 	output := Render(strings.NewReader(""))
-	if !strings.Contains(output, "error") {
+	if !strings.Contains(output, "claudekit: statusline:") {
 		t.Error("empty input should produce error message")
 	}
 }
