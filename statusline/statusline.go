@@ -79,7 +79,7 @@ func iconsForTier(tier FontTier) icons {
 func Render(r io.Reader) string {
 	var data SessionData
 	if err := json.NewDecoder(r).Decode(&data); err != nil {
-		return "claudekit: statusline error"
+		return fmt.Sprintf("claudekit: statusline: %v", err)
 	}
 
 	tier := DetectFontTier()
