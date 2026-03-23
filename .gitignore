@@ -31,3 +31,4 @@ claudekit.log
 # OS
 .DS_Store
 Thumbs.db
+.ralph/snapshots/
