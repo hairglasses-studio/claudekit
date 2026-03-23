@@ -114,17 +114,14 @@ func main() {
 		}
 	}
 
-	s := registry.NewMCPServer("claudekit", "0.1.0")
-	reg.RegisterWithServer(s)
-
 	// Wire ralph's sampler. Select API key based on budget profile:
 	//   personal  → PERSONAL_CLAUDE_MAX_ANTHROPIC_API_KEY (Claude Max billing)
 	//   work-api  → ANTHROPIC_API_KEY (API console billing, $10K credits)
 	// Falls back to ANTHROPIC_API_KEY if profile-specific key is not set.
 	apiKey := resolveAPIKey(profile.Name)
 
-	// Register prompt improvement module.
-	reg.RegisterModule(&mcpserver.PromptModule{APIKey: apiKey})
+	s := registry.NewMCPServer("claudekit", "0.1.0")
+	reg.RegisterWithServer(s)
 
 	if apiKey != "" {
 		log.Printf("[ralph] using API sampler (profile=%s)", profile.Name)
