@@ -32,3 +32,4 @@ claudekit.log
 .DS_Store
 Thumbs.db
 .ralph/snapshots/
+.envrc
