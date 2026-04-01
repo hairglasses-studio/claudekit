@@ -62,3 +62,4 @@ claudekit/
 - Middleware signature: `func(name string, td registry.ToolDefinition, next registry.ToolHandlerFunc) registry.ToolHandlerFunc`
 - Error handling: return `ErrorResult(err), nil` for expected errors
 - Tests: `*_test.go` in same package
+
