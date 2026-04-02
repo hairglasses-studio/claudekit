@@ -1,55 +1,44 @@
 name: CI
 
-# Requires MCPKIT_TOKEN secret with read access to hairglasses-studio/mcpkit.
-# Set via: gh secret set MCPKIT_TOKEN --body "<personal-access-token>"
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
-on: [push, pull_request]
+permissions:
+  contents: read
 
 jobs:
-  check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/checkout@v4
-        with:
-          repository: hairglasses-studio/mcpkit
-          path: mcpkit
-          token: ${{ secrets.MCPKIT_TOKEN }}
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "1.26"
-
-      # Adjust replace directive to match CI layout.
-      - name: Fix mcpkit replace path
-        run: go mod edit -replace github.com/hairglasses-studio/mcpkit=./mcpkit
-
-      - run: make check
-
-      - name: Test count
-        run: |
-          count=$(go test ./... -v 2>&1 | grep -c "^--- PASS")
-          echo "Tests passed: $count"
-
   lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - uses: actions/checkout@v4
-        with:
-          repository: hairglasses-studio/mcpkit
-          path: mcpkit
-          token: ${{ secrets.MCPKIT_TOKEN }}
-
       - uses: actions/setup-go@v5
         with:
-          go-version: "1.26"
-
-      - name: Fix mcpkit replace path
-        run: go mod edit -replace github.com/hairglasses-studio/mcpkit=./mcpkit
-
+          go-version-file: go.mod
       - uses: golangci/golangci-lint-action@v6
         with:
           version: latest
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - run: go vet ./...
+      - run: go test -race -coverprofile=coverage.out ./...
+      - run: go tool cover -func=coverage.out | tail -1
+      - run: go mod tidy && git diff --exit-code go.mod go.sum
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - run: go build ./...

@@ -1,10 +1,10 @@
 # claudekit — Gemini CLI Instructions
 
-Claude Code terminal customization framework built on mcpkit. 37 MCP tools across 10 modules for fonts, themes, env, statusline, skills, and autonomous R&D.
+Claude Code terminal customization framework. Built on [mcpkit](https://github.com/hairglasses-studio/mcpkit).
 
 ## Build & Test
 
-```bash
+```
 make check   # vet + test + build
 make build   # compile all packages
 make test    # run tests
@@ -12,15 +12,15 @@ make test    # run tests
 
 ## Architecture
 
-- `fontkit/`, `themekit/`, `envkit/` — Pure Go utility packages
-- `statusline/`, `pluginkit/`, `skillkit/` — Higher-level features
-- `mcpserver/` — MCP tool modules (depends on all packages + mcpkit)
-- `cmd/claudekit/` — CLI, `cmd/claudekit-mcp/` — MCP server
 
-## Key Patterns
+## Key Conventions
 
 - `ToolModule` interface: `Name()`, `Description()`, `Tools() []ToolDefinition`
-- Typed inputs/outputs with `jsonschema` tags
+- Typed inputs/outputs with `jsonschema` tags for MCP tools
 - Tests alongside source files (`_test.go`)
-- Dotfile markers: `# claudekit:begin` / `# claudekit:end`
-- Local mcpkit dependency via `replace` directive in go.mod
+- CLI: `os.Args` routing with `parseFlag(key, fallback)` helper
+- Context-aware `exec.CommandContext` for all shell commands
+- Font fallback: MonaspiceNe → MonaspaceNeon → Menlo
+- Theme export: one Catppuccin palette → multiple targets
+- Dotfile management: `# claudekit:begin` / `# claudekit:end` markers
+
