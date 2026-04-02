@@ -16,3 +16,5 @@ lint:
 
 clean:
 	rm -f claudekit claudekit-mcp
+
+-include $(HOME)/hairglasses-studio/dotfiles/make/pipeline.mk
