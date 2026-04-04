@@ -115,6 +115,11 @@ func (m *ralphModule) Tools() []registry.ToolDefinition {
 							Message:  "loop is already running",
 						}, nil
 					}
+					// Cancel previous loop's context to avoid goroutine leak.
+					if m.cancel != nil {
+						m.cancel()
+						m.cancel = nil
+					}
 				}
 
 				maxIter := input.MaxIterations
