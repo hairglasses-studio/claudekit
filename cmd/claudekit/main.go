@@ -150,6 +150,12 @@ func runFonts(ctx context.Context, cmd string) error {
 }
 
 func fontsStatus(ctx context.Context) error {
+	_, err := printFontStatus(ctx)
+	return err
+}
+
+// printFontStatus detects and prints font status, returning the result for reuse.
+func printFontStatus(ctx context.Context) (*fontkit.FontStatus, error) {
 	term := fontkit.DetectTerminal()
 	fmt.Printf("Terminal: %s", term.Name)
 	if term.Version != "" {
@@ -161,7 +167,7 @@ func fontsStatus(ctx context.Context) error {
 
 	status, err := fontkit.Detect(ctx)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	fmt.Printf("Homebrew: %v\n", status.BrewAvail)
@@ -186,7 +192,7 @@ func fontsStatus(ctx context.Context) error {
 		}
 		fmt.Println()
 	}
-	return nil
+	return status, nil
 }
 
 func fontsInstall(ctx context.Context) error {
@@ -253,11 +259,7 @@ func fontsPreview() error {
 
 func fontsSetup(ctx context.Context) error {
 	fmt.Println("=== Font Status ===")
-	if err := fontsStatus(ctx); err != nil {
-		return err
-	}
-
-	status, err := fontkit.Detect(ctx)
+	status, err := printFontStatus(ctx)
 	if err != nil {
 		return err
 	}
