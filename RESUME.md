@@ -27,11 +27,8 @@ git clone git@github.com:hairglasses-studio/mcpkit.git
 cd mcpkit
 git checkout feature/rdcycle-auto-2
 
-# 3. Retrieve secrets from 1Password
-#    Account: my.1password.com | Vault: Personal
-op item get "Anthropic API Key (Work - 10K credits)" --account my.1password.com --vault Personal --fields credential --reveal
-op item get "AFTRS MCP - Claude Max Personal API Key" --account my.1password.com --vault Personal --fields credential --reveal
-op item get "AFTRS MCP - mcpkit GitHub PAT" --account my.1password.com --vault Personal --fields credential --reveal
+# 3. Retrieve secrets from your secret manager
+#    Set the following env vars: ANTHROPIC_API_KEY, PERSONAL_CLAUDE_MAX_ANTHROPIC_API_KEY, MCPKIT_TOKEN
 
 # 4. Create .env in claudekit root
 cd ../claudekit
@@ -79,10 +76,7 @@ Or with custom args:
 ## WSL/Linux notes
 
 - **No Homebrew**: fontkit install tests auto-skip via `t.Skip`
-- **1Password CLI**: Use `op.exe` (Windows bridge), not `op` (Linux). Field name is `credential`, not `password`.
-  ```bash
-  op.exe item get "Anthropic API Key (Work - 10K credits)" --account my.1password.com --vault Personal --fields credential --reveal
-  ```
+- **1Password CLI**: Field name is `credential`, not `password`. Use `op item get "<title>" --fields credential --reveal`.
 - **Nesting guard**: `perpetual-loop.sh` will refuse to run inside a Claude Code session (`CLAUDECODE=1`). Always launch from a raw terminal.
 
 ## Key files
