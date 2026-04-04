@@ -558,7 +558,7 @@ func envSnapshot() error {
 }
 
 func envMise(ctx context.Context) error {
-	dryRun := parseFlag("dry-run", "false") == "true"
+	dryRun := hasFlag("dry-run")
 
 	fmt.Println("Configuring mise tool version manager...")
 	result, err := envkit.MiseInstall(ctx, envkit.MiseOpts{DryRun: dryRun})
