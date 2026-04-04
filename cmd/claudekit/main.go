@@ -828,7 +828,7 @@ func ralphStatus(path string) error {
 	if err != nil {
 		return fmt.Errorf("load progress: %w", err)
 	}
-	if parseFlag("json", "") == "true" || parseFlag("json", "") == "" && hasFlag("json") {
+	if hasFlag("json") {
 		data, err := json.MarshalIndent(p, "", "  ")
 		if err != nil {
 			return err
