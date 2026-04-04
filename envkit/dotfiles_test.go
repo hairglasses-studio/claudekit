@@ -12,9 +12,9 @@ func TestSnapshotRestoreRoundTrip(t *testing.T) {
 
 	// Write test config files
 	files := map[string]string{
-		".config/starship.toml":    "format = \"$directory\"\n",
-		".config/ghostty/config":   "font-family = MonaspiceNe Nerd Font\n",
-		".config/bat/config":       "--theme=Catppuccin Mocha\n",
+		".config/starship.toml":  "format = \"$directory\"\n",
+		".config/ghostty/config": "font-family = MonaspiceNe Nerd Font\n",
+		".config/bat/config":     "--theme=Catppuccin Mocha\n",
 	}
 
 	for rel, content := range files {

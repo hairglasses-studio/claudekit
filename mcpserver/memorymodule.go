@@ -14,8 +14,10 @@ type MemoryModule struct {
 	store memory.Store
 }
 
-func (m *MemoryModule) Name() string        { return "memory" }
-func (m *MemoryModule) Description() string { return "Agent memory — persist and retrieve data across tool invocations" }
+func (m *MemoryModule) Name() string { return "memory" }
+func (m *MemoryModule) Description() string {
+	return "Agent memory — persist and retrieve data across tool invocations"
+}
 
 // SetupMemory creates an in-memory store and registers the memory module.
 func SetupMemory(reg *registry.ToolRegistry) *MemoryModule {

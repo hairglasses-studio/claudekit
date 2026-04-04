@@ -11,16 +11,18 @@ import (
 // EnvModule exposes environment bootstrap tools via MCP.
 type EnvModule struct{}
 
-func (m *EnvModule) Name() string        { return "env" }
-func (m *EnvModule) Description() string { return "Environment bootstrap — mise, shell, and dotfile management" }
+func (m *EnvModule) Name() string { return "env" }
+func (m *EnvModule) Description() string {
+	return "Environment bootstrap — mise, shell, and dotfile management"
+}
 
 // --- env_status ---
 
 type EnvStatusInput struct{}
 
 type EnvStatusOutput struct {
-	Mise  *envkit.MiseInfo  `json:"mise"`
-	Shell envkit.ShellInfo  `json:"shell"`
+	Mise  *envkit.MiseInfo `json:"mise"`
+	Shell envkit.ShellInfo `json:"shell"`
 }
 
 // --- env_snapshot ---

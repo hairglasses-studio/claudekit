@@ -14,8 +14,10 @@ type SkillModule struct {
 	ProjectDir string // Project directory to install skills into
 }
 
-func (m *SkillModule) Name() string        { return "skills" }
-func (m *SkillModule) Description() string { return "Claude Code skill marketplace — discover, install, and manage skills" }
+func (m *SkillModule) Name() string { return "skills" }
+func (m *SkillModule) Description() string {
+	return "Claude Code skill marketplace — discover, install, and manage skills"
+}
 
 type SkillListInput struct {
 	Filter string `json:"filter,omitempty" jsonschema:"description=Filter: installed|available|all (default all),enum=installed,enum=available,enum=all"`

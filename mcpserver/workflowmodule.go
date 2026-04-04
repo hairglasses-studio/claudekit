@@ -19,8 +19,10 @@ type workflowEntry struct {
 	description string
 }
 
-func (m *WorkflowModule) Name() string        { return "workflow" }
-func (m *WorkflowModule) Description() string { return "Predefined workflow graphs for multi-step operations" }
+func (m *WorkflowModule) Name() string { return "workflow" }
+func (m *WorkflowModule) Description() string {
+	return "Predefined workflow graphs for multi-step operations"
+}
 
 // NewWorkflowModule creates a workflow module with predefined graphs.
 func NewWorkflowModule() *WorkflowModule {
@@ -83,7 +85,7 @@ type WorkflowInfo struct {
 // --- workflow_run ---
 
 type WorkflowRunInput struct {
-	Name  string            `json:"name" jsonschema:"required,description=Workflow name to execute (e.g. full-setup)"`
+	Name   string            `json:"name" jsonschema:"required,description=Workflow name to execute (e.g. full-setup)"`
 	Params map[string]string `json:"params,omitempty" jsonschema:"description=Optional parameters to pass to the workflow"`
 }
 

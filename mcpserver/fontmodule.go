@@ -12,21 +12,23 @@ import (
 // FontModule exposes font management tools via MCP.
 type FontModule struct{}
 
-func (m *FontModule) Name() string        { return "fonts" }
-func (m *FontModule) Description() string { return "Font detection, installation, and terminal configuration" }
+func (m *FontModule) Name() string { return "fonts" }
+func (m *FontModule) Description() string {
+	return "Font detection, installation, and terminal configuration"
+}
 
 // --- font_status ---
 
 type FontStatusInput struct{}
 
 type FontStatusOutput struct {
-	Terminal     string   `json:"terminal"`
-	TermVersion  string   `json:"terminal_version"`
-	ConfigSupport bool   `json:"config_support"`
-	BestFont     string   `json:"best_font"`
-	BrewAvail    bool     `json:"brew_available"`
-	Installed    []string `json:"installed"`
-	NotInstalled []string `json:"not_installed"`
+	Terminal      string   `json:"terminal"`
+	TermVersion   string   `json:"terminal_version"`
+	ConfigSupport bool     `json:"config_support"`
+	BestFont      string   `json:"best_font"`
+	BrewAvail     bool     `json:"brew_available"`
+	Installed     []string `json:"installed"`
+	NotInstalled  []string `json:"not_installed"`
 }
 
 // --- font_install ---
