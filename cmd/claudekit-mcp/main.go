@@ -21,7 +21,10 @@ func main() {
 	loadDotenv(".env")
 
 	reg := registry.NewToolRegistry()
-	wd, _ := os.Getwd()
+	wd, err := os.Getwd()
+	if err != nil {
+		log.Fatalf("failed to get working directory: %v", err)
+	}
 
 	// Resolve budget profile from env or CLI flag.
 	profile := resolveProfile()
