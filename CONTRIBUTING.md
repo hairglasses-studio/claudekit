@@ -16,20 +16,14 @@ make test    # or: go test ./... -count=1
 ### 2. Verify
 
 ```bash
-make pipeline-check   # build + vet + test (via shared pipeline)
-```
-
-Or use the pipeline script directly:
-
-```bash
-~/hairglasses-studio/dotfiles/scripts/hg-pipeline.sh
+make check   # build + vet + test
 ```
 
 ## Making Changes
 
 1. Create a branch: `git checkout -b feat/my-change`
 2. Make your changes
-3. Run the pipeline: `make pipeline-check`
+3. Run checks: `make check`
 4. Commit with a descriptive message
 5. Push and open a PR
 

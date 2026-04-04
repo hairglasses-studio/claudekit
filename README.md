@@ -1,5 +1,8 @@
 # claudekit
 
+[![Go](https://img.shields.io/badge/Go-1.26+-00ADD8?logo=go&logoColor=white)](https://go.dev/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Claude Code terminal customization toolkit — fonts, themes, statusline, environment bootstrap, and MCP integration.
 
 Built with [mcpkit](https://github.com/hairglasses-studio/mcpkit) for the MCP server layer.
@@ -273,4 +276,4 @@ make clean   # remove binaries
 
 ## License
 
-Private — [hairglasses-studio](https://github.com/hairglasses-studio)
+[MIT](LICENSE)
