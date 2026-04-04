@@ -302,7 +302,7 @@ func TestRunMCPUnknownCommand(t *testing.T) {
 }
 
 func TestRunStatuslineUnknownCommand(t *testing.T) {
-	err := runStatusline(context.Background(), "nonexistent")
+	err := runStatusline("nonexistent")
 	if err == nil {
 		t.Fatal("expected error for unknown statusline command")
 	}
