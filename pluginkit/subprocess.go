@@ -46,6 +46,9 @@ func (h *SubprocessHandler) Call(ctx context.Context, toolName string, input jso
 	}
 	reqBytes = append(reqBytes, '\n')
 
+	// Trust boundary: plugins are user-installed from local YAML files.
+	// The command is executed via shell to support pipes and redirects.
+	// LoadPlugin warns on shell metacharacters for auditability.
 	cmd := exec.CommandContext(ctx, "sh", "-c", h.Command)
 	cmd.Stdin = bytes.NewReader(reqBytes)
 

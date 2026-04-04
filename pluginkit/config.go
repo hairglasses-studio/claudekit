@@ -2,8 +2,10 @@ package pluginkit
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"gopkg.in/yaml.v3"
 )
@@ -45,6 +47,14 @@ func LoadPlugin(path string) (*PluginConfig, error) {
 
 	if cfg.Name == "" {
 		return nil, fmt.Errorf("plugin %s: name is required", path)
+	}
+
+	// Warn if the plugin command contains shell metacharacters.
+	// Plugins are user-installed and trusted, but log the command for auditability.
+	if cmd := cfg.Handler.Command; cmd != "" {
+		if strings.ContainsAny(cmd, ";|&$(`") {
+			log.Printf("warning: plugin %q command contains shell metacharacters: %s", cfg.Name, cmd)
+		}
 	}
 
 	return &cfg, nil
