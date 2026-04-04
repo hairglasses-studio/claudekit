@@ -35,7 +35,7 @@ func NewWorkflowModule() *WorkflowModule {
 }
 
 // buildFullSetupGraph creates the full-setup workflow:
-// detect → font_install, theme_apply (parallel) → statusline_install → env_snapshot → END
+// detect → font_install → theme_apply → statusline_install → env_snapshot → END
 func buildFullSetupGraph() *workflow.Graph {
 	g := workflow.NewGraph()
 
@@ -58,7 +58,7 @@ func buildFullSetupGraph() *workflow.Graph {
 	})
 
 	g.SetStart("detect")
-	// detect → font_install and theme_apply (sequential edges; parallelism is a client concern)
+	// Sequential: detect → font_install → theme_apply → statusline_install → env_snapshot → END
 	g.AddEdge("detect", "font_install")
 	g.AddEdge("font_install", "theme_apply")
 	g.AddEdge("theme_apply", "statusline_install")
