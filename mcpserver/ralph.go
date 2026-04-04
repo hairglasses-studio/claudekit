@@ -38,8 +38,10 @@ type ralphModule struct {
 	rcfg     RalphConfig
 }
 
-func (m *ralphModule) Name() string        { return "ralph" }
-func (m *ralphModule) Description() string { return "Autonomous loop runner with budget-aware configuration" }
+func (m *ralphModule) Name() string { return "ralph" }
+func (m *ralphModule) Description() string {
+	return "Autonomous loop runner with budget-aware configuration"
+}
 
 // SetupRalph registers the ralph autonomous loop module with budget-aware config.
 // Returns the module so the caller can wire a sampler later via SetSampler.
@@ -130,12 +132,12 @@ func (m *ralphModule) Tools() []registry.ToolDefinition {
 				}
 
 				// Derive project root: prefer cwd, fall back to spec file's directory.
-			projectRoot, _ := os.Getwd()
-			if projectRoot == "" {
-				projectRoot = filepath.Dir(input.SpecFile)
-			}
+				projectRoot, _ := os.Getwd()
+				if projectRoot == "" {
+					projectRoot = filepath.Dir(input.SpecFile)
+				}
 
-			config := ralph.Config{
+				config := ralph.Config{
 					SpecFile:      input.SpecFile,
 					ProjectRoot:   projectRoot,
 					MaxIterations: maxIter,

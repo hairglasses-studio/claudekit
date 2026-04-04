@@ -5,7 +5,7 @@ type IndexEntry struct {
 	Name        string   `json:"name"`
 	Title       string   `json:"title"`
 	Description string   `json:"description"`
-	Tools       []string `json:"tools"`  // MCP tools this skill uses
+	Tools       []string `json:"tools"`   // MCP tools this skill uses
 	Content     string   `json:"content"` // Full SKILL.md content
 }
 

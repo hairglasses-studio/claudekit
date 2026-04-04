@@ -13,8 +13,10 @@ import (
 // ThemeModule exposes terminal theme tools via MCP.
 type ThemeModule struct{}
 
-func (m *ThemeModule) Name() string        { return "theme" }
-func (m *ThemeModule) Description() string { return "Terminal color theme management with Catppuccin support" }
+func (m *ThemeModule) Name() string { return "theme" }
+func (m *ThemeModule) Description() string {
+	return "Terminal color theme management with Catppuccin support"
+}
 
 type ThemeApplyInput struct {
 	Flavor   string `json:"flavor,omitempty" jsonschema:"description=Catppuccin flavor (mocha|macchiato|frappe|latte),enum=mocha,enum=macchiato,enum=frappe,enum=latte"`

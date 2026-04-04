@@ -3,8 +3,8 @@ package themekit
 
 // Color represents an RGB color with an ANSI escape sequence.
 type Color struct {
-	Name string // Semantic name (e.g. "base", "text", "red")
-	Hex  string // Hex value without # (e.g. "1e1e2e")
+	Name    string // Semantic name (e.g. "base", "text", "red")
+	Hex     string // Hex value without # (e.g. "1e1e2e")
 	R, G, B uint8
 }
 

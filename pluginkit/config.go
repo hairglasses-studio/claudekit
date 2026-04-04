@@ -19,7 +19,7 @@ type PluginConfig struct {
 
 // HandlerConfig describes how to invoke the plugin.
 type HandlerConfig struct {
-	Type    string `yaml:"type"`    // "subprocess"
+	Type    string `yaml:"type"` // "subprocess"
 	Command string `yaml:"command"`
 	Timeout string `yaml:"timeout"` // e.g. "30s"
 }

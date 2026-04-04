@@ -11,8 +11,10 @@ import (
 // StatuslineModule exposes statusline management tools via MCP.
 type StatuslineModule struct{}
 
-func (m *StatuslineModule) Name() string        { return "statusline" }
-func (m *StatuslineModule) Description() string { return "Claude Code statusline installation and management" }
+func (m *StatuslineModule) Name() string { return "statusline" }
+func (m *StatuslineModule) Description() string {
+	return "Claude Code statusline installation and management"
+}
 
 type StatuslineInstallInput struct {
 	Style string `json:"style,omitempty" jsonschema:"description=Statusline style (full|compact|minimal),enum=full,enum=compact,enum=minimal"`
