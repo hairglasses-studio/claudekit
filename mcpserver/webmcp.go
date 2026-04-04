@@ -3,6 +3,7 @@ package mcpserver
 import (
 	"encoding/json"
 	"net/http"
+	"strings"
 
 	"github.com/hairglasses-studio/claudekit/skillkit"
 	"github.com/hairglasses-studio/mcpkit/registry"
@@ -19,6 +20,9 @@ type toolInfo struct {
 // over HTTP using a basic REST pattern. This is a minimal bridge for
 // browser-based clients to discover available tools.
 //
+// Security model: local-only, read-only. Intended to run on localhost.
+// CORS is restricted to localhost origins. No mutation endpoints are exposed.
+//
 // Endpoints:
 //   - GET /tools   — list all registered tools as JSON
 //   - GET /skills  — list available skills from the marketplace
@@ -26,7 +30,18 @@ type toolInfo struct {
 func WebMCPHandler(reg *registry.ToolRegistry) http.Handler {
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("GET /tools", func(w http.ResponseWriter, r *http.Request) {
+	// Restrict CORS to localhost origins.
+	cors := func(next http.HandlerFunc) http.HandlerFunc {
+		return func(w http.ResponseWriter, r *http.Request) {
+			origin := r.Header.Get("Origin")
+			if strings.HasPrefix(origin, "http://localhost") || strings.HasPrefix(origin, "http://127.0.0.1") {
+				w.Header().Set("Access-Control-Allow-Origin", origin)
+			}
+			next(w, r)
+		}
+	}
+
+	mux.HandleFunc("GET /tools", cors(func(w http.ResponseWriter, r *http.Request) {
 		defs := reg.GetAllToolDefinitions()
 		tools := make([]toolInfo, 0, len(defs))
 		for _, td := range defs {
@@ -40,9 +55,9 @@ func WebMCPHandler(reg *registry.ToolRegistry) http.Handler {
 		if err := json.NewEncoder(w).Encode(tools); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
-	})
+	}))
 
-	mux.HandleFunc("GET /skills", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /skills", cors(func(w http.ResponseWriter, r *http.Request) {
 		index := skillkit.BuiltinIndex()
 		type skillEntry struct {
 			Name        string   `json:"name"`
@@ -63,14 +78,14 @@ func WebMCPHandler(reg *registry.ToolRegistry) http.Handler {
 		if err := json.NewEncoder(w).Encode(entries); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
-	})
+	}))
 
-	mux.HandleFunc("GET /health", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /health", cors(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		if err := json.NewEncoder(w).Encode(map[string]string{"status": "ok"}); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
-	})
+	}))
 
 	return mux
 }

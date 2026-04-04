@@ -635,7 +635,7 @@ func mcpPublish(ctx context.Context) error {
 
 func mcpServe() error {
 	reg := newToolRegistry()
-	addr := parseFlag("addr", ":8080")
+	addr := parseFlag("addr", "127.0.0.1:8080")
 	handler := mcpserver.WebMCPHandler(reg)
 	fmt.Printf("Starting WebMCP server on %s\n", addr)
 	fmt.Println("Endpoints:")
