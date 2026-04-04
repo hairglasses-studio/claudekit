@@ -47,7 +47,7 @@ func main() {
 	case "mcp":
 		err = runMCP(ctx, cmd)
 	case "statusline":
-		err = runStatusline(ctx, cmd)
+		err = runStatusline(cmd)
 	case "plugin":
 		err = runPlugin(cmd)
 	case "skill":
@@ -446,7 +446,7 @@ func themePreview() error {
 	return nil
 }
 
-func runStatusline(ctx context.Context, cmd string) error {
+func runStatusline(cmd string) error {
 	switch cmd {
 	case "install":
 		return statuslineInstall()
