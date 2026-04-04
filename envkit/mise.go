@@ -107,7 +107,9 @@ func MiseInstall(ctx context.Context, opts MiseOpts) (*MiseResult, error) {
 			}
 			result.Output = string(out)
 		} else {
-			// Fall back to curl installer
+			// Fall back to curl installer.
+			// NOTE: curl-pipe-bash has supply-chain risks. On Arch/Manjaro, prefer
+			// pacman -S mise. Homebrew is tried first above. This is the last resort.
 			cmd := exec.CommandContext(ctx, "bash", "-c", "curl -fsSL https://mise.jdx.dev/install.sh | bash")
 			out, err := cmd.CombinedOutput()
 			if err != nil {
