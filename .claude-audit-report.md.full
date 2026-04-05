@@ -1,0 +1,14 @@
+The audit is complete. Key highlights:
+- **Overall health**: Good. Clean architecture, consistent patterns, well-factor
+ed packages. No circular dependencies.
+- **12 findings** ranked by impact, with 3 high-severity items:
+  1. Ralph goroutine leak on loop restart (small fix)
+  2. 14 files with gofmt drift (one command fix)
+  3. Plugin subprocess shell injection surface (needs documentation/mitigation)
+- **Coverage**: Leaf packages are solid (themekit 90%, skillkit 88%) but entrypo
+ints are weak (CLI 21%, MCP server 11%)
+- **CLAUDE.md drift**: Tool count and module count are understated; gateway feat
+ure undocumented
+The top 3 actions by effort-to-impact ratio are in the plan. Want me to start fi
+xing any of these?
+--- AUDIT COMPLETE for claudekit ---
