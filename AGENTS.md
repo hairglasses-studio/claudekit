@@ -35,3 +35,7 @@ make test    # run tests
 - Theme export: one Catppuccin palette → multiple targets
 - Dotfile management: `# claudekit:begin` / `# claudekit:end` markers
 
+
+## Shared Research Repository
+
+Cross-project research lives at `~/hairglasses-studio/docs/` (git: hairglasses-studio/docs). When launching research agents, check existing docs first and write reusable research outputs back to the shared repo rather than local docs/.
