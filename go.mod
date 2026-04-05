@@ -2,7 +2,7 @@ module github.com/hairglasses-studio/claudekit
 
 go 1.26.1
 
-require github.com/hairglasses-studio/mcpkit v0.1.1
+require github.com/hairglasses-studio/mcpkit v0.2.0
 
 require (
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
