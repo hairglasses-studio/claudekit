@@ -4,7 +4,7 @@ package main
 import (
 	"bufio"
 	"context"
-	"log"
+	"log/slog"
 	"os"
 	"path/filepath"
 	"strings"
@@ -18,12 +18,17 @@ import (
 )
 
 func main() {
+	slog.SetDefault(slog.New(slog.NewJSONHandler(os.Stderr, &slog.HandlerOptions{
+		Level: slog.LevelInfo,
+	})).With("service", "claudekit-mcp"))
+
 	loadDotenv(".env")
 
 	reg := registry.NewToolRegistry()
 	wd, err := os.Getwd()
 	if err != nil {
-		log.Fatalf("failed to get working directory: %v", err)
+		slog.Error("failed to get working directory", "error", err)
+		os.Exit(1)
 	}
 
 	// Resolve budget profile from env or CLI flag.
@@ -71,7 +76,7 @@ func main() {
 	artDir := filepath.Join(wd, "rdcycle", "artifacts")
 	fileStore, err := rdcycle.NewFileArtifactStore(artDir)
 	if err != nil {
-		log.Printf("warning: file artifact store: %v (using in-memory)", err)
+		slog.Warn("file artifact store unavailable, using in-memory", "error", err)
 		fileStore = nil
 	}
 	rdcycleMod := mcpserver.SetupRDCycle(reg, wd, fileStore)
@@ -110,7 +115,7 @@ func main() {
 	if pluginDir, err := pluginkit.DefaultPluginDir(); err == nil {
 		plugins, err := pluginkit.LoadPlugins(pluginDir)
 		if err != nil {
-			log.Printf("warning: failed to load plugins from %s: %v", pluginDir, err)
+			slog.Warn("failed to load plugins", "dir", pluginDir, "error", err)
 		}
 		for _, cfg := range plugins {
 			reg.RegisterModule(pluginkit.NewPluginModule(cfg))
@@ -127,7 +132,7 @@ func main() {
 	reg.RegisterWithServer(s)
 
 	if apiKey != "" {
-		log.Printf("[ralph] using API sampler (profile=%s)", profile.Name)
+		slog.Info("using API sampler", "component", "ralph", "profile", profile.Name)
 		ralphMod.SetSampler(&sampling.APISamplingClient{
 			APIKey:       apiKey,
 			DefaultModel: "claude-sonnet-4-6",
@@ -153,14 +158,16 @@ func main() {
 	if len(gatewayUpstreams) > 0 {
 		gw, dynReg, err := mcpserver.SetupGateway(reg, gatewayUpstreams)
 		if err != nil {
-			log.Fatalf("gateway setup: %v", err)
+			slog.Error("gateway setup failed", "error", err)
+			os.Exit(1)
 		}
 		defer gw.Close()
 		dynReg.RegisterWithServer(s)
 	}
 
 	if err := registry.ServeStdio(s); err != nil {
-		log.Fatal(err)
+		slog.Error("server stopped", "error", err)
+		os.Exit(1)
 	}
 }
 
@@ -233,7 +240,7 @@ func resolveProfile() rdcycle.BudgetProfile {
 		// Try loading from file path.
 		p, err := rdcycle.LoadProfile(name)
 		if err != nil {
-			log.Printf("failed to load budget profile %q, using personal: %v", name, err)
+			slog.Warn("failed to load budget profile, using personal", "profile", name, "error", err)
 			return rdcycle.PersonalProfile()
 		}
 		return p
