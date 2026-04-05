@@ -10,12 +10,12 @@
     {
       "id": "plan",
       "depends_on": ["scan"],
-      "description": "Run rdcycle_plan with the scan results. Analyze the roadmap at /Users/mitchnotmitchell/hairglasses-studio/claudekit/roadmap.json. If no urgent work items found, note that all tiers are complete."
+      "description": "Run rdcycle_plan with the scan results. Analyze the roadmap at $HOME/hairglasses-studio/claudekit/roadmap.json. If no urgent work items found, note that all tiers are complete."
     },
     {
       "id": "implement",
       "depends_on": ["plan"],
-      "description": "Create a CHANGELOG.md file at /Users/mitchnotmitchell/hairglasses-studio/claudekit/CHANGELOG.md summarizing the 7 completed tiers and 34 MCP tools. Use rdcycle_artifacts to record what was created."
+      "description": "Create a CHANGELOG.md file at $HOME/hairglasses-studio/claudekit/CHANGELOG.md summarizing the 7 completed tiers and 34 MCP tools. Use rdcycle_artifacts to record what was created."
     },
     {
       "id": "verify",
