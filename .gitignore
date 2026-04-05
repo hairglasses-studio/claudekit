@@ -33,3 +33,11 @@ claudekit.log
 Thumbs.db
 .ralph/snapshots/
 .envrc
+
+# Local env files
+.env
+.env.local
+.envrc
+.env.*
+!.env.example
+!.env.*.example
