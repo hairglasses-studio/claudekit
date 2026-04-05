@@ -6,7 +6,7 @@ import (
 )
 
 func TestRender(t *testing.T) {
-	input := `{"model":"claude-opus-4-6","working_directory":"/Users/dev/project","cost_usd":0.42,"total_tokens":15000,"max_tokens":200000,"duration_ms":120000}`
+	input := `{"model":"claude-opus-4-6","working_directory":"/tmp/example-project","cost_usd":0.42,"total_tokens":15000,"max_tokens":200000,"duration_ms":120000}`
 	output := Render(strings.NewReader(input))
 
 	if !strings.Contains(output, "Opus") {

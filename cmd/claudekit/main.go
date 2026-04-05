@@ -482,7 +482,7 @@ func statuslineRender() error {
 func statuslinePreview() error {
 	sampleJSON := `{
 		"model": "claude-opus-4-6",
-		"working_directory": "/Users/dev/hairglasses-studio/claudekit",
+		"working_directory": "$HOME/projects/claudekit",
 		"session_id": "abc123",
 		"cost_usd": 0.42,
 		"total_tokens": 15000,
