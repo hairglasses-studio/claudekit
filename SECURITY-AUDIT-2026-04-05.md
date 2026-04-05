@@ -27,7 +27,7 @@ The git log contains commits authored with emails that should not appear in a pu
 | Email | Commit Count | Issue |
 |-------|-------------|-------|
 | `mitch@galileo.ai` | 63 | Employer email — leaks employer association |
-| `mixellburk@gmail.com` | 11 | Personal gmail — should be project email |
+| `<redacted-personal-email>` | 11 | Personal gmail — should be project email |
 | `mitch@hairglasses.studio` | 11 | Correct |
 
 **Remediation options** (pick one before public push):
@@ -36,7 +36,7 @@ The git log contains commits authored with emails that should not appear in a pu
    ```
    # Create mailmap file:
    # mitch@hairglasses.studio <mitch@galileo.ai>
-   # mitch@hairglasses.studio <mixellburk@gmail.com>
+   # mitch@hairglasses.studio <<redacted-personal-email>>
    git filter-repo --mailmap mailmap.txt
    ```
 2. **Accept and move forward**. The emails are not secrets per se, but `galileo.ai` ties the repo to an employer, which violates the org convention "no employer names in personal repos."
