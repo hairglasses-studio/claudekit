@@ -1,4 +1,3 @@
-// Package skillkit provides Claude Code skill discovery, installation, and management.
 package skillkit
 
 import (

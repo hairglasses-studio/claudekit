@@ -1,4 +1,3 @@
-// Package themekit provides terminal color theme management with Catppuccin support.
 package themekit
 
 // Color represents an RGB color with an ANSI escape sequence.

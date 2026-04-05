@@ -1,4 +1,3 @@
-// Package statusline provides a Claude Code statusline script and installer.
 package statusline
 
 import (

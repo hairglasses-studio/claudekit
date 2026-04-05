@@ -1,4 +1,3 @@
-// Package mcpserver provides MCP tool modules for claudekit.
 package mcpserver
 
 import (
