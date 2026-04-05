@@ -8,14 +8,17 @@ import (
 	"github.com/hairglasses-studio/claudekit/envkit"
 )
 
-func ExampleDetectShell() {
-	info := envkit.DetectShell()
-	// The detected shell depends on the SHELL env var.
-	fmt.Printf("Shell type: %s\n", info.Shell)
-	fmt.Printf("Has manager: %v\n", info.Manager != "none" || info.Manager == "none")
+func ExampleShellInfo_ShellSummary() {
+	info := envkit.ShellInfo{
+		Shell:   "zsh",
+		Manager: "oh-my-zsh",
+		RCFile:  "/home/user/.zshrc",
+	}
+	fmt.Println(info.ShellSummary())
 	// Output:
-	// Shell type: zsh
-	// Has manager: true
+	// Shell: zsh
+	// Plugin manager: oh-my-zsh
+	// RC file: /home/user/.zshrc
 }
 
 func ExampleSnapshotDir() {
