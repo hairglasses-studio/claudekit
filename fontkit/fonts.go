@@ -1,5 +1,3 @@
-// Package fontkit provides font detection, installation, and terminal configuration
-// for Monaspace and Monaspice font families.
 package fontkit
 
 // Style represents a font weight/style variant.

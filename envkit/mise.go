@@ -1,4 +1,3 @@
-// Package envkit provides environment bootstrap utilities for Claude Code development.
 package envkit
 
 import (
