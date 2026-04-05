@@ -2,7 +2,7 @@ package pluginkit
 
 import (
 	"fmt"
-	"log"
+	"log/slog"
 	"os"
 	"path/filepath"
 	"strings"
@@ -53,7 +53,8 @@ func LoadPlugin(path string) (*PluginConfig, error) {
 	// Plugins are user-installed and trusted, but log the command for auditability.
 	if cmd := cfg.Handler.Command; cmd != "" {
 		if strings.ContainsAny(cmd, ";|&$(`") {
-			log.Printf("warning: plugin %q command contains shell metacharacters: %s", cfg.Name, cmd)
+			slog.Warn("plugin command contains shell metacharacters",
+				"plugin", cfg.Name, "command", cmd)
 		}
 	}
 

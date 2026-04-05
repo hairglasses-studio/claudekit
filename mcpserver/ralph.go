@@ -3,7 +3,7 @@ package mcpserver
 import (
 	"context"
 	"fmt"
-	"log"
+	"log/slog"
 	"os"
 	"path/filepath"
 	"sync"
@@ -154,10 +154,15 @@ func (m *ralphModule) Tools() []registry.ToolDefinition {
 				// Cost logging and auto-stop on budget breach.
 				costPolicy := m.rcfg.CostPolicy
 				config.Hooks.OnCostUpdate = func(iteration int, summary finops.UsageSummary) {
-					log.Printf("[ralph] iteration %d: %d input tokens, %d output tokens",
-						iteration, summary.TotalInputTokens, summary.TotalOutputTokens)
+					slog.Info("ralph iteration cost update",
+						"component", "ralph",
+						"iteration", iteration,
+						"input_tokens", summary.TotalInputTokens,
+						"output_tokens", summary.TotalOutputTokens)
 					if costPolicy != nil && costPolicy.RemainingBudget() <= 0 {
-						log.Printf("[ralph] cost budget exceeded ($%.2f used) — stopping loop", costPolicy.TotalCost())
+						slog.Warn("cost budget exceeded, stopping loop",
+							"component", "ralph",
+							"total_cost", costPolicy.TotalCost())
 						m.mu.Lock()
 						if m.loop != nil {
 							m.loop.Stop()
