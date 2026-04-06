@@ -31,7 +31,7 @@ claudekit.log
 # OS
 .DS_Store
 Thumbs.db
-.ralph/snapshots/
+.ralph/
 .envrc
 
 # Local env files
