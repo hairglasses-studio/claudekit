@@ -1,11 +1,14 @@
 # claudekit
 
+[![CI](https://github.com/hairglasses-studio/claudekit/actions/workflows/ci.yml/badge.svg)](https://github.com/hairglasses-studio/claudekit/actions/workflows/ci.yml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/hairglasses-studio/claudekit.svg)](https://pkg.go.dev/github.com/hairglasses-studio/claudekit)
+[![Go Report Card](https://goreportcard.com/badge/github.com/hairglasses-studio/claudekit)](https://goreportcard.com/report/github.com/hairglasses-studio/claudekit)
 [![Go](https://img.shields.io/badge/Go-1.26+-00ADD8?logo=go&logoColor=white)](https://go.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Claude Code terminal customization toolkit — fonts, themes, statusline, environment bootstrap, and MCP integration.
+Claude Code terminal customization and autonomous R&D framework. Combines environment management (fonts, themes, statusline) with autonomous loop orchestration, budget-aware model routing, and self-improvement cycles.
 
-Built with [mcpkit](https://github.com/hairglasses-studio/mcpkit) for the MCP server layer.
+37 MCP tools across 10 modules: environment setup, roadmap automation, Ralph autonomous loops with budget profiles, and rdcycle self-improving R&D workflows. Built with [mcpkit](https://github.com/hairglasses-studio/mcpkit).
 
 ## Quick Start
 
