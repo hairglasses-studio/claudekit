@@ -2,7 +2,7 @@ module github.com/hairglasses-studio/claudekit
 
 go 1.26.1
 
-require github.com/hairglasses-studio/mcpkit v0.2.0
+require github.com/hairglasses-studio/mcpkit v0.4.0
 
 require (
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
@@ -17,7 +17,7 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/invopop/jsonschema v0.13.0 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
-	github.com/mark3labs/mcp-go v0.46.0
+	github.com/mark3labs/mcp-go v0.47.0
 	github.com/modelcontextprotocol/go-sdk v1.4.1 // indirect
 	github.com/segmentio/asm v1.1.3 // indirect
 	github.com/segmentio/encoding v0.5.4 // indirect
