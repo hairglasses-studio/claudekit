@@ -1,5 +1,7 @@
 # claudekit
 
+This repo uses [AGENTS.md](AGENTS.md) as the canonical instruction file. Treat this file as compatibility guidance for Claude-specific workflows.
+
 Claude Code terminal customization framework. Built on [mcpkit](https://github.com/hairglasses-studio/mcpkit).
 
 ## Build

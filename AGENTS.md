@@ -1,6 +1,15 @@
 # claudekit — Agent Instructions
 
+> Canonical instructions: AGENTS.md
+
+Use this file as the canonical instruction surface for Codex-first repo guidance. [CLAUDE.md](CLAUDE.md) and [GEMINI.md](GEMINI.md) are compatibility mirrors.
+
 Claude Code terminal customization framework. Built on [mcpkit](https://github.com/hairglasses-studio/mcpkit).
+
+## Codex Surfaces
+
+- Canonical workflow skill: `.agents/skills/claudekit/SKILL.md`
+- Shared subagents: `.codex/agents/`
 
 ## Build & Test
 

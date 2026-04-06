@@ -5,5 +5,4 @@
 - [project_tier7_state.md](project_tier7_state.md) — All 7 tiers complete, 34 tools, 126 tests, budget profiles
 - [feedback_autonomous_work.md](feedback_autonomous_work.md) — User prefers autonomous work without stopping to ask
 - [project_ralph_sampling.md](project_ralph_sampling.md) — Claude Code doesn't support MCP sampling; Ralph needs API-based sampler
-- [reference_secrets_1password.md](reference_secrets_1password.md) — .env, GitHub secrets, and 1Password vault management for AFTRS MCP
 - [project_perpetual_12hr_runbook.md](project_perpetual_12hr_runbook.md) — Step-by-step instructions for $100 budget 12-hour perpetual R&D cycle
