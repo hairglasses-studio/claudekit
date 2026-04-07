@@ -51,6 +51,7 @@ Thumbs.db
 .claude-audit-report*
 .claude-fix-report*
 .claude/
+!.claude/settings.json
 .agents/
 !.agents/skills/
 .claude/skills/
