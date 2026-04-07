@@ -44,7 +44,8 @@ Thumbs.db
 
 # AI tool configs (local-only)
 .codex/
-.gemini/
+.gemini/*
+!.gemini/config.yaml
 
 # Development artifacts
 .claude-audit-report*
