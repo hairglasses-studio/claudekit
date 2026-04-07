@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "skills": [
+    {
+      "name": "claudekit",
+      "export_plugin": false,
+      "claude_aliases": [
+        {
+          "name": "env-setup",
+          "description": "Compatibility alias for the claudekit environment and dotfile workflow."
+        },
+        {
+          "name": "font-setup",
+          "description": "Compatibility alias for the claudekit terminal font workflow."
+        },
+        {
+          "name": "theme-setup",
+          "description": "Compatibility alias for the claudekit terminal theme workflow."
+        }
+      ]
+    }
+  ]
+}

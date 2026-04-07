@@ -1,0 +1,24 @@
+---
+name: claudekit
+description: Operate claudekit with Codex-first environment, font, theme, statusline, and skill-install workflows.
+---
+
+# claudekit Terminal Workflows
+
+Codex-native entrypoint for the highest-value `claudekit` workflows.
+
+## Primary flows
+
+- Environment: inspect shell, mise, and managed-config state before proposing changes.
+- Fonts: detect the active terminal, confirm installed families, and apply the fallback chain before editing config.
+- Themes: map a Catppuccin flavor to the supported terminal and CLI targets, then explain any restart or reload steps.
+- Statusline and skills: treat statusline install and skill marketplace changes as follow-up work after the terminal baseline is clear.
+
+## Working rules
+
+1. Prefer read-only inspection of the current terminal, font, and theme state before writing config.
+2. Keep the fallback chain explicit: MonaspiceNe Nerd Font, then MonaspaceNeon, then Menlo.
+3. Preserve `# claudekit:begin` / `# claudekit:end` managed blocks when editing dotfiles.
+4. Use the reference files when the request still maps to the older env/font/theme Claude skill names.
+
+Read `references/workflows.md` for the compressed workflow catalog and `references/legacy-aliases.md` for the old-skill mapping.

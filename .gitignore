@@ -51,6 +51,8 @@ Thumbs.db
 .claude-fix-report*
 .claude/
 .agents/
+!.agents/skills/
 .claude/skills/
+!.claude/skills/*/SKILL.md
 .ralph/ab_tests/
 .ralph/benchmarks/
