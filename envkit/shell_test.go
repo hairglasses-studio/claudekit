@@ -120,7 +120,7 @@ func TestIsDirIsFile(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	f.Close()
+	_ = f.Close()
 	if isDir(f.Name()) {
 		t.Error("expected isDir to return false for a regular file")
 	}

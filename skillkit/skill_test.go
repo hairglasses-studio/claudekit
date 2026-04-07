@@ -9,7 +9,7 @@ import (
 func TestParseSkill(t *testing.T) {
 	tmpDir := t.TempDir()
 	path := filepath.Join(tmpDir, "SKILL.md")
-	os.WriteFile(path, []byte("# My Skill\n\nDoes cool stuff when triggered.\n\n## Workflow\n\n1. Do things\n"), 0o644)
+	_ = os.WriteFile(path, []byte("# My Skill\n\nDoes cool stuff when triggered.\n\n## Workflow\n\n1. Do things\n"), 0o644)
 
 	s, err := ParseSkill(path)
 	if err != nil {
@@ -27,8 +27,8 @@ func TestParseSkill(t *testing.T) {
 func TestListInstalled(t *testing.T) {
 	tmpDir := t.TempDir()
 	skillsDir := filepath.Join(tmpDir, ".claude", "skills", "test-skill")
-	os.MkdirAll(skillsDir, 0o755)
-	os.WriteFile(filepath.Join(skillsDir, "SKILL.md"), []byte("# Test\n\nA test skill.\n"), 0o644)
+	_ = os.MkdirAll(skillsDir, 0o755)
+	_ = os.WriteFile(filepath.Join(skillsDir, "SKILL.md"), []byte("# Test\n\nA test skill.\n"), 0o644)
 
 	skills, err := ListInstalled(tmpDir)
 	if err != nil {
@@ -145,7 +145,7 @@ func TestAvailableSkills(t *testing.T) {
 	}
 
 	// Install one
-	Install(tmpDir, "font-setup", "# Font Setup Skill\n\nTest.\n")
+	_, _ = Install(tmpDir, "font-setup", "# Font Setup Skill\n\nTest.\n")
 
 	available, err = AvailableSkills(tmpDir)
 	if err != nil {

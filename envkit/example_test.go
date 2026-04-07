@@ -28,12 +28,12 @@ func ExampleSnapshotDir() {
 		fmt.Println(err)
 		return
 	}
-	defer os.RemoveAll(dir)
+	defer func() { _ = os.RemoveAll(dir) }()
 
 	// Write a test config file.
 	configDir := filepath.Join(dir, ".config", "starship.toml")
-	os.MkdirAll(filepath.Dir(configDir), 0o755)
-	os.WriteFile(configDir, []byte("[character]\nsymbol = \">\""), 0o644)
+	_ = os.MkdirAll(filepath.Dir(configDir), 0o755)
+	_ = os.WriteFile(configDir, []byte("[character]\nsymbol = \">\""), 0o644)
 
 	snap, err := envkit.SnapshotDir(dir)
 	if err != nil {

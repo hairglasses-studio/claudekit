@@ -179,7 +179,7 @@ func (m *ralphModule) Tools() []registry.ToolDefinition {
 				ctx, cancel := context.WithCancel(context.Background())
 				m.cancel = cancel
 
-				go loop.Run(ctx)
+				go func() { _ = loop.Run(ctx) }() // fire-and-forget; errors surfaced via ralph_status
 
 				return ralphStartOutput{
 					Status:   ralph.StatusRunning,

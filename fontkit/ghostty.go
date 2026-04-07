@@ -56,7 +56,7 @@ func ConfigureGhostty(opts GhosttyOpts) (string, error) {
 				preserved = append(preserved, line)
 			}
 		}
-		f.Close()
+		_ = f.Close()
 	}
 
 	// Append font config

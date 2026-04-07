@@ -27,7 +27,7 @@ tools:
 func TestLoadPlugin(t *testing.T) {
 	tmpDir := t.TempDir()
 	path := filepath.Join(tmpDir, "hello.yaml")
-	os.WriteFile(path, []byte(samplePlugin), 0o644)
+	_ = os.WriteFile(path, []byte(samplePlugin), 0o644)
 
 	cfg, err := LoadPlugin(path)
 	if err != nil {
@@ -57,7 +57,7 @@ func TestLoadPlugin(t *testing.T) {
 func TestLoadPluginMissingName(t *testing.T) {
 	tmpDir := t.TempDir()
 	path := filepath.Join(tmpDir, "bad.yaml")
-	os.WriteFile(path, []byte("description: no name\n"), 0o644)
+	_ = os.WriteFile(path, []byte("description: no name\n"), 0o644)
 
 	_, err := LoadPlugin(path)
 	if err == nil {
@@ -67,9 +67,9 @@ func TestLoadPluginMissingName(t *testing.T) {
 
 func TestLoadPlugins(t *testing.T) {
 	tmpDir := t.TempDir()
-	os.WriteFile(filepath.Join(tmpDir, "a.yaml"), []byte(samplePlugin), 0o644)
-	os.WriteFile(filepath.Join(tmpDir, "b.yml"), []byte("name: second\nversion: \"0.1\"\n"), 0o644)
-	os.WriteFile(filepath.Join(tmpDir, "ignore.txt"), []byte("not a plugin"), 0o644)
+	_ = os.WriteFile(filepath.Join(tmpDir, "a.yaml"), []byte(samplePlugin), 0o644)
+	_ = os.WriteFile(filepath.Join(tmpDir, "b.yml"), []byte("name: second\nversion: \"0.1\"\n"), 0o644)
+	_ = os.WriteFile(filepath.Join(tmpDir, "ignore.txt"), []byte("not a plugin"), 0o644)
 
 	plugins, err := LoadPlugins(tmpDir)
 	if err != nil {

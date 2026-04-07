@@ -35,8 +35,8 @@ func TestExportBatPreservesExisting(t *testing.T) {
 	t.Setenv("HOME", tmpDir)
 
 	configDir := filepath.Join(tmpDir, ".config", "bat")
-	os.MkdirAll(configDir, 0o755)
-	os.WriteFile(filepath.Join(configDir, "config"), []byte("--paging=never\n--theme=OneHalfDark\n"), 0o644)
+	_ = os.MkdirAll(configDir, 0o755)
+	_ = os.WriteFile(filepath.Join(configDir, "config"), []byte("--paging=never\n--theme=OneHalfDark\n"), 0o644)
 
 	_, err := ExportBat(Catppuccin(Frappe))
 	if err != nil {

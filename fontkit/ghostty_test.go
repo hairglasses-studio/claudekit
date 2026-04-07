@@ -38,8 +38,8 @@ func TestConfigureGhosttyPreservesExisting(t *testing.T) {
 	t.Setenv("HOME", tmpDir)
 
 	configDir := filepath.Join(tmpDir, ".config", "ghostty")
-	os.MkdirAll(configDir, 0o755)
-	os.WriteFile(filepath.Join(configDir, "config"), []byte("theme = catppuccin-mocha\nwindow-padding-x = 8\n"), 0o644)
+	_ = os.MkdirAll(configDir, 0o755)
+	_ = os.WriteFile(filepath.Join(configDir, "config"), []byte("theme = catppuccin-mocha\nwindow-padding-x = 8\n"), 0o644)
 
 	_, err := ConfigureGhostty(GhosttyOpts{})
 	if err != nil {

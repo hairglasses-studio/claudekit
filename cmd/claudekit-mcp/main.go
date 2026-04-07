@@ -11,10 +11,13 @@ import (
 
 	"github.com/hairglasses-studio/claudekit/mcpserver"
 	"github.com/hairglasses-studio/claudekit/pluginkit"
+	"github.com/hairglasses-studio/mcpkit/prompts"
 	"github.com/hairglasses-studio/mcpkit/ralph"
 	"github.com/hairglasses-studio/mcpkit/rdcycle"
 	"github.com/hairglasses-studio/mcpkit/registry"
+	"github.com/hairglasses-studio/mcpkit/resources"
 	"github.com/hairglasses-studio/mcpkit/sampling"
+	"github.com/hairglasses-studio/mcpkit/toolindex"
 )
 
 func main() {
@@ -25,6 +28,8 @@ func main() {
 	loadDotenv(".env")
 
 	reg := registry.NewToolRegistry()
+	resourceReg := resources.NewResourceRegistry()
+	promptReg := prompts.NewPromptRegistry()
 	wd, err := os.Getwd()
 	if err != nil {
 		slog.Error("failed to get working directory", "error", err)
@@ -110,6 +115,19 @@ func main() {
 
 	reg.RegisterModule(mcpserver.NewWorkflowModule())
 	mcpserver.SetupMemory(reg)
+	reg.RegisterModule(toolindex.NewToolIndexModule("claudekit", reg))
+	reg.RegisterModule(&mcpserver.ContractToolModule{
+		ToolRegistry:     reg,
+		ResourceRegistry: resourceReg,
+		PromptRegistry:   promptReg,
+		Version:          "0.1.0",
+	})
+	resourceReg.RegisterModule(&mcpserver.ContractResourceModule{
+		ToolRegistry:   reg,
+		PromptRegistry: promptReg,
+		Version:        "0.1.0",
+	})
+	promptReg.RegisterModule(&mcpserver.ContractPromptModule{})
 
 	// Load plugins.
 	if pluginDir, err := pluginkit.DefaultPluginDir(); err == nil {
@@ -130,6 +148,8 @@ func main() {
 
 	s := registry.NewMCPServer("claudekit", "0.1.0")
 	reg.RegisterWithServer(s)
+	resourceReg.RegisterWithServer(s)
+	promptReg.RegisterWithServer(s)
 
 	if apiKey != "" {
 		slog.Info("using API sampler", "component", "ralph", "profile", profile.Name)
@@ -161,7 +181,7 @@ func main() {
 			slog.Error("gateway setup failed", "error", err)
 			os.Exit(1)
 		}
-		defer gw.Close()
+		defer func() { _ = gw.Close() }()
 		dynReg.RegisterWithServer(s)
 	}
 
@@ -178,7 +198,7 @@ func loadDotenv(path string) {
 	if err != nil {
 		return
 	}
-	defer f.Close()
+	defer func() { _ = f.Close() }()
 	sc := bufio.NewScanner(f)
 	for sc.Scan() {
 		line := strings.TrimSpace(sc.Text())
@@ -192,7 +212,7 @@ func loadDotenv(path string) {
 		k = strings.TrimSpace(k)
 		v = strings.Trim(strings.TrimSpace(v), "'\"")
 		if os.Getenv(k) == "" {
-			os.Setenv(k, v)
+			_ = os.Setenv(k, v)
 		}
 	}
 }

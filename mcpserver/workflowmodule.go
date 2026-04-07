@@ -41,29 +41,29 @@ func buildFullSetupGraph() *workflow.Graph {
 
 	// Each node is a placeholder that sets state to track progress.
 	// Actual tool calls are made by the MCP client when running the workflow.
-	g.AddNode("detect", func(ctx context.Context, state workflow.State) (workflow.State, error) {
+	_ = g.AddNode("detect", func(ctx context.Context, state workflow.State) (workflow.State, error) {
 		return workflow.Set(state, "detect_done", true), nil
 	})
-	g.AddNode("font_install", func(ctx context.Context, state workflow.State) (workflow.State, error) {
+	_ = g.AddNode("font_install", func(ctx context.Context, state workflow.State) (workflow.State, error) {
 		return workflow.Set(state, "font_install_done", true), nil
 	})
-	g.AddNode("theme_apply", func(ctx context.Context, state workflow.State) (workflow.State, error) {
+	_ = g.AddNode("theme_apply", func(ctx context.Context, state workflow.State) (workflow.State, error) {
 		return workflow.Set(state, "theme_apply_done", true), nil
 	})
-	g.AddNode("statusline_install", func(ctx context.Context, state workflow.State) (workflow.State, error) {
+	_ = g.AddNode("statusline_install", func(ctx context.Context, state workflow.State) (workflow.State, error) {
 		return workflow.Set(state, "statusline_install_done", true), nil
 	})
-	g.AddNode("env_snapshot", func(ctx context.Context, state workflow.State) (workflow.State, error) {
+	_ = g.AddNode("env_snapshot", func(ctx context.Context, state workflow.State) (workflow.State, error) {
 		return workflow.Set(state, "env_snapshot_done", true), nil
 	})
 
-	g.SetStart("detect")
+	_ = g.SetStart("detect")
 	// Sequential: detect → font_install → theme_apply → statusline_install → env_snapshot → END
-	g.AddEdge("detect", "font_install")
-	g.AddEdge("font_install", "theme_apply")
-	g.AddEdge("theme_apply", "statusline_install")
-	g.AddEdge("statusline_install", "env_snapshot")
-	g.AddEdge("env_snapshot", workflow.EndNode)
+	_ = g.AddEdge("detect", "font_install")
+	_ = g.AddEdge("font_install", "theme_apply")
+	_ = g.AddEdge("theme_apply", "statusline_install")
+	_ = g.AddEdge("statusline_install", "env_snapshot")
+	_ = g.AddEdge("env_snapshot", workflow.EndNode)
 
 	return g
 }

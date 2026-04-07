@@ -47,7 +47,7 @@ func TestSetupGatewayEmptyUpstreams(t *testing.T) {
 	if dynReg == nil {
 		t.Fatal("expected non-nil dynamic registry")
 	}
-	defer gw.Close()
+	defer func() { _ = gw.Close() }()
 
 	upstreams := gw.ListUpstreams()
 	if len(upstreams) != 0 {

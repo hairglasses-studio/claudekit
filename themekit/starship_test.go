@@ -67,10 +67,10 @@ func TestExportStarshipPreservesExisting(t *testing.T) {
 	t.Setenv("HOME", tmpDir)
 
 	configDir := filepath.Join(tmpDir, ".config")
-	os.MkdirAll(configDir, 0o755)
+	_ = os.MkdirAll(configDir, 0o755)
 
 	existing := "# My custom config\n[custom.mymod]\ncommand = \"echo hello\"\n"
-	os.WriteFile(filepath.Join(configDir, "starship.toml"), []byte(existing), 0o644)
+	_ = os.WriteFile(filepath.Join(configDir, "starship.toml"), []byte(existing), 0o644)
 
 	_, err := ExportStarship(Catppuccin(Mocha))
 	if err != nil {
@@ -96,11 +96,11 @@ func TestExportStarshipReplacesExistingBlock(t *testing.T) {
 	t.Setenv("HOME", tmpDir)
 
 	configDir := filepath.Join(tmpDir, ".config")
-	os.MkdirAll(configDir, 0o755)
+	_ = os.MkdirAll(configDir, 0o755)
 
 	// Existing file with a claudekit block and user config
 	existing := "# User preamble\n\n# claudekit:begin\n[character]\nsuccess_symbol = \"old\"\n# claudekit:end\n\n# User postamble\n"
-	os.WriteFile(filepath.Join(configDir, "starship.toml"), []byte(existing), 0o644)
+	_ = os.WriteFile(filepath.Join(configDir, "starship.toml"), []byte(existing), 0o644)
 
 	_, err := ExportStarship(Catppuccin(Frappe))
 	if err != nil {

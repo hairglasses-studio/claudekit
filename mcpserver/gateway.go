@@ -19,7 +19,7 @@ func SetupGateway(reg *registry.ToolRegistry, upstreams []string) (*gateway.Gate
 	for _, spec := range upstreams {
 		name, url, err := parseUpstream(spec)
 		if err != nil {
-			gw.Close()
+			_ = gw.Close()
 			return nil, nil, fmt.Errorf("invalid upstream %q: %w", spec, err)
 		}
 
@@ -30,7 +30,7 @@ func SetupGateway(reg *registry.ToolRegistry, upstreams []string) (*gateway.Gate
 		})
 		cancel()
 		if err != nil {
-			gw.Close()
+			_ = gw.Close()
 			return nil, nil, fmt.Errorf("adding upstream %q: %w", name, err)
 		}
 	}

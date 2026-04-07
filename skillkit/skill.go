@@ -55,7 +55,7 @@ func ParseSkill(path string) (Skill, error) {
 	if err != nil {
 		return Skill{}, err
 	}
-	defer f.Close()
+	defer func() { _ = f.Close() }()
 
 	var s Skill
 	scanner := bufio.NewScanner(f)
