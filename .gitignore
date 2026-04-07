@@ -50,7 +50,7 @@ Thumbs.db
 # Development artifacts
 .claude-audit-report*
 .claude-fix-report*
-.claude/
+.claude/*
 !.claude/settings.json
 .agents/
 !.agents/skills/
