@@ -1,1 +1,0 @@
-/home/hg/hairglasses-studio/claude-skills/mcpkit-go/SKILL.md

@@ -1,8 +1,8 @@
 {
   "mcpServers": {
     "claudekit": {
-      "command": "go",
-      "args": ["run", "./cmd/claudekit-mcp"]
+      "command": "bash",
+      "args": ["-c", "exec bash \"$HOME/hairglasses-studio/claudekit/scripts/run-claudekit-mcp.sh\""]
     }
   }
 }

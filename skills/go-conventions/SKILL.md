@@ -1,1 +1,0 @@
-/home/hg/hairglasses-studio/claude-skills/go-conventions/SKILL.md
