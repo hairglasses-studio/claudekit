@@ -110,7 +110,6 @@ jobs:
                 fail ".gemini/settings.json MCP server names must use kebab-case"
             fi
           fi
-
           for profile in readonly_quiet review workspace_auto ci_json; do
             require_match "^\\[profiles\\.${profile}\\]" .codex/config.toml
           done
