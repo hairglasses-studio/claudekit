@@ -50,3 +50,7 @@ Thumbs.db
 .claude-audit-report*
 .claude-fix-report*
 .claude/
+.agents/
+.claude/skills/
+.ralph/ab_tests/
+.ralph/benchmarks/
