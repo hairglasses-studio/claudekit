@@ -1,0 +1,63 @@
+---
+name: research
+description: Research workflow using the docs knowledge base. Check existing coverage, write findings back, update indexes. Use from any repo.
+allowed-tools:
+  - Agent
+  - Read
+  - Grep
+  - Glob
+  - Bash
+  - Write
+  - mcp__docs-mcp__docs_search
+  - mcp__docs-mcp__docs_retrieve
+  - mcp__docs-mcp__docs_freshness
+  - mcp__docs-mcp__docs_tag
+  - mcp__docs-mcp__docs_memory_store
+  - mcp__docs-mcp__docs_knowledge_gate
+  - mcp__docs-mcp__docs_dedup_check
+  - mcp__docs-mcp__docs_research_track
+  - mcp__docs-mcp__research_pipeline_start
+  - mcp__docs-mcp__research_pipeline_finish
+  - mcp__docs-mcp__research_pipeline_abort
+  - mcp__docs-mcp__persist_research
+  - mcp__docs-mcp__persist_urls
+  - mcp__docs-mcp__persist_commit
+  - mcp__docs-mcp__prompt_best_practices
+  - mcp__docs-mcp__prompt_anti_patterns
+  - mcp__docs-mcp__prompt_scorecard
+---
+
+# Research
+
+Research, knowledge-gap checks, prompt analysis, and index-aware writing using the shared docs repo at ~/hairglasses-studio/docs/.
+
+## Mandatory protocol
+
+1. **Before researching ANY topic**: call `docs_knowledge_gate` or `docs_dedup_check` to check existing coverage. This is non-negotiable.
+2. **Track research**: call `docs_research_track` with action=start before beginning.
+3. **Write findings**: use `persist_research` to write to `docs/research/<domain>/`. Never write research to repo-local directories.
+4. **Index URLs**: use `persist_urls` to add discovered URLs to TAGGED-URL-INDEX.md.
+5. **Complete**: call `docs_research_track` with action=complete and output file paths.
+
+## Default loop
+
+1. Check existing coverage before starting new research.
+2. Reuse or extend existing documents and indexes instead of creating duplicates.
+3. Dispatch parallel agents only when the topic is large enough to justify separate passes.
+4. Write findings back into the docs repo with explicit sources, dated context, and searchable titles.
+5. Update indexes and store short session memory when the work creates reusable knowledge.
+
+## Domains
+
+mcp, agents, orchestration, cost-optimization, go-ecosystem, terminal, competitive
+
+## Naming
+
+- `kebab-case.md` for standalone files
+- Numbered (`01-name.md`) for series
+- Include URLs for all external claims
+- Never write personal data to the docs repo (it will become public)
+
+## Push
+
+After writing, run `~/hairglasses-studio/docs/scripts/push-docs.sh` to commit and push.
