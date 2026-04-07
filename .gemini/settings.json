@@ -1,18 +1,10 @@
 {
   "context": {
     "fileName": [
-      "GEMINI.md",
       "AGENTS.md",
-      "CLAUDE.md"
+      "CLAUDE.md",
+      "GEMINI.md"
     ]
   },
-  "mcpServers": {
-    "claudekit": {
-      "command": "bash",
-      "args": [
-        "-c",
-        "exec bash \"$HOME/hairglasses-studio/claudekit/scripts/run-claudekit-mcp.sh\""
-      ]
-    }
-  }
+  "mcpServers": {}
 }
