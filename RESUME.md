@@ -65,18 +65,9 @@ Or with custom args:
 - Expected: ~12 cycles × $8 = $96
 - Safety: circuit breaker (3 no-progress), governor (rolling avg), daily cap
 
-## 1Password items for this project
-
-| Item | .env Key |
-|------|----------|
-| Anthropic API Key (Work - 10K credits) | ANTHROPIC_API_KEY |
-| AFTRS MCP - Claude Max Personal API Key | PERSONAL_CLAUDE_MAX_ANTHROPIC_API_KEY |
-| AFTRS MCP - mcpkit GitHub PAT | MCPKIT_TOKEN |
-
 ## WSL/Linux notes
 
 - **No Homebrew**: fontkit install tests auto-skip via `t.Skip`
-- **1Password CLI**: Field name is `credential`, not `password`. Use `op item get "<title>" --fields credential --reveal`.
 - **Nesting guard**: `perpetual-loop.sh` will refuse to run inside a Claude Code session (`CLAUDECODE=1`). Always launch from a raw terminal.
 
 ## Key files
