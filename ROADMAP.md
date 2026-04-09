@@ -55,3 +55,29 @@
 - [x] Wire CostReader for real per-cycle dollar tracking in governor
 - [x] Consecutive sampler failure limit (5) for fast-fail on API outages
 - [x] Widen scan repo list (anthropics/anthropic-sdk-go, mark3labs/mcp-go)
+
+<!-- whiteclaw-rollout:start -->
+## Whiteclaw-Derived Overhaul (2026-04-08)
+
+This tranche applies the highest-value whiteclaw findings that fit this repo's real surface: engineer briefs, bounded skills/runbooks, searchable provenance, scoped MCP packaging, and explicit verification ladders.
+
+### Strategic Focus
+- This repo is publicly tagged but functionally deprecated into `mcpkit`, so the roadmap should emphasize surface honesty and migration clarity.
+- Only keep whiteclaw patterns that reduce confusion for operators: accurate manifests, a minimal engineer brief, and clear verification/migration guidance.
+- Avoid broad new autonomy work here unless the repo regains a real standalone MCP surface.
+
+### Recommended Work
+- [ ] [MCP contract] Either restore a minimal discovery-only self server or stop advertising live MCP parity in docs, manifests, and instructions.
+- [ ] [Deprecation] Make the deprecation and migration path to `mcpkit` explicit in README, roadmap, and any repo-local manifests.
+- [ ] [Verification] Keep a thin smoke path proving the remaining CLI behavior still works and matches the published guidance.
+- [ ] [Public docs] Trim instructions and skills to the small surface that is still intentionally maintained.
+
+### Rationale Snapshot
+- Tier / lifecycle: `tier-2` / `active`
+- Language profile: `Go`
+- Visibility / sensitivity: `PUBLIC` / `public`
+- Surface baseline: AGENTS=yes, skills=yes, codex=yes, mcp_manifest=empty, ralph=yes, roadmap=yes
+- Whiteclaw transfers in scope: surface honesty, migration to mcpkit, thin verification, minimal engineer brief
+- Live repo notes: AGENTS, skills, Codex config, empty .mcp.json, .ralph
+
+<!-- whiteclaw-rollout:end -->
