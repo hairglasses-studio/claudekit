@@ -1,50 +1,35 @@
 # claudekit — Agent Instructions
 
-> Canonical instructions: AGENTS.md
+> **DEPRECATED.** This repo has been retired. Its functionality was consolidated into
+> [`mcpkit`](https://github.com/hairglasses-studio/mcpkit) and
+> [`dotfiles/mcp/`](https://github.com/hairglasses-studio/dotfiles).
 
-Use this file as the canonical instruction surface for Codex-first repo guidance. [CLAUDE.md](CLAUDE.md) and [GEMINI.md](GEMINI.md) are compatibility mirrors.
+## Status
 
-Claude Code terminal customization framework. Built on [mcpkit](https://github.com/hairglasses-studio/mcpkit).
+Both `cmd/claudekit` and `cmd/claudekit-mcp` are deprecation stubs that print a
+retirement message and exit. The packages advertised in the previous architecture
+table (`fontkit`, `themekit`, `envkit`, `statusline`, `pluginkit`, `skillkit`,
+`mcpserver`) have been removed. The repo's `.mcp.json` is `{}`.
 
-## Codex Surfaces
+Do not add new features here. Any ongoing work should land in one of the canonical
+downstream homes:
 
-- Canonical workflow skill: `.agents/skills/claudekit/SKILL.md`
-- Shared subagents: `.codex/agents/`
+- **MCP server framework** → [`mcpkit`](https://github.com/hairglasses-studio/mcpkit)
+- **Claude Code skill marketplace / skill surface** → [`dotfiles/.agents/skills`](https://github.com/hairglasses-studio/dotfiles) and the canonical skill surface under `.agents/skills/`
+- **Terminal/font/theme customization** → [`dotfiles`](https://github.com/hairglasses-studio/dotfiles) theme pipeline
+- **Statusline** → `dotfiles/scripts/hg-statusline.sh` or equivalent
 
-## Build & Test
+## Historical context
 
-```
-make check   # vet + test + build
-make build   # compile all packages
-make test    # run tests
-```
-
-## Architecture
-
-| Package | Purpose | Dependencies |
-|---------|---------|-------------|
-| `fontkit` | Font detection, installation, terminal config | None (pure Go) |
-| `themekit` | Catppuccin palettes + theme export (iTerm2, Ghostty, WezTerm, bat, delta, Starship) | None (pure Go) |
-| `envkit` | Mise integration, shell detection, dotfile snapshot/restore | None (pure Go) |
-| `statusline` | Claude Code statusline script + installer | `themekit` |
-| `pluginkit` | YAML plugin loading, subprocess handler, ToolModule bridge | `mcpkit/registry`, `yaml.v3` |
-| `skillkit` | Claude Code skill marketplace — discovery, install, remove | None (pure Go) |
-| `mcpserver` | MCP tool modules (font, theme, env, statusline, skill, ralph, roadmap, finops, memory, rdcycle, workflow, gateway, discovery, webmcp) | `fontkit`, `themekit`, `envkit`, `statusline`, `skillkit`, mcpkit |
-| `cmd/claudekit` | CLI entrypoint | all packages |
-| `cmd/claudekit-mcp` | MCP server entrypoint | `mcpserver`, `pluginkit` |
-
-## Key Conventions
-
-- `ToolModule` interface: `Name()`, `Description()`, `Tools() []ToolDefinition`
-- Typed inputs/outputs with `jsonschema` tags for MCP tools
-- Tests alongside source files (`_test.go`)
-- CLI: `os.Args` routing with `parseFlag(key, fallback)` helper
-- Context-aware `exec.CommandContext` for all shell commands
-- Font fallback: MonaspiceNe → MonaspaceNeon → Menlo
-- Theme export: one Catppuccin palette → multiple targets
-- Dotfile management: `# claudekit:begin` / `# claudekit:end` markers
-
+The v3 llm-ops audit (docs@a5079e0e, wave-2-05) flagged claudekit as a
+declaration/runtime-inverted shadow surface: `workspace/manifest.json` still
+classified it `active_first_party` / `gateway` despite the code being stub-only.
+This AGENTS.md rewrite brings the repo-owned documentation in line with the
+runtime state. A matching manifest update moves claudekit to `lifecycle: "deprecated"`
+and `mcp_surface_class: "none"`.
 
 ## Shared Research Repository
 
-Cross-project research lives at `~/hairglasses-studio/docs/` (git: hairglasses-studio/docs). When launching research agents, check existing docs first and write reusable research outputs back to the shared repo rather than local docs/.
+Cross-project research lives at `~/hairglasses-studio/docs/` (git:
+hairglasses-studio/docs). Before adding retirement context or redirects elsewhere,
+check the existing `docs/projects/agent-parity/` track.
