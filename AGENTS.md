@@ -27,9 +27,3 @@ classified it `active_first_party` / `gateway` despite the code being stub-only.
 This AGENTS.md rewrite brings the repo-owned documentation in line with the
 runtime state. A matching manifest update moves claudekit to `lifecycle: "deprecated"`
 and `mcp_surface_class: "none"`.
-
-## Shared Research Repository
-
-Cross-project research lives at `~/hairglasses-studio/docs/` (git:
-hairglasses-studio/docs). Before adding retirement context or redirects elsewhere,
-check the existing `docs/projects/agent-parity/` track.
